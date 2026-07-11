@@ -1,12 +1,15 @@
 <script>
 	import { t, lang, toggleLang } from '$lib/i18n.js';
 	import { base } from '$app/paths';
+	import { page } from '$app/state';
 	import { onMount } from 'svelte';
 
 	let scrolled = $state(false);
 	let open = $state(false);
+	let activeId = $state('');
 
 	const panelId = 'site-nav-panel';
+	const onHome = $derived(page.url.pathname === `${base}/` || page.url.pathname === base || page.url.pathname === '/');
 
 	function closeMenu() {
 		open = false;
@@ -34,14 +37,35 @@
 
 	onMount(() => {
 		const onScroll = () => {
-			scrolled = window.scrollY > 24;
+			scrolled = window.scrollY > 8;
 		};
 		onScroll();
 		window.addEventListener('scroll', onScroll, { passive: true });
 		window.addEventListener('keydown', onKeydown);
+
+		// Scroll-spy: highlight the nav link for the section currently in view.
+		const ids = ['about', 'sessions', 'timetable', 'tickets', 'sponsors'];
+		const sections = ids
+			.map((id) => document.getElementById(id))
+			.filter((el) => el !== null);
+		/** @type {IntersectionObserver | undefined} */
+		let observer;
+		if (sections.length) {
+			observer = new IntersectionObserver(
+				(entries) => {
+					for (const entry of entries) {
+						if (entry.isIntersecting) activeId = entry.target.id;
+					}
+				},
+				{ rootMargin: '-40% 0px -50% 0px', threshold: 0 }
+			);
+			for (const s of sections) observer.observe(s);
+		}
+
 		return () => {
 			window.removeEventListener('scroll', onScroll);
 			window.removeEventListener('keydown', onKeydown);
+			observer?.disconnect();
 		};
 	});
 </script>
@@ -51,9 +75,9 @@
 		<!-- Brand -->
 		<a class="brand" href={`${base}/#top`} onclick={closeMenu} aria-label={$t.nav.brand}>
 			<span class="mark" aria-hidden="true">
-				<svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" aria-hidden="true">
-					<path d="M13.9 3 6.4 10.5l2.4 2.4L18.7 3H13.9Z" fill="#fff" opacity="0.95" />
-					<path d="M13.9 11.3 9.7 15.5l4.2 4.2h4.8l-4.2-4.2 4.2-4.2h-4.8Z" fill="#06121f" opacity="0.55" />
+				<svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+					<path d="M13.9 3 6.4 10.5l2.4 2.4L18.7 3H13.9Z" fill="#ffffff" />
+					<path d="M13.9 11.3 9.7 15.5l4.2 4.2h4.8l-4.2-4.2 4.2-4.2h-4.8Z" fill="#bfe3fc" />
 				</svg>
 			</span>
 			<span class="brand-text">{$t.nav.brand}</span>
@@ -62,7 +86,13 @@
 		<!-- Desktop nav -->
 		<nav class="desktop-nav" aria-label={$t.nav.brand}>
 			{#each $t.nav.links as link (link.id)}
-				<a class="nav-link" href={`${base}/#${link.id}`}>{link.label}</a>
+				<a
+					class="nav-link"
+					class:active={onHome && activeId === link.id}
+					href={`${base}/#${link.id}`}
+				>
+					{link.label}
+				</a>
 			{/each}
 		</nav>
 
@@ -107,13 +137,7 @@
 
 <!-- Mobile overlay + panel -->
 {#if open}
-	<button
-		type="button"
-		class="scrim"
-		aria-label={$t.nav.close}
-		onclick={closeMenu}
-		tabindex="-1"
-	></button>
+	<button type="button" class="scrim" aria-label={$t.nav.close} onclick={closeMenu} tabindex="-1"></button>
 {/if}
 
 <div id={panelId} class="mobile-panel" class:open aria-hidden={!open}>
@@ -151,26 +175,18 @@
 
 <style>
 	.site-header {
-		position: fixed;
-		inset: 0 0 auto 0;
+		position: sticky;
+		top: var(--announce-h);
 		z-index: 100;
 		height: var(--header-h);
 		display: flex;
 		align-items: center;
-		transition:
-			background 0.3s var(--ease),
-			border-color 0.3s var(--ease),
-			box-shadow 0.3s var(--ease);
-		border-bottom: 1px solid transparent;
-		background: transparent;
+		background: var(--white);
+		border-bottom: 1px solid var(--border);
+		transition: box-shadow 0.2s var(--ease);
 	}
-	.site-header.scrolled,
-	.site-header[data-open='true'] {
-		background: color-mix(in srgb, var(--bg) 72%, transparent);
-		-webkit-backdrop-filter: blur(14px) saturate(140%);
-		backdrop-filter: blur(14px) saturate(140%);
-		border-bottom-color: var(--border);
-		box-shadow: 0 8px 30px -18px rgba(0, 0, 0, 0.8);
+	.site-header.scrolled {
+		box-shadow: 0 4px 16px -12px rgba(11, 18, 32, 0.25);
 	}
 
 	.bar {
@@ -197,65 +213,56 @@
 		justify-content: center;
 		width: 30px;
 		height: 30px;
-		font-size: 20px;
 		border-radius: 9px;
-		background: var(--gradient-brand);
-		box-shadow: 0 6px 18px -8px var(--glow);
+		background: var(--blue-700);
 		flex-shrink: 0;
 	}
 	.brand-text {
 		font-size: 0.98rem;
-		color: var(--text);
+		color: var(--ink);
 		overflow: hidden;
 		text-overflow: ellipsis;
-	}
-	.brand:hover .mark {
-		box-shadow: 0 8px 22px -8px var(--glow);
 	}
 
 	/* --- Desktop nav --- */
 	.desktop-nav {
 		display: none;
-		align-items: center;
-		gap: 0.35rem;
 	}
 	.nav-link {
 		position: relative;
-		padding: 0.5rem 0.75rem;
-		border-radius: var(--r-full);
+		padding: 0.5rem 0;
 		font-size: 0.94rem;
+		font-weight: 500;
 		color: var(--text-muted);
-		transition:
-			color 0.2s var(--ease),
-			background 0.2s var(--ease);
+		transition: color 0.2s var(--ease);
 	}
 	.nav-link::after {
 		content: '';
 		position: absolute;
-		left: 0.75rem;
-		right: 0.75rem;
-		bottom: 0.28rem;
-		height: 1.5px;
-		border-radius: 2px;
-		background: var(--gradient-brand);
+		left: 0;
+		right: 0;
+		bottom: -2px;
+		height: 2px;
+		border-radius: 1px;
+		background: var(--accent);
 		transform: scaleX(0);
 		transform-origin: left;
-		transition: transform 0.25s var(--ease);
+		transition: transform 0.2s var(--ease);
 	}
 	.nav-link:hover {
-		color: var(--text);
+		color: var(--ink);
 	}
-	.nav-link:hover::after {
+	.nav-link.active {
+		color: var(--accent);
+	}
+	.nav-link.active::after {
 		transform: scaleX(1);
 	}
 
 	.desktop-actions {
 		display: none;
-		align-items: center;
-		gap: 0.6rem;
 	}
 
-	/* --- Language toggle --- */
 	.lang-btn {
 		display: inline-flex;
 		align-items: center;
@@ -263,28 +270,20 @@
 		padding: 0.5rem 0.85rem;
 		border-radius: var(--r-full);
 		border: 1px solid var(--border);
-		background: var(--surface);
+		background: var(--white);
 		color: var(--text-muted);
-		font-family: var(--font-mono);
-		font-size: 0.78rem;
-		font-weight: 500;
-		letter-spacing: 0.06em;
+		font-size: 0.85rem;
+		font-weight: 600;
 		cursor: pointer;
 		transition:
-			color 0.2s var(--ease),
 			border-color 0.2s var(--ease),
+			color 0.2s var(--ease),
 			background 0.2s var(--ease);
 	}
 	.lang-btn:hover {
-		color: var(--text);
 		border-color: var(--border-strong);
-		background: var(--card-hover);
-	}
-	.lang-btn.wide {
-		justify-content: center;
-		width: 100%;
-		padding-block: 0.85rem;
-		font-size: 0.85rem;
+		color: var(--accent);
+		background: var(--paper);
 	}
 
 	.cta {
@@ -292,26 +291,39 @@
 		font-size: 0.9rem;
 	}
 
-	/* --- Hamburger --- */
+	/* --- Mobile hamburger --- */
 	.hamburger {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		width: 42px;
-		height: 42px;
-		border-radius: var(--r-md);
+		width: 40px;
+		height: 40px;
+		border-radius: var(--r-sm);
 		border: 1px solid var(--border);
-		background: var(--surface);
-		color: var(--text);
+		background: var(--white);
+		color: var(--ink);
 		cursor: pointer;
 		flex-shrink: 0;
-		transition:
-			border-color 0.2s var(--ease),
-			background 0.2s var(--ease);
 	}
 	.hamburger:hover {
-		border-color: var(--border-strong);
-		background: var(--card-hover);
+		background: var(--paper);
+	}
+
+	@media (min-width: 900px) {
+		.desktop-nav {
+			display: flex;
+			align-items: center;
+			gap: 2rem;
+			margin-inline: auto;
+		}
+		.desktop-actions {
+			display: flex;
+			align-items: center;
+			gap: 0.75rem;
+		}
+		.hamburger {
+			display: none;
+		}
 	}
 
 	/* --- Mobile overlay + panel --- */
@@ -319,15 +331,12 @@
 		position: fixed;
 		inset: 0;
 		z-index: 90;
-		border: 0;
-		padding: 0;
-		background: rgba(4, 8, 18, 0.6);
-		-webkit-backdrop-filter: blur(2px);
-		backdrop-filter: blur(2px);
+		background: rgba(11, 18, 32, 0.35);
+		border: none;
 		cursor: default;
-		animation: scrim-in 0.25s var(--ease);
+		animation: fade-in 0.2s var(--ease);
 	}
-	@keyframes scrim-in {
+	@keyframes fade-in {
 		from {
 			opacity: 0;
 		}
@@ -338,35 +347,24 @@
 
 	.mobile-panel {
 		position: fixed;
-		top: var(--header-h);
-		left: 0;
+		top: 0;
 		right: 0;
+		bottom: 0;
 		z-index: 95;
+		width: min(84vw, 360px);
+		background: var(--white);
+		border-left: 1px solid var(--border);
+		box-shadow: -16px 0 40px -20px rgba(11, 18, 32, 0.3);
+		padding: calc(var(--announce-h) + var(--header-h) + 1.5rem) 1.5rem 2rem;
 		display: flex;
 		flex-direction: column;
-		gap: 1.25rem;
-		max-height: calc(100dvh - var(--header-h));
+		gap: 2rem;
+		transform: translateX(100%);
+		transition: transform 0.3s var(--ease);
 		overflow-y: auto;
-		padding: 1.25rem var(--gutter) 1.75rem;
-		background: color-mix(in srgb, var(--bg-elevated) 94%, transparent);
-		-webkit-backdrop-filter: blur(16px);
-		backdrop-filter: blur(16px);
-		border-bottom: 1px solid var(--border);
-		box-shadow: var(--shadow-card);
-		transform: translateY(-12px);
-		opacity: 0;
-		pointer-events: none;
-		visibility: hidden;
-		transition:
-			transform 0.28s var(--ease),
-			opacity 0.28s var(--ease),
-			visibility 0.28s var(--ease);
 	}
 	.mobile-panel.open {
-		transform: translateY(0);
-		opacity: 1;
-		pointer-events: auto;
-		visibility: visible;
+		transform: translateX(0);
 	}
 
 	.mobile-nav {
@@ -377,55 +375,31 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: 0.95rem 0.25rem;
+		padding: 1rem 0.25rem;
 		font-size: 1.15rem;
 		font-weight: 600;
-		color: var(--text);
+		color: var(--ink);
 		border-bottom: 1px solid var(--border);
-		transition: color 0.2s var(--ease);
-	}
-	.mobile-link:last-child {
-		border-bottom: 0;
 	}
 	.mobile-link svg {
 		color: var(--text-dim);
-		transition:
-			color 0.2s var(--ease),
-			transform 0.2s var(--ease);
-	}
-	.mobile-link:hover {
-		color: var(--accent);
-	}
-	.mobile-link:hover svg {
-		color: var(--accent);
-		transform: translateX(3px);
 	}
 
 	.mobile-actions {
 		display: flex;
 		flex-direction: column;
-		gap: 0.7rem;
+		gap: 0.75rem;
+		margin-top: auto;
 	}
-	.btn.wide {
+	.wide {
 		width: 100%;
+		justify-content: center;
 	}
 
-	/* --- Breakpoint: desktop --- */
 	@media (min-width: 900px) {
-		.desktop-nav,
-		.desktop-actions {
-			display: flex;
-		}
-		.hamburger,
-		.mobile-panel,
-		.scrim {
+		.scrim,
+		.mobile-panel {
 			display: none;
-		}
-		.brand {
-			margin-right: 0;
-		}
-		.desktop-nav {
-			margin-inline: auto;
 		}
 	}
 </style>

@@ -78,10 +78,7 @@
 		position: relative;
 		border-radius: var(--r-lg);
 		border: 1px solid var(--border-strong);
-		background:
-			var(--gradient-brand-soft),
-			var(--bg-elevated);
-		box-shadow: var(--shadow-card);
+		background: var(--bg-elevated);
 		overflow: hidden;
 		isolation: isolate;
 	}
@@ -154,8 +151,7 @@
 		padding: clamp(1.5rem, 3vw, 2rem);
 		border-radius: var(--r-md);
 		border: 1px solid var(--border);
-		background: var(--card);
-		backdrop-filter: blur(6px);
+		background: var(--white);
 	}
 
 	@media (min-width: 860px) {

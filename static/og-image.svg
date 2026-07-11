@@ -1,29 +1,26 @@
 <svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#0A0E1A"/>
-      <stop offset="1" stop-color="#0B1428"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="1100" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0A3F96"/>
+      <stop offset="0.5" stop-color="#0A6DF2"/>
+      <stop offset="1" stop-color="#7C4DFF"/>
     </linearGradient>
-    <linearGradient id="accent" x1="120" y1="200" x2="520" y2="470" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#54C5F8"/>
-      <stop offset="1" stop-color="#0175C2"/>
-    </linearGradient>
-    <linearGradient id="text" x1="120" y1="0" x2="1080" y2="0" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#FFFFFF"/>
-      <stop offset="1" stop-color="#9FD8FF"/>
-    </linearGradient>
-    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
-      <path d="M48 0 H0 V48" fill="none" stroke="#1B2740" stroke-width="1"/>
-    </pattern>
   </defs>
   <rect width="1200" height="630" fill="url(#bg)"/>
-  <rect width="1200" height="630" fill="url(#grid)" opacity="0.5"/>
-  <g transform="translate(96,120)">
-    <path d="M120 0 L180 0 L80 100 L20 100 Z" fill="url(#accent)"/>
-    <path d="M120 80 L180 80 L100 160 L80 140 L120 100 Z" fill="#54C5F8"/>
+  <!-- Decorative facets, echoing Flutter's origami-fold mark -->
+  <g opacity="0.14" fill="#ffffff">
+    <path d="M760 -80 L1280 40 L1040 480 L620 300 Z"/>
   </g>
-  <text x="96" y="360" font-family="Pretendard, -apple-system, sans-serif" font-size="34" font-weight="600" letter-spacing="6" fill="#54C5F8">FLUTTER KOREA 2026</text>
-  <text x="94" y="446" font-family="Pretendard, -apple-system, sans-serif" font-size="76" font-weight="800" fill="url(#text)">Back to Basics,</text>
-  <text x="94" y="530" font-family="Pretendard, -apple-system, sans-serif" font-size="76" font-weight="800" fill="url(#text)">Move Forward</text>
-  <text x="96" y="590" font-family="Pretendard, -apple-system, sans-serif" font-size="28" font-weight="500" fill="#8A97AE">2026.11.07 SAT · Seoul · Hosted by Flutter Seoul</text>
+  <g opacity="0.16" fill="#ffffff">
+    <path d="M980 90 L1180 160 L1080 380 L920 320 Z"/>
+  </g>
+  <g opacity="0.1" fill="#ffffff">
+    <path d="M120 470 L360 520 L280 660 L60 610 Z"/>
+  </g>
+  <rect x="96" y="96" width="216" height="40" rx="20" fill="#ffffff" opacity="0.14"/>
+  <text x="120" y="122" font-family="Pretendard, -apple-system, sans-serif" font-size="16" font-weight="700" letter-spacing="1" fill="#ffffff">2026.11.07 SAT · SEOUL</text>
+  <text x="94" y="270" font-family="Pretendard, -apple-system, sans-serif" font-size="72" font-weight="800" fill="#ffffff">Back to Basics,</text>
+  <text x="94" y="350" font-family="Pretendard, -apple-system, sans-serif" font-size="72" font-weight="800" fill="#bfe3fc">Move Forward</text>
+  <text x="96" y="410" font-family="Pretendard, -apple-system, sans-serif" font-size="24" font-weight="500" fill="#e3edfc">기술의 본질로 돌아가, 두려움 없이 미래를 정의하다</text>
+  <text x="96" y="560" font-family="Pretendard, -apple-system, sans-serif" font-size="22" font-weight="600" fill="#ffffff" opacity="0.85">Flutter Korea 2026 · Hosted by Flutter Seoul</text>
 </svg>

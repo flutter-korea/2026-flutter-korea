@@ -56,12 +56,8 @@
 					</div>
 
 					<div class="tier-price">
-						{#if tier.isText}
-							<span class="price-text">{tier.price}</span>
-						{:else}
-							<span class="price-currency">{$t.tickets.currency}</span>
-							<span class="price-num" class:gradient-text={tier.featured || tier.support}>{tier.price}</span>
-						{/if}
+						<span class="price-currency">{$t.tickets.currency}</span>
+						<span class="price-num" class:gradient-text={tier.featured || tier.support}>{tier.price}</span>
 					</div>
 
 					<ul class="features">
@@ -182,17 +178,14 @@
 		box-shadow: var(--shadow-card);
 	}
 
-	/* Featured (early bird) — stands out with gradient border + glow */
+	/* Featured (early bird) — stands out with a deeper tint + accent border */
 	.tier.is-featured {
-		background:
-			var(--gradient-brand-soft),
-			var(--bg-elevated);
-		border-color: var(--border-strong);
-		box-shadow: var(--shadow-glow);
+		background: var(--bg-elevated);
+		border-color: var(--accent);
 	}
 	.tier.is-featured:hover {
 		transform: translateY(-6px);
-		box-shadow: var(--shadow-glow), var(--shadow-card);
+		box-shadow: var(--shadow-lift);
 	}
 
 	/* Personal supporter (Flutter Lover) — subtle accent, no glow */
@@ -212,19 +205,17 @@
 		height: 2.2rem;
 		font-size: 1.1rem;
 		border-radius: var(--r-full);
-		background: var(--gradient-brand);
-		color: #06121f;
-		box-shadow: 0 8px 24px -10px var(--glow);
+		background: var(--accent);
+		color: var(--white);
 		pointer-events: none;
 	}
 	.ribbon svg {
 		flex: none;
 	}
 	.ribbon-heart {
-		background: var(--surface);
+		background: var(--white);
 		color: var(--accent);
 		border: 1px solid var(--border-strong);
-		box-shadow: none;
 	}
 
 	.tier-head {
@@ -238,9 +229,9 @@
 		text-transform: uppercase;
 	}
 	.tier-badge-featured {
-		border-color: var(--border-strong);
-		background: rgba(255, 255, 255, 0.05);
-		color: var(--text);
+		border-color: var(--accent);
+		background: var(--white);
+		color: var(--accent);
 	}
 
 	.tier-name {
@@ -266,13 +257,6 @@
 		font-weight: 800;
 		font-size: clamp(2.6rem, 2rem + 2.8vw, 3.6rem);
 		letter-spacing: -0.03em;
-	}
-
-	.price-text {
-		font-weight: 800;
-		font-size: clamp(2.1rem, 1.7rem + 2vw, 2.9rem);
-		letter-spacing: -0.02em;
-		color: var(--text);
 	}
 
 	.features {
@@ -316,7 +300,7 @@
 		font-size: 0.95rem;
 		color: var(--text-dim);
 		border: 1px dashed var(--border-strong);
-		background: rgba(255, 255, 255, 0.02);
+		background: var(--white);
 		cursor: not-allowed;
 		user-select: none;
 	}
@@ -335,7 +319,7 @@
 		padding: 0.35rem 0.8rem;
 		border: 1px solid var(--border-strong);
 		border-radius: var(--r-full);
-		background: rgba(84, 197, 248, 0.06);
+		background: var(--paper);
 	}
 	.status-dot {
 		width: 6px;

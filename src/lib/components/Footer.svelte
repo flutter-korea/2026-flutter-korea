@@ -13,12 +13,8 @@
 				<a class="brand" href={`${base}/#top`} aria-label={$t.footer.org}>
 					<span class="mark" aria-hidden="true">
 						<svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" aria-hidden="true">
-							<path d="M13.9 3 6.4 10.5l2.4 2.4L18.7 3H13.9Z" fill="#fff" opacity="0.95" />
-							<path
-								d="M13.9 11.3 9.7 15.5l4.2 4.2h4.8l-4.2-4.2 4.2-4.2h-4.8Z"
-								fill="#06121f"
-								opacity="0.55"
-							/>
+							<path d="M13.9 3 6.4 10.5l2.4 2.4L18.7 3H13.9Z" fill="#ffffff" />
+							<path d="M13.9 11.3 9.7 15.5l4.2 4.2h4.8l-4.2-4.2 4.2-4.2h-4.8Z" fill="#bfe3fc" />
 						</svg>
 					</span>
 					<span class="brand-meta">

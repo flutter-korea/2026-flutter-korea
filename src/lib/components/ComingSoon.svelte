@@ -68,7 +68,7 @@
 		padding: 0.35rem 0.8rem;
 		border: 1px solid var(--border-strong);
 		border-radius: var(--r-full);
-		background: rgba(84, 197, 248, 0.06);
+		background: var(--white);
 	}
 	.dot {
 		width: 6px;

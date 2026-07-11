@@ -71,7 +71,7 @@
 		padding: 0.35rem 0.85rem;
 		border-radius: var(--r-full);
 		border: 1px solid var(--border-strong);
-		background: rgba(6, 18, 31, 0.35);
+		background: var(--white);
 	}
 	.fs-dot {
 		width: 7px;

@@ -2,6 +2,7 @@
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import { lang, setLang } from '$lib/i18n.js';
+	import AnnouncementBar from '$lib/components/AnnouncementBar.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 
@@ -32,6 +33,7 @@
 
 <a class="skip-link" href="#main">Skip to content</a>
 
+<AnnouncementBar />
 <Header />
 
 <main id="main">
@@ -49,7 +51,7 @@
 		z-index: 200;
 		padding: 0.7rem 1.2rem;
 		background: var(--accent);
-		color: #06121f;
+		color: var(--white);
 		font-weight: 700;
 		border-radius: 0 0 var(--r-sm) var(--r-sm);
 		transition: transform 0.2s var(--ease);

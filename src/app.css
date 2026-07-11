@@ -1,41 +1,47 @@
 /* ============================================================================
    Flutter Korea 2026 — Global design system
-   Theme: "Back to Basics, Move Forward"
-   Dark, engineering-blueprint aesthetic with the Flutter blue→cyan gradient.
+   Theme: official-Flutter-brand — white canvas, hairline-bordered paper-blue
+   cards, and ONE bold diagonal blue→violet gradient reserved for the hero
+   band (matching flutter.dev / docs.flutter.dev). Everywhere else is flat.
    ========================================================================== */
 
 :root {
 	/* --- Brand palette ------------------------------------------------------ */
-	--flutter-navy: #0175c2;
-	--flutter-blue: #027dfd;
-	--flutter-sky: #54c5f8;
-	--flutter-cyan: #61d4fb;
+	--blue-900: #06377a; /* deep navy — headline-on-gradient, strong hover */
+	--blue-700: #0553b1; /* primary brand blue — buttons, links, active state */
+	--blue-500: #0a6df2; /* mid blue — secondary accents */
+	--sky: #54c5f8; /* light accent — logo, small highlights */
+	--violet: #7c4dff; /* gradient partner, hero band only */
 
-	/* --- Surfaces ----------------------------------------------------------- */
-	--bg: #0a0e1a;
-	--bg-2: #0b1120;
-	--bg-elevated: #0f1526;
-	--card: rgba(255, 255, 255, 0.025);
-	--card-hover: rgba(255, 255, 255, 0.045);
-	--surface: rgba(255, 255, 255, 0.04);
-	--border: rgba(255, 255, 255, 0.08);
-	--border-strong: rgba(120, 190, 255, 0.28);
+	/* --- Surfaces ------------------------------------------------------------ */
+	--white: #ffffff;
+	--paper: #eef4fd; /* light blue-tinted card surface (docs.flutter.dev cards) */
+	--paper-strong: #e2ecfc; /* deeper tint — hover / highlighted panels */
+	--bg-elevated: var(--paper-strong); /* highlighted panel surface (featured/confirmed) */
+	--bg: var(--white);
+	--card: var(--paper);
+	--card-hover: var(--paper-strong);
+	--surface: var(--paper);
+	--border: #dfe6f2;
+	--border-strong: #b7cdef;
 
-	/* --- Text --------------------------------------------------------------- */
-	--text: #e9eefb;
-	--text-muted: #9aa7be;
-	--text-dim: #8592ab; /* AA-contrast (6.1:1 on --bg) for small mono labels */
+	/* --- Text ------------------------------------------------------------------ */
+	--ink: #0b1220;
+	--text: var(--ink);
+	--text-muted: #51606f;
+	--text-dim: #6b7b8c;
 
-	/* --- Accents ------------------------------------------------------------ */
-	--accent: var(--flutter-sky);
-	--accent-strong: #2aa9f0;
-	--glow: rgba(84, 197, 248, 0.35);
-	/* Flat theme: solid brand fill, subtle solid tint, solid heading accent */
-	--gradient-brand: #29a3ef;
-	--gradient-brand-soft: rgba(84, 197, 248, 0.09);
-	--gradient-text: #9fd8ff;
+	/* --- Accents --------------------------------------------------------------- */
+	--accent: var(--blue-700);
+	--accent-strong: var(--blue-900);
+	--glow: rgba(5, 83, 177, 0.16);
+	--gradient-brand: var(--blue-700); /* flat solid — buttons/borders elsewhere */
+	--gradient-brand-soft: var(--paper-strong);
+	--gradient-text: var(--blue-700);
+	/* The ONE gradient on the whole site — hero band + announcement strip only */
+	--gradient-hero: linear-gradient(115deg, #0a3f96 0%, #0a6df2 48%, #7c4dff 100%);
 
-	/* --- Typography --------------------------------------------------------- */
+	/* --- Typography -------------------------------------------------------------- */
 	--font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
 		'Segoe UI', Roboto, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
 	--font-mono: 'SFMono-Regular', ui-monospace, 'JetBrains Mono', 'Menlo', 'Consolas', monospace;
@@ -46,22 +52,24 @@
 	--fs-lead: clamp(1.125rem, 1.02rem + 0.5vw, 1.35rem);
 	--fs-h3: clamp(1.25rem, 1.1rem + 0.7vw, 1.6rem);
 	--fs-h2: clamp(1.9rem, 1.4rem + 2.2vw, 3rem);
-	--fs-display: clamp(2.7rem, 1.4rem + 6vw, 6rem);
+	--fs-display: clamp(2.6rem, 1.3rem + 5.6vw, 5.6rem);
 
 	/* --- Layout ------------------------------------------------------------- */
 	--container: 1200px;
 	--container-narrow: 860px;
 	--gutter: clamp(1.25rem, 5vw, 3rem);
-	--section-y: clamp(4.5rem, 10vw, 9rem);
+	--section-y: clamp(4rem, 9vw, 7.5rem);
 	--header-h: 68px;
+	--announce-h: 40px;
 
-	/* --- Radii / shadow ----------------------------------------------------- */
-	--r-sm: 10px;
-	--r-md: 16px;
-	--r-lg: 24px;
+	/* --- Radii / shadow ------------------------------------------------------- */
+	--r-sm: 8px;
+	--r-md: 14px;
+	--r-lg: 20px;
 	--r-full: 999px;
-	--shadow-card: 0 20px 50px -24px rgba(0, 0, 0, 0.7);
-	--shadow-glow: 0 0 0 1px rgba(84, 197, 248, 0.2), 0 24px 60px -20px rgba(30, 130, 220, 0.4);
+	/* Docs-style: mostly flat with a hairline border; shadows are small and crisp */
+	--shadow-card: 0 10px 24px -14px rgba(11, 18, 32, 0.16);
+	--shadow-lift: 0 16px 32px -16px rgba(11, 18, 32, 0.22);
 
 	/* --- Motion ------------------------------------------------------------- */
 	--ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -80,7 +88,7 @@
 html {
 	-webkit-text-size-adjust: 100%;
 	scroll-behavior: smooth;
-	scroll-padding-top: calc(var(--header-h) + 12px);
+	scroll-padding-top: calc(var(--header-h) + var(--announce-h) + 16px);
 }
 body {
 	font-family: var(--font-sans);
@@ -118,13 +126,14 @@ h4 {
 	font-weight: 800;
 	letter-spacing: -0.02em;
 	text-wrap: balance;
+	color: var(--ink);
 }
 p {
 	text-wrap: pretty;
 }
 ::selection {
-	background: rgba(84, 197, 248, 0.28);
-	color: #fff;
+	background: rgba(10, 109, 242, 0.18);
+	color: var(--ink);
 }
 :focus-visible {
 	outline: 2px solid var(--accent);
@@ -138,15 +147,15 @@ p {
 	height: 11px;
 }
 ::-webkit-scrollbar-track {
-	background: var(--bg);
+	background: var(--white);
 }
 ::-webkit-scrollbar-thumb {
-	background: #1e2a44;
+	background: #c4d3ea;
 	border-radius: 99px;
-	border: 3px solid var(--bg);
+	border: 3px solid var(--white);
 }
 ::-webkit-scrollbar-thumb:hover {
-	background: #2a3a5c;
+	background: #a9c0e3;
 }
 
 /* --- Layout helpers ------------------------------------------------------- */
@@ -163,6 +172,10 @@ p {
 	padding-block: var(--section-y);
 	position: relative;
 }
+/* Alternate section backgrounds for rhythm, docs.flutter.dev-style */
+.section-tint {
+	background: var(--paper);
+}
 
 /* Section heading kicker — mono "code label" */
 .kicker {
@@ -171,15 +184,16 @@ p {
 	gap: 0.55rem;
 	font-family: var(--font-mono);
 	font-size: var(--fs-kicker);
-	font-weight: 500;
-	letter-spacing: 0.16em;
+	font-weight: 600;
+	letter-spacing: 0.14em;
 	text-transform: uppercase;
 	color: var(--accent);
 }
 .kicker::before {
 	content: '';
 	width: 1.6rem;
-	height: 1px;
+	height: 2px;
+	border-radius: 1px;
 	background: var(--accent);
 }
 
@@ -213,16 +227,17 @@ p {
 	gap: 0.5rem;
 	padding: 0.85rem 1.5rem;
 	border-radius: var(--r-full);
-	font-weight: 600;
+	font-weight: 700;
 	font-size: 0.98rem;
 	letter-spacing: -0.01em;
-	border: 1px solid transparent;
+	border: 1.5px solid transparent;
 	cursor: pointer;
 	transition:
-		transform 0.25s var(--ease),
-		box-shadow 0.25s var(--ease),
-		background 0.25s var(--ease),
-		border-color 0.25s var(--ease);
+		transform 0.2s var(--ease),
+		box-shadow 0.2s var(--ease),
+		background 0.2s var(--ease),
+		border-color 0.2s var(--ease),
+		color 0.2s var(--ease);
 	white-space: nowrap;
 }
 .btn:hover {
@@ -232,22 +247,39 @@ p {
 	transform: translateY(0);
 }
 .btn-primary {
-	background: var(--gradient-brand);
-	color: #06121f;
-	box-shadow: 0 10px 30px -10px var(--glow);
+	background: var(--blue-700);
+	color: var(--white);
+	box-shadow: var(--shadow-card);
 }
 .btn-primary:hover {
-	box-shadow: 0 16px 40px -12px var(--glow);
+	background: var(--blue-900);
+	box-shadow: var(--shadow-lift);
 }
 .btn-ghost {
-	background: var(--surface);
-	color: var(--text);
-	border-color: var(--border);
-	backdrop-filter: blur(8px);
+	background: var(--white);
+	color: var(--accent);
+	border-color: var(--border-strong);
 }
 .btn-ghost:hover {
-	border-color: var(--border-strong);
-	background: var(--card-hover);
+	border-color: var(--accent);
+	background: var(--paper);
+}
+/* Ghost variant for use on top of the hero gradient band */
+.btn-on-gradient {
+	background: var(--white);
+	color: var(--blue-700);
+}
+.btn-on-gradient:hover {
+	background: var(--paper);
+}
+.btn-outline-on-gradient {
+	background: transparent;
+	color: var(--white);
+	border-color: rgba(255, 255, 255, 0.6);
+}
+.btn-outline-on-gradient:hover {
+	background: rgba(255, 255, 255, 0.12);
+	border-color: var(--white);
 }
 
 /* --- Cards ---------------------------------------------------------------- */
@@ -255,7 +287,6 @@ p {
 	background: var(--card);
 	border: 1px solid var(--border);
 	border-radius: var(--r-lg);
-	backdrop-filter: blur(4px);
 }
 
 /* Chip / badge */
@@ -267,19 +298,20 @@ p {
 	border-radius: var(--r-full);
 	font-family: var(--font-mono);
 	font-size: 0.72rem;
-	letter-spacing: 0.05em;
+	font-weight: 600;
+	letter-spacing: 0.04em;
 	border: 1px solid var(--border);
-	background: var(--surface);
+	background: var(--white);
 	color: var(--text-muted);
 }
 
 /* --- Scroll reveal (via `reveal` action) ---------------------------------- */
 .reveal {
 	opacity: 0;
-	transform: translateY(22px);
+	transform: translateY(18px);
 	transition:
-		opacity 0.7s var(--ease),
-		transform 0.7s var(--ease);
+		opacity 0.6s var(--ease),
+		transform 0.6s var(--ease);
 	transition-delay: var(--reveal-delay, 0s);
 	will-change: opacity, transform;
 }
@@ -303,38 +335,20 @@ p {
 	border: 0;
 }
 
-/* --- Keyframes ------------------------------------------------------------ */
-@keyframes float {
-	0%,
-	100% {
-		transform: translateY(0);
-	}
-	50% {
-		transform: translateY(-18px);
-	}
-}
-@keyframes drift {
-	0%,
-	100% {
-		transform: translate(0, 0);
-	}
-	50% {
-		transform: translate(20px, -24px);
-	}
-}
+/* Restrained "live" status pulse — used sparingly for confirmed/active badges */
 @keyframes pulse-ring {
 	0% {
-		box-shadow: 0 0 0 0 rgba(84, 197, 248, 0.5);
+		box-shadow: 0 0 0 0 rgba(5, 83, 177, 0.3);
 	}
 	70% {
-		box-shadow: 0 0 0 12px rgba(84, 197, 248, 0);
+		box-shadow: 0 0 0 8px rgba(5, 83, 177, 0);
 	}
 	100% {
-		box-shadow: 0 0 0 0 rgba(84, 197, 248, 0);
+		box-shadow: 0 0 0 0 rgba(5, 83, 177, 0);
 	}
 }
 
-/* --- Reduced motion ------------------------------------------------------- */
+/* --- Reduced motion --------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
 	html {
 		scroll-behavior: auto;

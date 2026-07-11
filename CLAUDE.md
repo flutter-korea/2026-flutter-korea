@@ -66,20 +66,33 @@ The site is served from a **project subpath** (`/2026-flutter-korea/`), so path 
 
 ## Design system
 
-`src/app.css` defines the whole visual language as CSS custom properties (`--bg`, `--accent`, `--text*`,
-`--gradient-brand`, `--r-*`, `--font-mono`, `--section-y`, `--header-h`, …) plus utility classes (`.container`,
-`.section`, `.kicker`, `.section-title`, `.section-lead`, `.btn`/`.btn-primary`/`.btn-ghost`, `.chip`, `.card`,
-`.gradient-text`, `.reveal`). Components use **scoped `<style>` only** and reuse these tokens rather than
-hardcoding colors, so theme changes are centralized. Sections follow a shared heading pattern
-(`kicker` → `section-title` → `section-lead`) for vertical rhythm.
+The site follows the **official Flutter brand** (docs.flutter.dev / flutter.dev), not a generic dark SaaS
+look: white canvas, hairline-bordered light-blue "paper" cards, near-black headings, and restrained blue accents.
+`src/app.css` defines this as CSS custom properties (`--white`, `--paper`, `--ink`, `--text-muted`, `--accent`
+(`--blue-700`), `--border`, `--r-*`, `--font-mono`, `--section-y`, `--header-h`, `--announce-h`, …) plus utility
+classes (`.container`, `.section`, `.section-tint` (paper background for alternating rhythm), `.kicker`,
+`.section-title`, `.section-lead`, `.btn`/`.btn-primary`/`.btn-ghost`, `.btn-on-gradient`/
+`.btn-outline-on-gradient` (for use on the hero band), `.chip`, `.card`, `.gradient-text`, `.reveal`). Components
+use **scoped `<style>` only** and reuse these tokens rather than hardcoding colors, so theme changes are
+centralized. Sections follow a shared heading pattern (`kicker` → `section-title` → `section-lead`).
 
-The theme is intentionally **flat**: the `--gradient-*` tokens hold *solid* colors (`--gradient-brand` = solid
-button fill, `--gradient-brand-soft` = solid translucent tint, `--gradient-text` = solid heading accent) and
-there are **no CSS `gradient()` functions anywhere** (no blueprint grids, no glow blobs). Keep it that way when
-adding UI — use solids, and `.gradient-text` just sets `color`.
+**The gradient is deliberately contained to one place.** `--gradient-hero` (a diagonal blue→violet, matching
+flutter.dev's marketing device) is used ONLY in `Hero.svelte`'s background and `AnnouncementBar.svelte` — nowhere
+else. Every other surface (buttons, cards, chips, text) is flat/solid. Do not reintroduce glow blobs, blueprint
+grids, or gradient text outside those two components — that reads as generic AI-SaaS, which is exactly what this
+redesign moved away from. `--glow` is a small crisp shadow tint, not a diffuse blur.
+
+Two components carry the site's interactivity signature:
+- `Countdown.svelte` — a live, ticking countdown to the event start (`2026-11-07T11:00:00+09:00`, browser-only,
+  `onMount`/`setInterval`, SSR-safe placeholder `--` before mount). Embedded in the Hero's glass panel.
+- `Header.svelte` — scroll-spy nav via `IntersectionObserver` over the section ids, underlining the active link.
 
 Responsive grids must self-clamp — use `repeat(auto-fit, minmax(min(100%, Npx), 1fr))` so a column can't exceed
 the container and overflow at ~320px (body has `overflow-x: hidden`).
+
+Avoid numbered markers (`01`/`02`/`03`) unless the content is a genuine sequence — e.g. the speaker page's
+3 difficulty levels (real progression) and 11 session categories (mirrors the actual Google Form's own numbering)
+qualify; a pair of named concepts does not.
 
 ## "To be announced" sections
 

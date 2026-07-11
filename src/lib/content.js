@@ -31,6 +31,17 @@ export const dict = {
 			langButtonLabel: 'Switch to English'
 		},
 
+		announce: {
+			text: '연사 모집 중 · 지금 바로 세션을 제안해 보세요'
+		},
+
+		countdown: {
+			label: '행사까지 남은 시간',
+			live: '지금 진행 중입니다',
+			done: '함께해 주셔서 감사합니다',
+			units: { days: '일', hours: '시간', minutes: '분', seconds: '초' }
+		},
+
 		nav: {
 			brand: 'Flutter Korea 2026',
 			links: [
@@ -175,14 +186,6 @@ export const dict = {
 					featured: false,
 					support: true,
 					features: ['전 세션 및 파이어사이드 챗 입장', '개인 후원자 명단 등재']
-				},
-				{
-					name: '초대권',
-					price: 'Invite',
-					isText: true,
-					badge: '별도 배포',
-					featured: false,
-					features: ['후원사 · 파트너', '주요 공헌자', '연사 및 오거나이저']
 				}
 			],
 			platformNote: '예매 플랫폼 · 티켓타코(Tickettaco) — 2026년 8월 오픈 예정 (대관지 확정 후)',
@@ -271,6 +274,17 @@ export const dict = {
 		meta: {
 			langButton: 'KR',
 			langButtonLabel: '한국어로 전환'
+		},
+
+		announce: {
+			text: 'Call for Speakers is open · Propose your session now'
+		},
+
+		countdown: {
+			label: 'Until the event',
+			live: 'Happening right now',
+			done: 'Thanks for being part of it',
+			units: { days: 'Days', hours: 'Hours', minutes: 'Min', seconds: 'Sec' }
 		},
 
 		nav: {
@@ -417,14 +431,6 @@ export const dict = {
 					featured: false,
 					support: true,
 					features: ['All sessions + fireside chat', 'Listed as a personal supporter']
-				},
-				{
-					name: 'Invitation',
-					price: 'Invite',
-					isText: true,
-					badge: 'By invite',
-					featured: false,
-					features: ['Sponsors & partners', 'Key contributors', 'Speakers & organizers']
 				}
 			],
 			platformNote: 'Booking via Tickettaco — opening August 2026 (after the venue is confirmed).',
