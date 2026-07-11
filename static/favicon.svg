@@ -1,0 +1,13 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#54C5F8"/>
+      <stop offset="1" stop-color="#0175C2"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="#0A0E1A"/>
+  <!-- Abstract folded-panel mark evoking forward motion -->
+  <path d="M34 14 L46 14 L26 34 L14 34 Z" fill="url(#g)"/>
+  <path d="M34 30 L46 30 L30 46 L26 42 L34 34 Z" fill="#54C5F8"/>
+  <path d="M26 42 L34 50 L46 50 L34 38 Z" fill="url(#g)"/>
+</svg>

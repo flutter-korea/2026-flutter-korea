@@ -1,0 +1,369 @@
+/* ============================================================================
+   Flutter Korea 2026 — Global design system
+   Theme: "Back to Basics, Move Forward"
+   Dark, engineering-blueprint aesthetic with the Flutter blue→cyan gradient.
+   ========================================================================== */
+
+:root {
+	/* --- Brand palette ------------------------------------------------------ */
+	--flutter-navy: #0175c2;
+	--flutter-blue: #027dfd;
+	--flutter-sky: #54c5f8;
+	--flutter-cyan: #61d4fb;
+
+	/* --- Surfaces ----------------------------------------------------------- */
+	--bg: #0a0e1a;
+	--bg-2: #0b1120;
+	--bg-elevated: #0f1526;
+	--card: rgba(255, 255, 255, 0.025);
+	--card-hover: rgba(255, 255, 255, 0.045);
+	--surface: rgba(255, 255, 255, 0.04);
+	--border: rgba(255, 255, 255, 0.08);
+	--border-strong: rgba(120, 190, 255, 0.28);
+
+	/* --- Text --------------------------------------------------------------- */
+	--text: #e9eefb;
+	--text-muted: #9aa7be;
+	--text-dim: #8592ab; /* AA-contrast (6.1:1 on --bg) for small mono labels */
+
+	/* --- Accents ------------------------------------------------------------ */
+	--accent: var(--flutter-sky);
+	--accent-strong: #2aa9f0;
+	--glow: rgba(84, 197, 248, 0.35);
+	--gradient-brand: linear-gradient(135deg, #54c5f8 0%, #0175c2 100%);
+	--gradient-brand-soft: linear-gradient(135deg, rgba(84, 197, 248, 0.16), rgba(1, 117, 194, 0.16));
+	--gradient-text: linear-gradient(120deg, #ffffff 0%, #cfe8ff 45%, #54c5f8 100%);
+
+	/* --- Typography --------------------------------------------------------- */
+	--font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
+		'Segoe UI', Roboto, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+	--font-mono: 'SFMono-Regular', ui-monospace, 'JetBrains Mono', 'Menlo', 'Consolas', monospace;
+
+	/* Fluid type scale */
+	--fs-kicker: 0.8125rem;
+	--fs-body: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+	--fs-lead: clamp(1.125rem, 1.02rem + 0.5vw, 1.35rem);
+	--fs-h3: clamp(1.25rem, 1.1rem + 0.7vw, 1.6rem);
+	--fs-h2: clamp(1.9rem, 1.4rem + 2.2vw, 3rem);
+	--fs-display: clamp(2.7rem, 1.4rem + 6vw, 6rem);
+
+	/* --- Layout ------------------------------------------------------------- */
+	--container: 1200px;
+	--container-narrow: 860px;
+	--gutter: clamp(1.25rem, 5vw, 3rem);
+	--section-y: clamp(4.5rem, 10vw, 9rem);
+	--header-h: 68px;
+
+	/* --- Radii / shadow ----------------------------------------------------- */
+	--r-sm: 10px;
+	--r-md: 16px;
+	--r-lg: 24px;
+	--r-full: 999px;
+	--shadow-card: 0 20px 50px -24px rgba(0, 0, 0, 0.7);
+	--shadow-glow: 0 0 0 1px rgba(84, 197, 248, 0.2), 0 24px 60px -20px rgba(30, 130, 220, 0.4);
+
+	/* --- Motion ------------------------------------------------------------- */
+	--ease: cubic-bezier(0.22, 1, 0.36, 1);
+	--dur: 0.6s;
+}
+
+/* --- Reset ---------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+* {
+	margin: 0;
+}
+html {
+	-webkit-text-size-adjust: 100%;
+	scroll-behavior: smooth;
+	scroll-padding-top: calc(var(--header-h) + 12px);
+}
+body {
+	font-family: var(--font-sans);
+	font-size: var(--fs-body);
+	line-height: 1.65;
+	color: var(--text);
+	background-color: var(--bg);
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	font-feature-settings: 'ss01', 'cv01';
+	overflow-x: hidden;
+	min-height: 100vh;
+	/* Ambient background: layered radial glows + faint blueprint grid */
+	background-image:
+		radial-gradient(60rem 40rem at 78% -8%, rgba(2, 125, 253, 0.12), transparent 60%),
+		radial-gradient(48rem 36rem at 8% 12%, rgba(84, 197, 248, 0.08), transparent 55%),
+		linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+	background-attachment: fixed;
+}
+img,
+svg,
+picture {
+	display: block;
+	max-width: 100%;
+}
+a {
+	color: inherit;
+	text-decoration: none;
+}
+button,
+input,
+select {
+	font: inherit;
+	color: inherit;
+}
+h1,
+h2,
+h3,
+h4 {
+	line-height: 1.14;
+	font-weight: 800;
+	letter-spacing: -0.02em;
+	text-wrap: balance;
+}
+p {
+	text-wrap: pretty;
+}
+::selection {
+	background: rgba(84, 197, 248, 0.28);
+	color: #fff;
+}
+:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 3px;
+	border-radius: 4px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+	width: 11px;
+	height: 11px;
+}
+::-webkit-scrollbar-track {
+	background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+	background: #1e2a44;
+	border-radius: 99px;
+	border: 3px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover {
+	background: #2a3a5c;
+}
+
+/* --- Layout helpers ------------------------------------------------------- */
+.container {
+	width: 100%;
+	max-width: var(--container);
+	margin-inline: auto;
+	padding-inline: var(--gutter);
+}
+.container-narrow {
+	max-width: var(--container-narrow);
+}
+.section {
+	padding-block: var(--section-y);
+	position: relative;
+}
+
+/* Section heading kicker — mono "code label" */
+.kicker {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.55rem;
+	font-family: var(--font-mono);
+	font-size: var(--fs-kicker);
+	font-weight: 500;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+.kicker::before {
+	content: '';
+	width: 1.6rem;
+	height: 1px;
+	background: linear-gradient(90deg, var(--accent), transparent);
+}
+
+.section-title {
+	font-size: var(--fs-h2);
+	margin-top: 0.9rem;
+}
+.section-lead {
+	color: var(--text-muted);
+	font-size: var(--fs-lead);
+	max-width: 46ch;
+	margin-top: 1.1rem;
+}
+
+.gradient-text {
+	background: var(--gradient-text);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+
+.eyebrow-num {
+	font-family: var(--font-mono);
+	color: var(--text-dim);
+	font-size: 0.8rem;
+	letter-spacing: 0.1em;
+}
+
+/* --- Buttons -------------------------------------------------------------- */
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	padding: 0.85rem 1.5rem;
+	border-radius: var(--r-full);
+	font-weight: 600;
+	font-size: 0.98rem;
+	letter-spacing: -0.01em;
+	border: 1px solid transparent;
+	cursor: pointer;
+	transition:
+		transform 0.25s var(--ease),
+		box-shadow 0.25s var(--ease),
+		background 0.25s var(--ease),
+		border-color 0.25s var(--ease);
+	white-space: nowrap;
+}
+.btn:hover {
+	transform: translateY(-2px);
+}
+.btn:active {
+	transform: translateY(0);
+}
+.btn-primary {
+	background: var(--gradient-brand);
+	color: #06121f;
+	box-shadow: 0 10px 30px -10px var(--glow);
+}
+.btn-primary:hover {
+	box-shadow: 0 16px 40px -12px var(--glow);
+}
+.btn-ghost {
+	background: var(--surface);
+	color: var(--text);
+	border-color: var(--border);
+	backdrop-filter: blur(8px);
+}
+.btn-ghost:hover {
+	border-color: var(--border-strong);
+	background: var(--card-hover);
+}
+
+/* --- Cards ---------------------------------------------------------------- */
+.card {
+	background: var(--card);
+	border: 1px solid var(--border);
+	border-radius: var(--r-lg);
+	backdrop-filter: blur(4px);
+}
+
+/* Chip / badge */
+.chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	padding: 0.3rem 0.7rem;
+	border-radius: var(--r-full);
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+	letter-spacing: 0.05em;
+	border: 1px solid var(--border);
+	background: var(--surface);
+	color: var(--text-muted);
+}
+
+/* --- Scroll reveal (via `reveal` action) ---------------------------------- */
+.reveal {
+	opacity: 0;
+	transform: translateY(22px);
+	transition:
+		opacity 0.7s var(--ease),
+		transform 0.7s var(--ease);
+	transition-delay: var(--reveal-delay, 0s);
+	will-change: opacity, transform;
+}
+.reveal.is-visible {
+	opacity: 1;
+	transform: none;
+}
+.no-js .reveal {
+	opacity: 1;
+	transform: none;
+}
+
+.visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* --- Keyframes ------------------------------------------------------------ */
+@keyframes float {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-18px);
+	}
+}
+@keyframes drift {
+	0%,
+	100% {
+		transform: translate(0, 0);
+	}
+	50% {
+		transform: translate(20px, -24px);
+	}
+}
+@keyframes gradient-pan {
+	0% {
+		background-position: 0% 50%;
+	}
+	100% {
+		background-position: 200% 50%;
+	}
+}
+@keyframes pulse-ring {
+	0% {
+		box-shadow: 0 0 0 0 rgba(84, 197, 248, 0.5);
+	}
+	70% {
+		box-shadow: 0 0 0 12px rgba(84, 197, 248, 0);
+	}
+	100% {
+		box-shadow: 0 0 0 0 rgba(84, 197, 248, 0);
+	}
+}
+
+/* --- Reduced motion ------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.001ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.001ms !important;
+	}
+	.reveal {
+		opacity: 1;
+		transform: none;
+	}
+}
