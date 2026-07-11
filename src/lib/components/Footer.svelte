@@ -50,8 +50,27 @@
 						<a href={`${base}/#tickets`}>{$t.tickets.title}</a>
 					</li>
 					<li>
-						<a href={links.flutterSeoul} target="_blank" rel="noopener noreferrer" class="ext">
-							<span>Flutter Seoul</span>
+						<a href={links.meetup} target="_blank" rel="noopener noreferrer" class="ext">
+							<span>Meetup</span>
+							<svg
+								viewBox="0 0 24 24"
+								width="0.85em"
+								height="0.85em"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="1.8"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								aria-hidden="true"
+							>
+								<path d="M7 17 17 7" />
+								<path d="M8 7h9v9" />
+							</svg>
+						</a>
+					</li>
+					<li>
+						<a href={links.discord} target="_blank" rel="noopener noreferrer" class="ext">
+							<span>Discord</span>
 							<svg
 								viewBox="0 0 24 24"
 								width="0.85em"

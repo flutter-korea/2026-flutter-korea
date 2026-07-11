@@ -10,8 +10,9 @@ export const links = {
 	// Call for Speakers — session proposal Google Form
 	cfp: 'https://forms.gle/PGG9Kvd7Z7xkVPs3A',
 	tickettaco: 'https://tickettaco.io',
-	flutterSeoul: 'https://www.meetup.com/flutter-seoul/',
-	email: 'mailto:hello@flutterseoul.dev'
+	meetup: 'https://www.meetup.com/ko-kr/flutter-korea/',
+	discord: 'https://flutter-seoul.com',
+	email: 'mailto:flutter-seoul@googlegroups.com'
 };
 
 /** Internal route paths (prefix with `base` from $app/paths in components). */
