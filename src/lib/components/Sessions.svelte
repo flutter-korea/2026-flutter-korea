@@ -54,9 +54,7 @@
 		padding: clamp(1.75rem, 4vw, 2.75rem);
 		border-radius: var(--r-lg);
 		border: 1px solid var(--border-strong);
-		background:
-			radial-gradient(120% 140% at 100% 0%, rgba(2, 125, 253, 0.14), transparent 55%),
-			var(--gradient-brand-soft);
+		background: var(--gradient-brand-soft);
 		overflow: hidden;
 	}
 	.fs-head {

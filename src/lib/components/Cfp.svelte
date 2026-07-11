@@ -7,7 +7,6 @@
 <section id="speakers" class="section">
 	<div class="container">
 		<div class="panel reveal" use:reveal>
-			<div class="panel-glow" aria-hidden="true"></div>
 			<div class="panel-inner">
 				<!-- Left: copy -->
 				<div class="copy">
@@ -85,18 +84,6 @@
 		box-shadow: var(--shadow-card);
 		overflow: hidden;
 		isolation: isolate;
-	}
-
-	/* Ambient gradient bloom bleeding from the corners */
-	.panel-glow {
-		position: absolute;
-		inset: -30% -10% auto auto;
-		width: 40rem;
-		height: 40rem;
-		background: radial-gradient(closest-side, var(--glow), transparent 70%);
-		opacity: 0.7;
-		z-index: -1;
-		pointer-events: none;
 	}
 
 	.panel-inner {

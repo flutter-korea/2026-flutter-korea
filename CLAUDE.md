@@ -73,6 +73,11 @@ The site is served from a **project subpath** (`/2026-flutter-korea/`), so path 
 hardcoding colors, so theme changes are centralized. Sections follow a shared heading pattern
 (`kicker` → `section-title` → `section-lead`) for vertical rhythm.
 
+The theme is intentionally **flat**: the `--gradient-*` tokens hold *solid* colors (`--gradient-brand` = solid
+button fill, `--gradient-brand-soft` = solid translucent tint, `--gradient-text` = solid heading accent) and
+there are **no CSS `gradient()` functions anywhere** (no blueprint grids, no glow blobs). Keep it that way when
+adding UI — use solids, and `.gradient-text` just sets `color`.
+
 Responsive grids must self-clamp — use `repeat(auto-fit, minmax(min(100%, Npx), 1fr))` so a column can't exceed
 the container and overflow at ~320px (body has `overflow-x: hidden`).
 

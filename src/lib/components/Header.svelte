@@ -205,10 +205,7 @@
 	}
 	.brand-text {
 		font-size: 0.98rem;
-		background: var(--gradient-text);
-		-webkit-background-clip: text;
-		background-clip: text;
-		color: transparent;
+		color: var(--text);
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}

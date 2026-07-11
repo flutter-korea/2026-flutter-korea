@@ -13,14 +13,6 @@
 </script>
 
 <section id="top" class="hero" class:entered>
-	<!-- Decorative background: soft animated blobs + faint blueprint grid. -->
-	<div class="backdrop" aria-hidden="true">
-		<span class="grid"></span>
-		<span class="blob blob-a"></span>
-		<span class="blob blob-b"></span>
-		<span class="blob blob-c"></span>
-	</div>
-
 	<div class="container inner">
 		<span class="chip badge stagger" style="--i: 0">
 			<span class="dot" aria-hidden="true"></span>
@@ -110,69 +102,6 @@
 		padding-bottom: clamp(4rem, 10vh, 7rem);
 		overflow: hidden;
 		isolation: isolate;
-	}
-
-	/* --- Decorative backdrop ------------------------------------------------ */
-	.backdrop {
-		position: absolute;
-		inset: 0;
-		z-index: -1;
-		pointer-events: none;
-		overflow: hidden;
-	}
-
-	.grid {
-		position: absolute;
-		inset: -2px;
-		background-image:
-			repeating-linear-gradient(
-				to right,
-				var(--border) 0 1px,
-				transparent 1px 88px
-			),
-			repeating-linear-gradient(
-				to bottom,
-				var(--border) 0 1px,
-				transparent 1px 88px
-			);
-		/* Fade the grid toward the edges so it stays subtle. */
-		-webkit-mask-image: radial-gradient(120% 90% at 50% 30%, #000 0%, transparent 78%);
-		mask-image: radial-gradient(120% 90% at 50% 30%, #000 0%, transparent 78%);
-		opacity: 0.55;
-	}
-
-	.blob {
-		position: absolute;
-		border-radius: 50%;
-		filter: blur(70px);
-		opacity: 0.5;
-	}
-	.blob-a {
-		width: 34rem;
-		height: 34rem;
-		top: -10rem;
-		right: -8rem;
-		background: radial-gradient(circle, var(--flutter-blue), transparent 66%);
-		opacity: 0.32;
-		animation: drift 18s var(--ease) infinite;
-	}
-	.blob-b {
-		width: 26rem;
-		height: 26rem;
-		bottom: -9rem;
-		left: -7rem;
-		background: radial-gradient(circle, var(--flutter-sky), transparent 66%);
-		opacity: 0.24;
-		animation: float 14s var(--ease) infinite;
-	}
-	.blob-c {
-		width: 20rem;
-		height: 20rem;
-		top: 34%;
-		left: 46%;
-		background: radial-gradient(circle, var(--flutter-cyan), transparent 68%);
-		opacity: 0.14;
-		animation: drift 22s var(--ease) infinite reverse;
 	}
 
 	/* --- Foreground --------------------------------------------------------- */

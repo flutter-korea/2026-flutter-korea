@@ -30,9 +30,10 @@
 	--accent: var(--flutter-sky);
 	--accent-strong: #2aa9f0;
 	--glow: rgba(84, 197, 248, 0.35);
-	--gradient-brand: linear-gradient(135deg, #54c5f8 0%, #0175c2 100%);
-	--gradient-brand-soft: linear-gradient(135deg, rgba(84, 197, 248, 0.16), rgba(1, 117, 194, 0.16));
-	--gradient-text: linear-gradient(120deg, #ffffff 0%, #cfe8ff 45%, #54c5f8 100%);
+	/* Flat theme: solid brand fill, subtle solid tint, solid heading accent */
+	--gradient-brand: #29a3ef;
+	--gradient-brand-soft: rgba(84, 197, 248, 0.09);
+	--gradient-text: #9fd8ff;
 
 	/* --- Typography --------------------------------------------------------- */
 	--font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
@@ -92,12 +93,6 @@ body {
 	font-feature-settings: 'ss01', 'cv01';
 	overflow-x: hidden;
 	min-height: 100vh;
-	/* Ambient background: layered radial glows + faint blueprint grid */
-	background-image:
-		radial-gradient(60rem 40rem at 78% -8%, rgba(2, 125, 253, 0.12), transparent 60%),
-		radial-gradient(48rem 36rem at 8% 12%, rgba(84, 197, 248, 0.08), transparent 55%),
-		linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
-	background-attachment: fixed;
 }
 img,
 svg,
@@ -185,7 +180,7 @@ p {
 	content: '';
 	width: 1.6rem;
 	height: 1px;
-	background: linear-gradient(90deg, var(--accent), transparent);
+	background: var(--accent);
 }
 
 .section-title {
@@ -200,10 +195,7 @@ p {
 }
 
 .gradient-text {
-	background: var(--gradient-text);
-	-webkit-background-clip: text;
-	background-clip: text;
-	color: transparent;
+	color: var(--gradient-text);
 }
 
 .eyebrow-num {
@@ -328,14 +320,6 @@ p {
 	}
 	50% {
 		transform: translate(20px, -24px);
-	}
-}
-@keyframes gradient-pan {
-	0% {
-		background-position: 0% 50%;
-	}
-	100% {
-		background-position: 200% 50%;
 	}
 }
 @keyframes pulse-ring {

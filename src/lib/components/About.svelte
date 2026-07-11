@@ -148,31 +148,9 @@
 		transform: scaleX(1);
 	}
 
-	/* Blueprint grid motif — leans in on card 1, gradient wash on card 2 */
+	/* Decorative grid removed for a flat look */
 	.compass-grid {
-		position: absolute;
-		inset: 0;
-		pointer-events: none;
-		background-image:
-			linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-			linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-		background-size: 28px 28px;
-		-webkit-mask-image: radial-gradient(120% 90% at 100% 0%, #000 0%, transparent 62%);
-		mask-image: radial-gradient(120% 90% at 100% 0%, #000 0%, transparent 62%);
-		opacity: 0.7;
-		transition: opacity 0.3s var(--ease);
-	}
-	.compass:hover .compass-grid {
-		opacity: 1;
-	}
-	/* Card 2 (Move Forward): swap blueprint grid for a forward-motion gradient glow */
-	.compass.forward .compass-grid {
-		background-image: none;
-		background: radial-gradient(80% 100% at 100% 0%, var(--glow), transparent 60%);
-		opacity: 0.4;
-	}
-	.compass.forward:hover .compass-grid {
-		opacity: 0.7;
+		display: none;
 	}
 
 	.compass-top {

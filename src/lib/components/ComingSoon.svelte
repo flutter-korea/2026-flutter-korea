@@ -50,21 +50,8 @@
 		padding: clamp(2.5rem, 6vw, 4rem) clamp(1.25rem, 5vw, 3rem);
 		border: 1px dashed var(--border-strong);
 		border-radius: var(--r-lg);
-		background:
-			radial-gradient(80% 120% at 50% 0%, rgba(84, 197, 248, 0.07), transparent 70%),
-			var(--card);
+		background: var(--card);
 		overflow: hidden;
-	}
-	.coming-soon::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background-image:
-			linear-gradient(rgba(120, 190, 255, 0.05) 1px, transparent 1px),
-			linear-gradient(90deg, rgba(120, 190, 255, 0.05) 1px, transparent 1px);
-		background-size: 28px 28px;
-		mask-image: radial-gradient(70% 70% at 50% 40%, #000, transparent 75%);
-		pointer-events: none;
 	}
 	.coming-soon > * {
 		position: relative;

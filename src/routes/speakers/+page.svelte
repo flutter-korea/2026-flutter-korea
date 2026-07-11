@@ -13,12 +13,6 @@
 </svelte:head>
 
 <article class="speaker-page">
-	<!-- Ambient backdrop -->
-	<div class="backdrop" aria-hidden="true">
-		<span class="blob"></span>
-		<span class="grid"></span>
-	</div>
-
 	<div class="container">
 		<a class="back" href={`${base}/#top`}>
 			<svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -128,32 +122,6 @@
 		overflow: hidden;
 	}
 
-	.backdrop {
-		position: absolute;
-		inset: 0;
-		z-index: -1;
-		pointer-events: none;
-	}
-	.backdrop .blob {
-		position: absolute;
-		top: -8rem;
-		right: -6rem;
-		width: 34rem;
-		height: 34rem;
-		border-radius: 50%;
-		background: radial-gradient(closest-side, rgba(2, 125, 253, 0.16), transparent 70%);
-		filter: blur(10px);
-	}
-	.backdrop .grid {
-		position: absolute;
-		inset: 0;
-		background-image:
-			linear-gradient(rgba(120, 190, 255, 0.04) 1px, transparent 1px),
-			linear-gradient(90deg, rgba(120, 190, 255, 0.04) 1px, transparent 1px);
-		background-size: 46px 46px;
-		mask-image: radial-gradient(80% 55% at 60% 0%, #000, transparent 75%);
-	}
-
 	.back {
 		display: inline-flex;
 		align-items: center;
@@ -179,10 +147,7 @@
 	.sp-title {
 		margin-top: 0.9rem;
 		font-size: var(--fs-h2);
-		background: var(--gradient-text);
-		-webkit-background-clip: text;
-		background-clip: text;
-		color: transparent;
+		color: var(--gradient-text);
 	}
 	.sp-intro {
 		margin-top: 1.25rem;
@@ -369,9 +334,7 @@
 		padding: clamp(2.5rem, 6vw, 4rem) clamp(1.25rem, 5vw, 3rem);
 		border-radius: var(--r-lg);
 		border: 1px solid var(--border-strong);
-		background:
-			radial-gradient(80% 120% at 50% 0%, rgba(84, 197, 248, 0.1), transparent 70%),
-			var(--bg-elevated);
+		background: var(--bg-elevated);
 	}
 	.final-title {
 		font-size: var(--fs-h3);

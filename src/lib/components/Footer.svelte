@@ -158,10 +158,7 @@
 		font-weight: 700;
 		font-size: 1.05rem;
 		letter-spacing: -0.01em;
-		background: var(--gradient-text);
-		-webkit-background-clip: text;
-		background-clip: text;
-		color: transparent;
+		color: var(--text);
 	}
 	.tagline {
 		margin-top: 1.1rem;
