@@ -169,6 +169,14 @@ export const dict = {
 					features: ['전 세션 및 파이어사이드 챗 입장', '점심 및 네트워킹', '후원사 부스 참여']
 				},
 				{
+					name: 'Flutter Lover',
+					price: '80,000',
+					badge: '개인 후원',
+					featured: false,
+					support: true,
+					features: ['전 세션 및 파이어사이드 챗 입장', '개인 후원자 명단 등재']
+				},
+				{
 					name: '초대권',
 					price: 'Invite',
 					isText: true,
@@ -401,6 +409,14 @@ export const dict = {
 					badge: 'Final price',
 					featured: false,
 					features: ['All sessions + fireside chat', 'Lunch & networking', 'Sponsor booth access']
+				},
+				{
+					name: 'Flutter Lover',
+					price: '80,000',
+					badge: 'Personal Supporter',
+					featured: false,
+					support: true,
+					features: ['All sessions + fireside chat', 'Listed as a personal supporter']
 				},
 				{
 					name: 'Invitation',

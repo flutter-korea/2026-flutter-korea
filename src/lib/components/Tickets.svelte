@@ -20,6 +20,7 @@
 				<li
 					class="tier card reveal"
 					class:is-featured={tier.featured}
+					class:is-support={tier.support}
 					use:reveal={{ delay: 80 + i * 80 }}
 				>
 					{#if tier.featured}
@@ -39,6 +40,14 @@
 								/>
 							</svg>
 						</span>
+					{:else if tier.support}
+						<span class="ribbon ribbon-heart" aria-hidden="true">
+							<svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+								<path
+									d="M12 20.3l-1.45-1.32C5.4 14.24 2 11.16 2 7.5 2 4.42 4.42 2 7.5 2c1.74 0 3.41.81 4.5 2.09C13.09 2.81 14.76 2 16.5 2 19.58 2 22 4.42 22 7.5c0 3.66-3.4 6.74-8.55 11.49L12 20.3z"
+								/>
+							</svg>
+						</span>
 					{/if}
 
 					<div class="tier-head">
@@ -51,7 +60,7 @@
 							<span class="price-text">{tier.price}</span>
 						{:else}
 							<span class="price-currency">{$t.tickets.currency}</span>
-							<span class="price-num" class:gradient-text={tier.featured}>{tier.price}</span>
+							<span class="price-num" class:gradient-text={tier.featured || tier.support}>{tier.price}</span>
 						{/if}
 					</div>
 
@@ -147,7 +156,7 @@
 		padding: 0;
 		margin-top: clamp(2.5rem, 5vw, 3.5rem);
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
 		gap: clamp(1rem, 2.4vw, 1.5rem);
 		align-items: stretch;
 	}
@@ -186,6 +195,11 @@
 		box-shadow: var(--shadow-glow), var(--shadow-card);
 	}
 
+	/* Personal supporter (Flutter Lover) — subtle accent, no glow */
+	.tier.is-support {
+		border-color: var(--border-strong);
+	}
+
 	/* Star ribbon on featured card */
 	.ribbon {
 		position: absolute;
@@ -205,6 +219,12 @@
 	}
 	.ribbon svg {
 		flex: none;
+	}
+	.ribbon-heart {
+		background: var(--surface);
+		color: var(--accent);
+		border: 1px solid var(--border-strong);
+		box-shadow: none;
 	}
 
 	.tier-head {
