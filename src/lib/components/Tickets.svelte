@@ -160,6 +160,8 @@
 	.tier {
 		position: relative;
 		overflow: hidden;
+		/* Query container so the price digits scale with the card itself. */
+		container-type: inline-size;
 		display: flex;
 		flex-direction: column;
 		gap: 1.4rem;
@@ -255,7 +257,10 @@
 
 	.price-num {
 		font-weight: 800;
-		font-size: clamp(2.6rem, 2rem + 2.8vw, 3.6rem);
+		/* Sized against the card's own width (cqi), not the viewport, so
+		   "80,000" can never outgrow the card's right padding regardless of
+		   how many grid columns are showing. */
+		font-size: clamp(2rem, 22cqi, 3.6rem);
 		letter-spacing: -0.03em;
 	}
 
