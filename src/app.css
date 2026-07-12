@@ -88,7 +88,9 @@
 html {
 	-webkit-text-size-adjust: 100%;
 	scroll-behavior: smooth;
-	scroll-padding-top: calc(var(--header-h) + var(--announce-h) + 16px);
+	/* Anchor targets clear only the pinned header — the announcement bar has
+	   scrolled away by the time any anchor jump lands. */
+	scroll-padding-top: calc(var(--header-h) + 16px);
 }
 body {
 	font-family: var(--font-sans);
@@ -96,6 +98,10 @@ body {
 	line-height: 1.65;
 	color: var(--text);
 	background-color: var(--bg);
+	/* The announcement bar and header are position:fixed (they slide in/out
+	   on scroll); reserve their combined height so content doesn't start
+	   underneath them. */
+	padding-top: calc(var(--announce-h) + var(--header-h));
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;
 	font-feature-settings: 'ss01', 'cv01';

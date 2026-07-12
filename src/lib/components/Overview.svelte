@@ -35,8 +35,20 @@
 		padding: 0;
 		margin-top: clamp(2.5rem, 5vw, 3.5rem);
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+		/* 1 → 2 → 4 columns only: with 4 cards, a 3-column state would strand
+		   the last card alone on a second row. */
+		grid-template-columns: 1fr;
 		gap: clamp(1rem, 2.4vw, 1.5rem);
+	}
+	@media (min-width: 640px) {
+		.stats {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+	@media (min-width: 1024px) {
+		.stats {
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+		}
 	}
 
 	.stat {
@@ -53,14 +65,19 @@
 			box-shadow 0.3s var(--ease);
 	}
 
-	/* Thin gradient accent line across the top of each card */
+	/* Gradient accent line on hover along the top edge — same treatment as
+	   the About section's compass cards. */
 	.stat-accent {
 		position: absolute;
 		inset: 0 0 auto 0;
 		height: 2px;
 		background: var(--gradient-brand);
-		opacity: 0.65;
-		transition: opacity 0.3s var(--ease);
+		opacity: 0;
+		transform: scaleX(0.35);
+		transform-origin: left;
+		transition:
+			opacity 0.3s var(--ease),
+			transform 0.4s var(--ease);
 	}
 
 	.stat:hover {
@@ -71,6 +88,7 @@
 	}
 	.stat:hover .stat-accent {
 		opacity: 1;
+		transform: scaleX(1);
 	}
 
 	.stat-label {

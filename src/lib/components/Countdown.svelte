@@ -94,6 +94,9 @@
 		color: rgba(255, 255, 255, 0.72);
 	}
 	.cd-grid {
+		/* Digits and colons share one size + baseline, so they render exactly
+		   like a single line of mono text — no optical nudging needed. */
+		--cd-num-size: clamp(1.7rem, 1.3rem + 1.6vw, 2.6rem);
 		display: flex;
 		align-items: baseline;
 		gap: 0.55rem;
@@ -108,7 +111,7 @@
 		font-family: var(--font-mono);
 		font-variant-numeric: tabular-nums;
 		font-weight: 700;
-		font-size: clamp(1.7rem, 1.3rem + 1.6vw, 2.6rem);
+		font-size: var(--cd-num-size);
 		color: var(--white);
 		line-height: 1;
 	}
@@ -121,9 +124,9 @@
 	.cd-colon {
 		font-family: var(--font-mono);
 		font-weight: 700;
-		font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
+		font-size: var(--cd-num-size);
+		line-height: 1;
 		color: rgba(255, 255, 255, 0.4);
-		transform: translateY(-0.6em);
 	}
 	.cd-status {
 		display: inline-flex;

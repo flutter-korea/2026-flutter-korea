@@ -94,6 +94,10 @@
 <style>
 	.hero {
 		position: relative;
+		/* "#top" jumps (logo, footer back-to-top) must land at scrollY 0 — not
+		   at the scroll-padding offset — so the announcement bar re-expands.
+		   Offsetting by the fixed chrome height clamps the jump to 0. */
+		scroll-margin-top: calc(var(--announce-h) + var(--header-h));
 		display: flex;
 		align-items: center;
 		min-height: 640px;

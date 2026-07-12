@@ -4,9 +4,11 @@
 	// "X is here!" banner but carrying real event status instead.
 	import { t } from '$lib/i18n.js';
 	import { base } from '$app/paths';
+
+	let { collapsed = false } = $props();
 </script>
 
-<div class="announce">
+<div class="announce" class:collapsed>
 	<a class="announce-link" href={`${base}/speakers`}>
 		<span class="dot" aria-hidden="true"></span>
 		<span class="msg">{$t.announce.text}</span>
@@ -16,11 +18,39 @@
 
 <style>
 	.announce {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 100;
 		height: var(--announce-h);
 		background: var(--gradient-hero);
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		/* Animates `top` (not transform) so it moves in lockstep with the
+		   header's `top` transition — same mechanism, no seam between bars. */
+		transition: top 0.35s var(--ease);
+	}
+	.announce.collapsed {
+		top: calc(-1 * var(--announce-h));
+	}
+	/* Overscroll (rubber-band) cover: extends the banner's gradient above the
+	   viewport so pulling past the top stretches the banner instead of
+	   revealing a white strip. */
+	.announce::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 100%;
+		height: 40vh;
+		background: var(--gradient-hero);
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.announce {
+			transition: none;
+		}
 	}
 	.announce-link {
 		display: inline-flex;

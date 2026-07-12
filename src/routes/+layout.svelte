@@ -10,6 +10,12 @@
 
 	const STORAGE_KEY = 'fk26-lang';
 
+	// At scroll 0 the announcement bar slides down and pushes the header below
+	// it; on any scroll the bar slides out and the header pins to the viewport
+	// top (both animate their `top` in AnnouncementBar/Header, driven by this
+	// one flag).
+	let collapsed = $state(false);
+
 	onMount(() => {
 		// Restore the visitor's saved language after hydration.
 		try {
@@ -19,8 +25,14 @@
 			/* ignore private-mode storage errors */
 		}
 
+		const onScroll = () => {
+			collapsed = window.scrollY > 0;
+		};
+		onScroll();
+		window.addEventListener('scroll', onScroll, { passive: true });
+
 		// Persist + keep <html lang> in sync.
-		return lang.subscribe((v) => {
+		const unsubLang = lang.subscribe((v) => {
 			document.documentElement.lang = v;
 			try {
 				localStorage.setItem(STORAGE_KEY, v);
@@ -28,13 +40,18 @@
 				/* ignore */
 			}
 		});
+
+		return () => {
+			window.removeEventListener('scroll', onScroll);
+			unsubLang();
+		};
 	});
 </script>
 
 <a class="skip-link" href="#main">Skip to content</a>
 
-<AnnouncementBar />
-<Header />
+<AnnouncementBar {collapsed} />
+<Header {collapsed} />
 
 <main id="main">
 	{@render children()}
