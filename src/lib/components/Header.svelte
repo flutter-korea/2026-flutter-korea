@@ -4,7 +4,8 @@
 	import { page } from '$app/state';
 	import { onMount } from 'svelte';
 
-	let scrolled = $state(false);
+	let { collapsed = false } = $props();
+
 	let open = $state(false);
 	let activeId = $state('');
 
@@ -36,11 +37,6 @@
 	});
 
 	onMount(() => {
-		const onScroll = () => {
-			scrolled = window.scrollY > 8;
-		};
-		onScroll();
-		window.addEventListener('scroll', onScroll, { passive: true });
 		window.addEventListener('keydown', onKeydown);
 
 		// Scroll-spy: highlight the nav link for the section currently in view.
@@ -63,14 +59,13 @@
 		}
 
 		return () => {
-			window.removeEventListener('scroll', onScroll);
 			window.removeEventListener('keydown', onKeydown);
 			observer?.disconnect();
 		};
 	});
 </script>
 
-<header class="site-header" class:scrolled data-open={open}>
+<header class="site-header" class:collapsed data-open={open}>
 	<div class="bar container">
 		<!-- Brand -->
 		<a class="brand" href={`${base}/#top`} onclick={closeMenu} aria-label={$t.nav.brand}>
@@ -175,18 +170,33 @@
 
 <style>
 	.site-header {
-		position: sticky;
+		/* Fixed (like the announcement bar) so it can pin to the viewport top
+		   on any scroll — sticky could never rise above its flow position.
+		   Both bars animate `top` together (same duration/easing), so the
+		   header lands flush at the top with no seam. body reserves the
+		   combined height via padding-top. */
+		position: fixed;
 		top: var(--announce-h);
+		left: 0;
+		right: 0;
 		z-index: 100;
 		height: var(--header-h);
 		display: flex;
 		align-items: center;
 		background: var(--white);
 		border-bottom: 1px solid var(--border);
-		transition: box-shadow 0.2s var(--ease);
+		transition:
+			box-shadow 0.2s var(--ease),
+			top 0.35s var(--ease);
 	}
-	.site-header.scrolled {
+	.site-header.collapsed {
+		top: 0;
 		box-shadow: 0 4px 16px -12px rgba(11, 18, 32, 0.25);
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.site-header {
+			transition: box-shadow 0.2s var(--ease);
+		}
 	}
 
 	.bar {
