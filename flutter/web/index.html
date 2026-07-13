@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a3f96">
+
+  <!-- Primary meta -->
+  <title>Flutter Korea 2026 — Back to Basics, Move Forward</title>
+  <meta
+    name="description"
+    content="Flutter Korea 2026 · 2026.11.07 SAT · 기술의 본질로 돌아가, 두려움 없이 미래를 정의하다. Flutter Seoul이 주최하는 국내 최대 규모의 Flutter 커뮤니티 컨퍼런스."
+  >
+  <meta name="author" content="Flutter Seoul">
+
+  <!-- Open Graph (absolute URLs — social crawlers don't resolve relative paths or SVG) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Flutter Korea 2026">
+  <meta property="og:title" content="Flutter Korea 2026 — Back to Basics, Move Forward">
+  <meta
+    property="og:description"
+    content="2026.11.07 SAT · 기술의 본질로 돌아가, 두려움 없이 미래를 정의하다. Flutter Seoul 주최 컨퍼런스."
+  >
+  <meta property="og:url" content="https://flutter-korea.github.io/2026-flutter-korea/">
+  <meta property="og:image" content="https://flutter-korea.github.io/2026-flutter-korea/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:locale:alternate" content="en_US">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Flutter Korea 2026 — Back to Basics, Move Forward">
+  <meta
+    name="twitter:description"
+    content="2026.11.07 SAT · Flutter Seoul이 주최하는 Flutter 커뮤니티 컨퍼런스."
+  >
+  <meta name="twitter:image" content="https://flutter-korea.github.io/2026-flutter-korea/og-image.png">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Flutter Korea 2026">
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <link rel="manifest" href="manifest.json">
+
+  <script>
+    // Framework switch (counterpart of the script in the SvelteKit app.html):
+    // this Flutter build is deployed under <base>/flutter/ next to the
+    // SvelteKit site, which is the default. `?mode=svelte` / `?mode=sveltekit`
+    // explicitly selects it, so redirect back up one level; `#/speakers` maps
+    // to the SvelteKit /speakers/ route. Only acts in the composed deploy
+    // (pathname ends in /flutter/).
+    (function () {
+      var mode = (new URLSearchParams(location.search).get('mode') || '').toLowerCase();
+      if (mode !== 'svelte' && mode !== 'sveltekit') return;
+      // Trailing slash required — servers redirect /flutter → /flutter/ with
+      // the query intact, and '../' resolves correctly only from the slash form.
+      if (!/\/flutter\/$/.test(location.pathname)) return;
+      var target = location.hash.indexOf('#/speakers') === 0 ? '../speakers/' : '../';
+      location.replace(new URL(target, location.href.split('#')[0]));
+    })();
+  </script>
+
+  <style>
+    /* Splash backdrop while the Flutter engine boots — matches the hero band. */
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: linear-gradient(115deg, #0a3f96 0%, #0a6df2 48%, #7c4dff 100%);
+    }
+  </style>
+</head>
+<body>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
