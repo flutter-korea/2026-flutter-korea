@@ -1,0 +1,35 @@
+{
+    "name": "Flutter Korea 2026 — Back to Basics, Move Forward",
+    "short_name": "FK26",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#0a3f96",
+    "theme_color": "#0a3f96",
+    "description": "Flutter Korea 2026 · 2026.11.07 SAT · Flutter Seoul이 주최하는 Flutter 커뮤니티 컨퍼런스.",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}

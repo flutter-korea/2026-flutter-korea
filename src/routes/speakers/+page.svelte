@@ -148,6 +148,9 @@
 		margin-top: 0.9rem;
 		font-size: var(--fs-h2);
 		color: var(--gradient-text);
+		/* The title carries an intentional \n break ("Flutter Korea 2026" /
+		   "세션을 제안하세요") — honor it instead of collapsing to a space. */
+		white-space: pre-line;
 	}
 	.sp-intro {
 		margin-top: 1.25rem;

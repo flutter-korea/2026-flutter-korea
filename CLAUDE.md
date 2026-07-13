@@ -109,6 +109,17 @@ Push to `main` → `.github/workflows/deploy.yml` builds with `BASE_PATH=/<repo>
 (`upload-pages-artifact` + `deploy-pages`; Pages source must be **GitHub Actions**). `static/.nojekyll` is
 required so the `_app/` directory isn't stripped by Jekyll.
 
+The same workflow also builds the **Flutter Web port** (`flutter/`, see `flutter/README.md`) with
+`flutter build web --base-href "$BASE_PATH/flutter/"` and copies it into `build/flutter/`, so one Pages
+artifact serves both apps. The **`mode` query param** (case-insensitive) picks the app: SvelteKit is the
+default, `?mode=flutter` redirects to the Flutter build, and `?mode=svelte` / `?mode=sveltekit` explicitly
+select SvelteKit (a counterpart script in `flutter/web/index.html` redirects back up when the Flutter app
+receives them). The SvelteKit-side script sits at the top of `src/app.html`'s `<head>` and resolves the
+target via `%sveltekit.assets%` (so it works locally, on Pages, and on forks), mapping `/speakers` to the
+Flutter app's `#/speakers` hash route and back. The redirect only exists in composed builds; under
+`bun run dev` there is no `/flutter/` to serve. The Flutter toolchain version is pinned in the workflow
+(keep in sync with `fvm`).
+
 ## Gotchas
 
 - `svelte-check` needs **TypeScript pinned to v5** (`typescript@5`). TypeScript 7 (the native compiler) has a
