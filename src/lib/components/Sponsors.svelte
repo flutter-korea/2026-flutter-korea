@@ -7,7 +7,7 @@
 
 <section id="sponsors" class="section">
 	<div class="container">
-		<header class="reveal">
+		<header class="reveal" use:reveal>
 			<span class="kicker">{$t.sponsors.kicker}</span>
 			<h2 class="section-title">{$t.sponsors.title}</h2>
 			<p class="section-lead">{$t.sponsors.lead}</p>

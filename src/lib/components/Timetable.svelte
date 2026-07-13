@@ -6,7 +6,7 @@
 
 <section id="timetable" class="section">
 	<div class="container">
-		<header class="reveal">
+		<header class="reveal" use:reveal>
 			<span class="kicker">{$t.timetable.kicker}</span>
 			<h2 class="section-title">{$t.timetable.title}</h2>
 			<p class="section-lead">{$t.timetable.lead}</p>

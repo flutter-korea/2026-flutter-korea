@@ -7,7 +7,7 @@
 
 <section id="sessions" class="section">
 	<div class="container">
-		<header class="reveal">
+		<header class="reveal" use:reveal>
 			<span class="kicker">{$t.sessions.kicker}</span>
 			<h2 class="section-title">{$t.sessions.title}</h2>
 			<p class="section-lead">{$t.sessions.lead}</p>
