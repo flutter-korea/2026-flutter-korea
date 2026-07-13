@@ -210,7 +210,7 @@ export const dict = {
 			metaTitle: '연사 모집 · Flutter Korea 2026',
 			metaDesc: 'Flutter Korea 2026 세션 제안 — 지원 가능 분야와 지원 방법 안내.',
 			kicker: 'Call for Speakers',
-			title: 'Flutter Korea 2026 세션을 제안하세요',
+			title: 'Flutter Korea 2026\n세션을 제안하세요',
 			intro:
 				'Flutter 생태계에 대한 흥미롭고, 기술적이며, 혁신적인 발표를 찾고 있습니다. 여러분의 세션 제안을 기다립니다. 구글러부터 첫 발표에 도전하는 분까지 누구나 환영합니다.',
 			dateLabel: '행사일',
