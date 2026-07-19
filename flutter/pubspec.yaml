@@ -22,6 +22,9 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
+  assets:
+    - assets/images/flutter_seoul/
+
   fonts:
     # Variable fonts — weights are selected via FontVariation('wght', …).
     - family: Pretendard
