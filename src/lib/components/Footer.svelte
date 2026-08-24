@@ -1,8 +1,13 @@
 <script>
-	import { t } from '$lib/i18n.js';
+	import { lang, t } from '$lib/i18n.js';
 	import { base } from '$app/paths';
 	import { reveal } from '$lib/actions.js';
 	import { links } from '$lib/content.js';
+
+	/** @param {{ href: string }} link */
+	function navHref(link) {
+		return link.href.startsWith('#') ? `${base}/${link.href}` : `${base}${link.href}`;
+	}
 </script>
 
 <footer class="site-footer">
@@ -12,14 +17,22 @@
 			<div class="brand-col reveal" use:reveal>
 				<a class="brand" href={`${base}/#top`} aria-label={$t.footer.org}>
 					<span class="mark" aria-hidden="true">
-						<svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" aria-hidden="true">
-							<path d="M13.9 3 6.4 10.5l2.4 2.4L18.7 3H13.9Z" fill="#ffffff" />
-							<path d="M13.9 11.3 9.7 15.5l4.2 4.2h4.8l-4.2-4.2 4.2-4.2h-4.8Z" fill="#bfe3fc" />
-						</svg>
+						<img
+							src={`${base}/assets/flutter-seoul/flutter-seoul-logo-exact-size.svg`}
+							alt=""
+							width="46"
+							height="28"
+							draggable="false"
+						/>
 					</span>
 					<span class="brand-meta">
 						<span class="made-by">{$t.footer.madeBy}</span>
-						<span class="org">{$t.footer.org}</span>
+						<img
+							class="org-logo"
+							src={`${base}/assets/flutter-seoul/${$lang === 'ko' ? 'flutter-seoul-text-kor.svg' : 'flutter-seoul-logo-kor-horizontal.svg'}`}
+							alt=""
+							draggable="false"
+						/>
 					</span>
 				</a>
 				<p class="tagline">{$t.footer.tagline}</p>
@@ -30,7 +43,7 @@
 				<h2 class="col-title">{$t.footer.nav}</h2>
 				<ul class="link-list">
 					{#each $t.nav.links as link (link.id)}
-						<li><a href={`${base}/#${link.id}`}>{link.label}</a></li>
+						<li><a href={navHref(link)}>{link.label}</a></li>
 					{/each}
 				</ul>
 			</nav>
@@ -67,6 +80,25 @@
 					<li>
 						<a href={links.discord} target="_blank" rel="noopener noreferrer" class="ext">
 							<span>Discord</span>
+							<svg
+								viewBox="0 0 24 24"
+								width="0.85em"
+								height="0.85em"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="1.8"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								aria-hidden="true"
+							>
+								<path d="M7 17 17 7" />
+								<path d="M8 7h9v9" />
+							</svg>
+						</a>
+					</li>
+					<li>
+						<a href={links.kakaoTalk} target="_blank" rel="noopener noreferrer" class="ext">
+							<span>KakaoTalk</span>
 							<svg
 								viewBox="0 0 24 24"
 								width="0.85em"
@@ -144,17 +176,16 @@
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		width: 34px;
+		width: 46px;
 		height: 34px;
-		font-size: 22px;
-		border-radius: 10px;
-		background: var(--gradient-brand);
-		box-shadow: 0 6px 18px -8px var(--glow);
+		border-radius: 0;
+		background: transparent;
 		flex-shrink: 0;
-		transition: box-shadow 0.25s var(--ease);
 	}
-	.brand:hover .mark {
-		box-shadow: 0 8px 22px -8px var(--glow);
+	.mark img {
+		display: block;
+		width: 100%;
+		height: auto;
 	}
 	.brand-meta {
 		display: flex;
@@ -169,11 +200,11 @@
 		text-transform: uppercase;
 		color: var(--text-dim);
 	}
-	.org {
-		font-weight: 700;
-		font-size: 1.05rem;
-		letter-spacing: -0.01em;
-		color: var(--text);
+	.org-logo {
+		display: block;
+		width: auto;
+		height: 22px;
+		max-width: min(180px, 100%);
 	}
 	.tagline {
 		margin-top: 1.1rem;

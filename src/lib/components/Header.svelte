@@ -12,6 +12,18 @@
 	const panelId = 'site-nav-panel';
 	const onHome = $derived(page.url.pathname === `${base}/` || page.url.pathname === base || page.url.pathname === '/');
 
+	/** @param {{ id: string; href: string }} link */
+	function navHref(link) {
+		return link.href.startsWith('#') ? `${base}/${link.href}` : `${base}${link.href}`;
+	}
+
+	/** @param {{ id: string; href: string }} link */
+	function isActive(link) {
+		if (link.href.startsWith('#')) return onHome && activeId === link.id;
+		const path = `${base}${link.href}`;
+		return page.url.pathname === path || page.url.pathname === `${path}/`;
+	}
+
 	function closeMenu() {
 		open = false;
 	}
@@ -40,7 +52,9 @@
 		window.addEventListener('keydown', onKeydown);
 
 		// Scroll-spy: highlight the nav link for the section currently in view.
-		const ids = ['about', 'sessions', 'timetable', 'tickets', 'sponsors'];
+		const ids = $t.nav.links
+			.filter((link) => link.href.startsWith('#'))
+			.map((link) => link.href.slice(1));
 		const sections = ids
 			.map((id) => document.getElementById(id))
 			.filter((el) => el !== null);
@@ -83,8 +97,8 @@
 			{#each $t.nav.links as link (link.id)}
 				<a
 					class="nav-link"
-					class:active={onHome && activeId === link.id}
-					href={`${base}/#${link.id}`}
+					class:active={isActive(link)}
+					href={navHref(link)}
 				>
 					{link.label}
 				</a>
@@ -138,7 +152,7 @@
 <div id={panelId} class="mobile-panel" class:open aria-hidden={!open}>
 	<nav class="mobile-nav" aria-label={$t.nav.menu}>
 		{#each $t.nav.links as link (link.id)}
-			<a class="mobile-link" href={`${base}/#${link.id}`} onclick={closeMenu} tabindex={open ? 0 : -1}>
+			<a class="mobile-link" href={navHref(link)} onclick={closeMenu} tabindex={open ? 0 : -1}>
 				<span>{link.label}</span>
 				<svg viewBox="0 0 24 24" width="0.9em" height="0.9em" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 					<path d="m9 5 7 7-7 7" />
@@ -319,11 +333,11 @@
 		background: var(--paper);
 	}
 
-	@media (min-width: 900px) {
+	@media (min-width: 1060px) {
 		.desktop-nav {
 			display: flex;
 			align-items: center;
-			gap: 2rem;
+			gap: clamp(1rem, 1.6vw, 1.75rem);
 			margin-inline: auto;
 		}
 		.desktop-actions {
