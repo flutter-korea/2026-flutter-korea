@@ -30,7 +30,7 @@ class FkApp extends StatelessWidget {
     return ListenableBuilder(
       listenable: I18n.instance,
       builder: (context, _) => MaterialApp.router(
-        title: 'Flutter Korea 2026 — Back to Basics, Move Forward',
+        title: 'Flutter Korea 2026: Back to Basics, Move Forward',
         debugShowCheckedModeBanner: false,
         routerConfig: _router,
         builder: (context, child) => I18nScope(
