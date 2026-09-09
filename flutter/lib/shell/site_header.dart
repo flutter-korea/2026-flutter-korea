@@ -213,6 +213,7 @@ class LangButton extends StatelessWidget {
         cursor: SystemMouseCursors.click,
         builder: (context, hovered) => GestureDetector(
           onTap: I18n.instance.toggle,
+          behavior: HitTestBehavior.opaque,
           child: AnimatedContainer(
             duration: FKMotion.quick,
             curve: FKMotion.ease,
