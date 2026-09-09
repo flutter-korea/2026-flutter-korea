@@ -500,7 +500,7 @@ const koContent = Content(
   sessions: SessionsStrings(
     kicker: 'Program',
     title: '세션',
-    lead: '세션 라인업을 준비하고 있습니다. 지금은 연사를 모집하는 중이에요 — 여러분의 이야기로 무대를 채워 주세요.',
+    lead: '세션 라인업을 준비하고 있습니다. 지금은 연사를 모집하는 중이에요. 여러분의 이야기로 무대를 채워 주세요.',
     comingSoon: ComingSoonStrings(
       badge: '향후 공개 예정',
       title: '세션 라인업 준비 중',
@@ -511,7 +511,7 @@ const koContent = Content(
       badge: 'Confirmed · 60 min',
       title: '연차별 파이어사이드 챗',
       body:
-          '일방향 발표가 아닌, 연차별 고민을 사전에 취합해 패널들과 진솔하게 대화하는 시간입니다. 주니어의 커리어 방향성, 미드레벨의 기술적 갈증, 시니어의 팀 리딩까지 — 지금 우리에게 필요한 이야기를 나눕니다.',
+          '일방향 발표가 아닌, 연차별 고민을 사전에 취합해 패널들과 진솔하게 대화하는 시간입니다. 주니어의 커리어 방향성, 미드레벨의 기술적 갈증, 시니어의 팀 리딩까지 지금 우리에게 필요한 이야기를 나눕니다.',
       tags: ['주니어 · 커리어', '미드레벨 · 기술', '시니어 · 리딩'],
     ),
   ),
@@ -687,7 +687,7 @@ const enContent = Content(
     sloganBottom: 'Move Forward',
     subtitle: 'Return to the essence of technology, and fearlessly define the future.',
     description:
-        'In an era where change is the default, we spend a day defining the future with AI — armed with unshakable fundamentals. Right now, we’re recruiting the speakers to fill this stage.',
+        'In an era where change is the default, we spend a day defining the future with AI, armed with unshakable fundamentals. Right now, we’re recruiting the speakers to fill this stage.',
     ctaPrimary: 'Apply to Speak',
     ctaSecondary: 'Learn More',
     facts: [
@@ -724,8 +724,8 @@ const enContent = Content(
     kicker: 'Why 2026',
     title: 'From ‘Transition’ to Basics & Future',
     paragraphs: [
-      'At Flutter Korea 2025 we shared stories of ‘Transition’ — migrating from native to Flutter, pivoting careers into development, and facing the sudden rise of AI. We found comfort and solidarity in opening up about our fears of change.',
-      'One year later, in 2026, those transitions have fully settled into a new paradigm. ‘Vibe coding’ — co-developing with AI agents — is a daily reality, and on-device AI and large-model serving are dynamically merging within the Flutter ecosystem.',
+      'At Flutter Korea 2025 we shared stories of ‘Transition’: migrating from native to Flutter, pivoting careers into development, and facing the sudden rise of AI. We found comfort and solidarity in opening up about our fears of change.',
+      'One year later, in 2026, those transitions have fully settled into a new paradigm. ‘Vibe coding’ (co-developing with AI agents) is a daily reality, and on-device AI and large-model serving are dynamically merging within the Flutter ecosystem.',
       'Yet when change is the default, a different anxiety appears: “Are my fundamentals strong enough for this flood of new tech?” and “Where do I go when the pace threatens to overwhelm me?” Flutter Korea 2026 starts with exactly these questions.',
     ],
     compasses: [
@@ -734,7 +734,7 @@ const enContent = Content(
         title: 'Back to Basics',
         subtitle: 'Return to fundamentals',
         body:
-            'The more sophisticated our tools become, the more critical the fundamentals — architecture, rendering pipelines, state management. Only on solid ground can we keep ownership of our craft.',
+            'The more sophisticated our tools become, the more critical the fundamentals: architecture, rendering pipelines, state management. Only on solid ground can we keep ownership of our craft.',
       ),
       CompassCard(
         tag: 'Compass 02',
@@ -751,7 +751,7 @@ const enContent = Content(
     kicker: 'Program',
     title: 'Sessions',
     lead:
-        'The session lineup is in the works. Right now we’re recruiting speakers — help us fill the stage with your story.',
+        'The session lineup is in the works. Right now we’re recruiting speakers: help us fill the stage with your story.',
     comingSoon: ComingSoonStrings(
       badge: 'To be announced',
       title: 'Session lineup in the works',
@@ -763,7 +763,7 @@ const enContent = Content(
       badge: 'Confirmed · 60 min',
       title: 'Fireside Chat by Career Level',
       body:
-          'Not a one-way talk, but an honest conversation with panelists built from questions gathered in advance — junior career direction, mid-level technical thirst, senior team leadership. The talk we all need right now.',
+          'Not a one-way talk, but an honest conversation with panelists built from questions gathered in advance, covering junior career direction, mid-level technical thirst, and senior team leadership. The talk we all need right now.',
       tags: ['Junior · Career', 'Mid · Craft', 'Senior · Leading'],
     ),
   ),
@@ -789,7 +789,7 @@ const enContent = Content(
     kicker: 'Call for Speakers',
     title: 'We’re looking for the next voice on stage',
     body:
-        'Share your story of fundamentals and bold challenges on the Flutter Korea 2026 stage. Everyone is welcome — from Googlers to first-time speakers.',
+        'Share your story of fundamentals and bold challenges on the Flutter Korea 2026 stage. Everyone is welcome, from Googlers to first-time speakers.',
     perks: ['Speakers attend free', 'Official slide template provided', 'Propose your own topic'],
     cta: 'View Call for Speakers',
     ctaNote: 'Go to the speaker overview page',
@@ -856,7 +856,7 @@ const enContent = Content(
     kicker: 'Call for Speakers',
     title: 'Propose a session for Flutter Korea 2026',
     intro:
-        'We’re looking for engaging, technical, and innovative talks about the Flutter ecosystem. We can’t wait to see your proposal — everyone is welcome, from Googlers to first-time speakers.',
+        'We’re looking for engaging, technical, and innovative talks about the Flutter ecosystem. We can’t wait to see your proposal. Everyone is welcome, from Googlers to first-time speakers.',
     dateLabel: 'Event date',
     date: 'Saturday, November 7, 2026',
     levelsTitle: 'Target Audience Level',
