@@ -11,7 +11,7 @@ abstract final class Links {
   /// Call for Speakers — session proposal Google Form.
   static const cfp = 'https://forms.gle/PGG9Kvd7Z7xkVPs3A';
   static const ticket = 'https://ticketa.co/event/c9xsstcs';
-  static const tickettaco = 'https://ticketa.co/event/c9xsstcs';
+  static const ticketaco = 'https://ticketa.co/event/c9xsstcs';
   static const venueMap = 'https://maps.app.goo.gl/RSkiDXQxdRXUJqpA9';
   static const meetup = 'https://www.meetup.com/ko-kr/flutter-korea/';
   static const kakaoTalk = 'https://open.kakao.com/o/gdL2Gj1e';
@@ -532,7 +532,8 @@ const koContent = Content(
   tickets: TicketsStrings(
     kicker: 'Tickets',
     title: '티켓',
-    lead: 'Flutter Korea 2026 티켓 예매가 오픈되었습니다. 티켓타코(Ticketa)에서 지금 바로 예매하세요.',
+    lead:
+        'Flutter Korea 2026 티켓 예매가 오픈되었습니다. 티켓타코(Ticketaco)에서 지금 바로 예매하세요.',
     statusBadge: '예매 오픈',
     cta: '티켓 예매하기',
     ctaTbd: '오픈 예정',
@@ -559,7 +560,7 @@ const koContent = Content(
         features: ['전 세션 및 파이어사이드 챗 입장', '개인 후원자 명단 등재'],
       ),
     ],
-    platformNote: '예매 플랫폼 · 티켓타코(Ticketa) 공식 이벤트 페이지',
+    platformNote: '예매 플랫폼 · 티켓타코(Ticketaco) 공식 이벤트 페이지',
     speakerNote: '연사자는 티켓 구매가 필요하지 않습니다.',
     venueNote: '행사 장소 · AWS 코리아 (서울 강남구 테헤란로 231 센터필드 EAST 12층 / 주차 지원 불가, 대중교통 이용 권장)',
     venueMapLinkText: '지도 보기',
@@ -782,7 +783,7 @@ const enContent = Content(
     kicker: 'Tickets',
     title: 'Tickets',
     lead:
-        'Tickets for Flutter Korea 2026 are now available. Get your tickets now on Ticketa.',
+        'Tickets for Flutter Korea 2026 are now available. Get your tickets now on Ticketaco.',
     statusBadge: 'Tickets Available',
     cta: 'Get Tickets',
     ctaTbd: 'Coming soon',
@@ -809,11 +810,11 @@ const enContent = Content(
         features: ['All sessions + fireside chat', 'Listed as a personal supporter'],
       ),
     ],
-    platformNote: 'Ticketing platform · Available on Ticketa official event page.',
+    platformNote: 'Ticketing platform · Available on Ticketaco official event page.',
     speakerNote: 'Speakers do not need to purchase a ticket.',
     venueNote: 'Venue · AWS Korea (Centerfield East 12F, 231 Teheran-ro, Gangnam-gu, Seoul / Public transit recommended)',
     venueMapLinkText: 'View Map',
-    platformLinkText: 'Go to Ticketa',
+    platformLinkText: 'Go to Ticketaco',
   ),
   sponsors: SponsorsStrings(
     kicker: 'Sponsors',
