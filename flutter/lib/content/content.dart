@@ -549,7 +549,7 @@ const koContent = Content(
         name: '일반',
         price: '20,000',
         badge: '최종 확정가',
-        features: ['전 세션 및 파이어사이드 챗 입장', '점심 및 네트워킹', '후원사 부스 참여'],
+        features: ['전 세션 및 파이어사이드 챗 입장', '네트워킹', '후원사 부스 참여'],
       ),
       TicketTier(
         name: 'Flutter Lover',
@@ -799,7 +799,7 @@ const enContent = Content(
         name: 'Standard',
         price: '20,000',
         badge: 'Final price',
-        features: ['All sessions + fireside chat', 'Lunch & networking', 'Sponsor booth access'],
+        features: ['All sessions + fireside chat', 'Networking', 'Sponsor booth access'],
       ),
       TicketTier(
         name: 'Flutter Lover',
