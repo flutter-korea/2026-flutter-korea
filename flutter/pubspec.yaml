@@ -24,6 +24,7 @@ flutter:
 
   assets:
     - assets/images/flutter_seoul/
+    - assets/images/sponsors/
 
   fonts:
     # Variable fonts — weights are selected via FontVariation('wght', …).

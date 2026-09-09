@@ -96,9 +96,10 @@ qualify; a pair of named concepts does not.
 
 ## "To be announced" sections
 
-Sessions, Timetable, and Sponsors are intentionally in a **TBD state**: each renders its heading plus the shared
+Sessions and Timetable are intentionally in a **TBD state**: each renders its heading plus the shared
 `ComingSoon.svelte` panel (badge / title / body / optional CTA). Tickets is open and links to the Ticketaco booking
-page (`links.ticket`). The speaker recruitment path routes to the `/speakers` overview page (`links.cfp`).
+page (`links.ticket`). Sponsors displays confirmed partner logos and provides an inquiry CTA (`links.email`).
+The speaker recruitment path routes to the `/speakers` overview page (`links.cfp`).
 When remaining real content is confirmed, restore the detailed rendering and update `content.js`.
 
 ## Deploy

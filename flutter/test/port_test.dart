@@ -62,6 +62,7 @@ void main() {
     expect(koContent.hero.facts.length, enContent.hero.facts.length);
     expect(koContent.overview.stats.length, enContent.overview.stats.length);
     expect(koContent.tickets.tiers.length, enContent.tickets.tiers.length);
+    expect(koContent.sponsors.items.length, enContent.sponsors.items.length);
     expect(koContent.speakerPage.categories.length,
         enContent.speakerPage.categories.length);
     for (var i = 0; i < koContent.nav.links.length; i++) {
