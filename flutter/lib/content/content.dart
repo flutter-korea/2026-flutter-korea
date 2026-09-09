@@ -281,11 +281,24 @@ class TicketsStrings {
   });
 }
 
+class SponsorItem {
+  final String name;
+  final String logo;
+  final String url;
+  final String description;
+  const SponsorItem({
+    required this.name,
+    required this.logo,
+    required this.url,
+    required this.description,
+  });
+}
+
 class SponsorsStrings {
   final String kicker;
   final String title;
   final String lead;
-  final ComingSoonStrings comingSoon;
+  final List<SponsorItem> items;
   final String ctaTitle;
   final String ctaBody;
   final String cta;
@@ -293,7 +306,7 @@ class SponsorsStrings {
     required this.kicker,
     required this.title,
     required this.lead,
-    required this.comingSoon,
+    required this.items,
     required this.ctaTitle,
     required this.ctaBody,
     required this.cta,
@@ -569,12 +582,16 @@ const koContent = Content(
   sponsors: SponsorsStrings(
     kicker: 'Sponsors',
     title: '함께 만드는 사람들',
-    lead: '후원은 커뮤니티가 계속 이어지게 하는 힘입니다. Flutter Korea 2026과 함께할 파트너를 찾고 있습니다.',
-    comingSoon: ComingSoonStrings(
-      badge: '향후 공개 예정',
-      title: '후원사 라인업 공개 예정',
-      body: '행사를 함께 만들어 갈 후원사를 모시고 있습니다. 확정되는 대로 이곳에서 소개하겠습니다.',
-    ),
+    lead:
+        '후원은 커뮤니티가 계속 이어지게 하는 힘입니다. Flutter Korea 2026을 함께 만들어 가는 공식 후원사를 소개합니다.',
+    items: [
+      SponsorItem(
+        name: 'Flutter',
+        logo: 'assets/images/sponsors/flutter.png',
+        url: 'https://flutter.dev',
+        description: 'Build apps for any screen',
+      ),
+    ],
     ctaTitle: '후원사로 함께하시겠어요?',
     ctaBody: '국내 최대 규모의 Flutter 커뮤니티와 만나고, 브랜드를 개발자에게 각인시킬 기회입니다.',
     cta: '후원 문의하기',
@@ -820,13 +837,15 @@ const enContent = Content(
     kicker: 'Sponsors',
     title: 'The people who make it happen',
     lead:
-        'Sponsorship is what keeps the community going. We’re looking for partners to build Flutter Korea 2026 with us.',
-    comingSoon: ComingSoonStrings(
-      badge: 'To be announced',
-      title: 'Sponsor lineup coming soon',
-      body:
-          'We’re welcoming sponsors to build the event with us. We’ll introduce them here as they’re confirmed.',
-    ),
+        'Sponsorship is what keeps the community going. Introducing the official sponsors building Flutter Korea 2026 with us.',
+    items: [
+      SponsorItem(
+        name: 'Flutter',
+        logo: 'assets/images/sponsors/flutter.png',
+        url: 'https://flutter.dev',
+        description: 'Build apps for any screen',
+      ),
+    ],
     ctaTitle: 'Become a sponsor',
     ctaBody:
         'Meet Korea’s largest Flutter community and put your brand in front of developers who build.',

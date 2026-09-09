@@ -205,12 +205,15 @@ export const dict = {
 		sponsors: {
 			kicker: 'Sponsors',
 			title: '함께 만드는 사람들',
-			lead: '후원은 커뮤니티가 계속 이어지게 하는 힘입니다. Flutter Korea 2026과 함께할 파트너를 찾고 있습니다.',
-			comingSoon: {
-				badge: '향후 공개 예정',
-				title: '후원사 라인업 공개 예정',
-				body: '행사를 함께 만들어 갈 후원사를 모시고 있습니다. 확정되는 대로 이곳에서 소개하겠습니다.'
-			},
+			lead: '후원은 커뮤니티가 계속 이어지게 하는 힘입니다. Flutter Korea 2026을 함께 만들어 가는 공식 후원사를 소개합니다.',
+			items: [
+				{
+					name: 'Flutter',
+					logo: '/assets/sponsors/flutter.png',
+					url: 'https://flutter.dev',
+					description: 'Build apps for any screen'
+				}
+			],
 			ctaTitle: '후원사로 함께하시겠어요?',
 			ctaBody: '국내 최대 규모의 Flutter 커뮤니티와 만나고, 브랜드를 개발자에게 각인시킬 기회입니다.',
 			cta: '후원 문의하기'
@@ -777,12 +780,15 @@ export const dict = {
 		sponsors: {
 			kicker: 'Sponsors',
 			title: 'The people who make it happen',
-			lead: 'Sponsorship is what keeps the community going. We’re looking for partners to build Flutter Korea 2026 with us.',
-			comingSoon: {
-				badge: 'To be announced',
-				title: 'Sponsor lineup coming soon',
-				body: 'We’re welcoming sponsors to build the event with us. We’ll introduce them here as they’re confirmed.'
-			},
+			lead: 'Sponsorship is what keeps the community going. Introducing the official sponsors building Flutter Korea 2026 with us.',
+			items: [
+				{
+					name: 'Flutter',
+					logo: '/assets/sponsors/flutter.png',
+					url: 'https://flutter.dev',
+					description: 'Build apps for any screen'
+				}
+			],
 			ctaTitle: 'Become a sponsor',
 			ctaBody: 'Meet Korea’s largest Flutter community and put your brand in front of developers who build.',
 			cta: 'Sponsor Inquiry'

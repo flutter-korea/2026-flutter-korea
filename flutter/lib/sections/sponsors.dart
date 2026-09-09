@@ -6,13 +6,13 @@ import '../nav.dart';
 import '../theme/tokens.dart';
 import '../theme/typography.dart';
 import '../widgets/buttons.dart';
-import '../widgets/coming_soon.dart';
 import '../widgets/layout.dart';
+import '../widgets/lift_card.dart';
 import '../widgets/reveal.dart';
 import '../widgets/section_header.dart';
 import '../widgets/stroke_icon.dart';
 
-/// "Sponsors" — TBD panel plus the sponsor-inquiry CTA card.
+/// "Sponsors" — sponsor card grid plus the sponsor-inquiry CTA card.
 class SponsorsSection extends StatelessWidget {
   const SponsorsSection({super.key});
 
@@ -31,13 +31,17 @@ class SponsorsSection extends StatelessWidget {
         const SizedBox(height: 40),
         Reveal(
           delayMs: 80,
-          child: ComingSoonPanel(
-            badge: t.comingSoon.badge,
-            title: t.comingSoon.title,
-            body: t.comingSoon.body,
+          child: AutoGrid(
+            itemCount: t.items.length,
+            gap: 20,
+            minCellWidth: 280,
+            itemBuilder: (context, index, cellWidth) {
+              final sponsor = t.items[index];
+              return _SponsorCard(sponsor: sponsor, vw: vw);
+            },
           ),
         ),
-        const SizedBox(height: 24),
+        const SizedBox(height: 32),
         Reveal(
           delayMs: 160,
           child: PanelSurface(
@@ -81,6 +85,84 @@ class SponsorsSection extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _SponsorCard extends StatelessWidget {
+  final SponsorItem sponsor;
+  final double vw;
+
+  const _SponsorCard({required this.sponsor, required this.vw});
+
+  @override
+  Widget build(BuildContext context) {
+    final pad = (vw * 0.035).clamp(24.0, 36.0);
+
+    return LiftCard(
+      padding: EdgeInsets.all(pad),
+      color: FKColors.paper,
+      borderColor: FKColors.border,
+      hoverBorderColor: FKColors.borderStrong,
+      topAccent: true,
+      builder: (context, hovered) {
+        return MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => openExternal(sponsor.url),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  height: 48,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Image.asset(
+                      sponsor.logo,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      sponsor.name,
+                      style: heading(
+                        size: 19.2,
+                        weight: 700,
+                      ),
+                    ),
+                    AnimatedSlide(
+                      duration: FKMotion.quick,
+                      curve: FKMotion.ease,
+                      offset: hovered ? const Offset(0.15, -0.15) : Offset.zero,
+                      child: StrokeIcon(
+                        FkIcons.upRightSmall,
+                        size: 15,
+                        color: hovered ? FKColors.accent : FKColors.textMuted,
+                        strokeWidth: 2.2,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  sponsor.description,
+                  style: sans(
+                    size: 14.4,
+                    color: FKColors.textMuted,
+                    height: 1.5,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
