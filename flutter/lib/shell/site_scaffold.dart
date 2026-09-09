@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' show Material;
+import 'package:flutter/material.dart' show Material, SelectionArea;
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
@@ -68,81 +68,83 @@ class _SiteScaffoldState extends State<SiteScaffold> {
     // Material ancestor gives Text its default (undecorated) style.
     return Material(
       color: FKColors.white,
-      child: ValueListenableBuilder<bool>(
-        valueListenable: widget.hub.collapsed,
-        builder: (context, collapsed, _) => Stack(
-          children: [
-            // Scrollable page content; reserves the combined chrome height.
-            Positioned.fill(
-              child: IgnorePointer(
-                ignoring: menuOpen,
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(context)
-                      .copyWith(scrollbars: true),
-                  child: SingleChildScrollView(
-                    controller: widget.hub.controller,
-                    padding: const EdgeInsets.only(
-                        top: FKLayout.announceH + FKLayout.headerH),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: widget.children,
+      child: SelectionArea(
+        child: ValueListenableBuilder<bool>(
+          valueListenable: widget.hub.collapsed,
+          builder: (context, collapsed, _) => Stack(
+            children: [
+              // Scrollable page content; reserves the combined chrome height.
+              Positioned.fill(
+                child: IgnorePointer(
+                  ignoring: menuOpen,
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(context)
+                        .copyWith(scrollbars: true),
+                    child: SingleChildScrollView(
+                      controller: widget.hub.controller,
+                      padding: const EdgeInsets.only(
+                          top: FKLayout.announceH + FKLayout.headerH),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: widget.children,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
 
-            // Mobile scrim + slide-in panel (under the fixed bars, above content).
-            if (!desktop) ...[
-              if (menuOpen)
-                Positioned.fill(
-                  child: GestureDetector(
-                    onTap: _closeMenu,
-                    child: AnimatedOpacity(
-                      opacity: 1,
-                      duration: FKMotion.quick,
-                      child: Container(color: const Color(0x590B1220)),
+              // Mobile scrim + slide-in panel (under the fixed bars, above content).
+              if (!desktop) ...[
+                if (menuOpen)
+                  Positioned.fill(
+                    child: GestureDetector(
+                      onTap: _closeMenu,
+                      child: AnimatedOpacity(
+                        opacity: 1,
+                        duration: FKMotion.quick,
+                        child: Container(color: const Color(0x590B1220)),
+                      ),
                     ),
                   ),
+                AnimatedPositioned(
+                  duration: reduceMotion ? Duration.zero : FKMotion.mid,
+                  curve: FKMotion.ease,
+                  top: 0,
+                  bottom: 0,
+                  width: (size.width * 0.84).clamp(0.0, 360.0),
+                  right: menuOpen ? 0 : -(size.width * 0.84).clamp(0.0, 360.0),
+                  child: _MobilePanel(hub: widget.hub, onClose: _closeMenu),
                 ),
+              ],
+
+              // Announcement bar — slides fully out when collapsed.
               AnimatedPositioned(
-                duration: reduceMotion ? Duration.zero : FKMotion.mid,
+                duration: barDur,
                 curve: FKMotion.ease,
-                top: 0,
-                bottom: 0,
-                width: (size.width * 0.84).clamp(0.0, 360.0),
-                right: menuOpen ? 0 : -(size.width * 0.84).clamp(0.0, 360.0),
-                child: _MobilePanel(hub: widget.hub, onClose: _closeMenu),
+                top: collapsed ? -FKLayout.announceH : 0,
+                left: 0,
+                right: 0,
+                height: FKLayout.announceH,
+                child: const AnnouncementBar(),
+              ),
+
+              // Header — pins to the viewport top when collapsed.
+              AnimatedPositioned(
+                duration: barDur,
+                curve: FKMotion.ease,
+                top: collapsed ? 0 : FKLayout.announceH,
+                left: 0,
+                right: 0,
+                height: FKLayout.headerH,
+                child: SiteHeader(
+                  hub: widget.hub,
+                  collapsed: collapsed,
+                  menuOpen: menuOpen,
+                  onToggleMenu: _toggleMenu,
+                ),
               ),
             ],
-
-            // Announcement bar — slides fully out when collapsed.
-            AnimatedPositioned(
-              duration: barDur,
-              curve: FKMotion.ease,
-              top: collapsed ? -FKLayout.announceH : 0,
-              left: 0,
-              right: 0,
-              height: FKLayout.announceH,
-              child: const AnnouncementBar(),
-            ),
-
-            // Header — pins to the viewport top when collapsed.
-            AnimatedPositioned(
-              duration: barDur,
-              curve: FKMotion.ease,
-              top: collapsed ? 0 : FKLayout.announceH,
-              left: 0,
-              right: 0,
-              height: FKLayout.headerH,
-              child: SiteHeader(
-                hub: widget.hub,
-                collapsed: collapsed,
-                menuOpen: menuOpen,
-                onToggleMenu: _toggleMenu,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
