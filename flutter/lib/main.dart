@@ -33,6 +33,10 @@ class FkApp extends StatelessWidget {
         title: 'Flutter Korea 2026 — Back to Basics, Move Forward',
         debugShowCheckedModeBanner: false,
         routerConfig: _router,
+        builder: (context, child) => I18nScope(
+          notifier: I18n.instance,
+          child: child ?? const SizedBox.shrink(),
+        ),
         theme: ThemeData(
           useMaterial3: true,
           scaffoldBackgroundColor: FKColors.white,

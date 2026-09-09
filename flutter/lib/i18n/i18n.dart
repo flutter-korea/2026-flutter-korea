@@ -44,9 +44,22 @@ class I18n extends ChangeNotifier {
   }
 }
 
+/// InheritedNotifier that propagates language changes to all descendant widgets.
+class I18nScope extends InheritedNotifier<I18n> {
+  const I18nScope({
+    super.key,
+    required super.notifier,
+    required super.child,
+  });
+
+  static I18n of(BuildContext context) {
+    final scope = context.dependOnInheritedWidgetOfExactType<I18nScope>();
+    return scope?.notifier ?? I18n.instance;
+  }
+}
+
 /// Shorthand used across widgets: `context.t.hero.badge`.
-/// Widgets rebuild on language change because the app root listens to
-/// [I18n.instance] and rebuilds the whole tree (all copy changes at once).
+/// Widgets rebuild on language change because they subscribe to [I18nScope].
 extension I18nContext on BuildContext {
-  Content get t => I18n.instance.t;
+  Content get t => I18nScope.of(this).t;
 }
