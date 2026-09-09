@@ -1,5 +1,6 @@
 <script>
 	import { t } from '$lib/i18n.js';
+	import { links } from '$lib/content.js';
 	import { reveal } from '$lib/actions.js';
 </script>
 
@@ -82,28 +83,56 @@
 						{/each}
 					</ul>
 
-					<div class="tier-cta tier-cta-tbd" aria-disabled="true">
+					<a
+						class="btn tier-cta"
+						class:btn-primary={tier.featured}
+						class:btn-ghost={!tier.featured}
+						href={links.ticket}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						{$t.tickets.cta}
 						<svg
 							viewBox="0 0 24 24"
-							width="1em"
-							height="1em"
+							width="1.1em"
+							height="1.1em"
 							fill="none"
 							stroke="currentColor"
-							stroke-width="1.9"
+							stroke-width="2.2"
 							stroke-linecap="round"
 							stroke-linejoin="round"
 							aria-hidden="true"
 						>
-							<circle cx="12" cy="12" r="9" />
-							<path d="M12 7v5l3.5 2" />
+							<path d="M7 17L17 7" />
+							<path d="M7 7h10v10" />
 						</svg>
-						{$t.tickets.ctaTbd}
-					</div>
+					</a>
 				</li>
 			{/each}
 		</ul>
 
 		<ul class="notes reveal" use:reveal={{ delay: 240 }}>
+			<li class="note">
+				<svg
+					class="note-icon note-icon-accent"
+					viewBox="0 0 24 24"
+					width="1em"
+					height="1em"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="1.8"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					aria-hidden="true"
+				>
+					<path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z" />
+					<circle cx="12" cy="10" r="3" />
+				</svg>
+				<span>
+					{$t.tickets.venueNote}
+					<a href={links.venueMap} target="_blank" rel="noopener noreferrer" class="note-link">{$t.tickets.venueMapLinkText} ↗</a>
+				</span>
+			</li>
 			<li class="note">
 				<svg
 					class="note-icon"
@@ -121,7 +150,10 @@
 					<path d="M12 11v5" />
 					<path d="M12 8h.01" />
 				</svg>
-				<span>{$t.tickets.platformNote}</span>
+				<span>
+					{$t.tickets.platformNote}
+					<a href={links.ticket} target="_blank" rel="noopener noreferrer" class="note-link">{$t.tickets.platformLinkText} ↗</a>
+				</span>
 			</li>
 			<li class="note">
 				<svg
@@ -293,23 +325,6 @@
 		width: 100%;
 	}
 
-	/* Purchase not open yet — non-interactive "coming soon" state */
-	.tier-cta-tbd {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		gap: 0.5rem;
-		padding: 0.85rem 1.5rem;
-		border-radius: var(--r-full);
-		font-weight: 600;
-		font-size: 0.95rem;
-		color: var(--text-dim);
-		border: 1px dashed var(--border-strong);
-		background: var(--white);
-		cursor: not-allowed;
-		user-select: none;
-	}
-
 	/* Status badge in the header */
 	.status-badge {
 		display: inline-flex;
@@ -359,7 +374,20 @@
 		margin-top: 0.15em;
 		color: var(--text-muted);
 	}
+	.note-icon-accent,
 	.note:first-child .note-icon {
 		color: var(--accent);
+	}
+
+	.note-link {
+		color: var(--accent);
+		text-decoration: underline;
+		text-underline-offset: 3px;
+		margin-left: 0.35rem;
+		font-weight: 500;
+		white-space: nowrap;
+	}
+	.note-link:hover {
+		color: var(--blue-900);
 	}
 </style>

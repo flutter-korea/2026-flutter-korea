@@ -2,8 +2,10 @@ import 'package:flutter/widgets.dart';
 
 import '../content/content.dart';
 import '../i18n/i18n.dart';
+import '../nav.dart';
 import '../theme/tokens.dart';
 import '../theme/typography.dart';
+import '../widgets/buttons.dart';
 import '../widgets/chips.dart';
 import '../widgets/layout.dart';
 import '../widgets/lift_card.dart';
@@ -46,7 +48,7 @@ class TicketsSection extends StatelessWidget {
             child: _TierCard(
               tier: t.tiers[i],
               currency: t.currency,
-              ctaTbd: t.ctaTbd,
+              cta: t.cta,
               vw: vw,
               cardWidth: cellWidth,
             ),
@@ -58,7 +60,21 @@ class TicketsSection extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _Note(icon: FkIcons.info, accent: true, text: t.platformNote),
+              _Note(
+                icon: FkIcons.compassDraft,
+                accent: true,
+                text: t.venueNote,
+                linkText: '${t.venueMapLinkText} ↗',
+                onLinkTap: () => openExternal(Links.venueMap),
+              ),
+              const SizedBox(height: 11.2),
+              _Note(
+                icon: FkIcons.info,
+                accent: false,
+                text: t.platformNote,
+                linkText: '${t.platformLinkText} ↗',
+                onLinkTap: () => openExternal(Links.ticket),
+              ),
               const SizedBox(height: 11.2),
               _Note(icon: FkIcons.star, accent: false, text: t.speakerNote),
             ],
@@ -72,14 +88,14 @@ class TicketsSection extends StatelessWidget {
 class _TierCard extends StatelessWidget {
   final TicketTier tier;
   final String currency;
-  final String ctaTbd;
+  final String cta;
   final double vw;
   final double cardWidth;
 
   const _TierCard({
     required this.tier,
     required this.currency,
-    required this.ctaTbd,
+    required this.cta,
     required this.vw,
     required this.cardWidth,
   });
@@ -162,7 +178,16 @@ class _TierCard extends StatelessWidget {
                     ),
                   const Spacer(),
                   const SizedBox(height: 10.4),
-                  _TbdCta(label: ctaTbd),
+                  FkButton(
+                    label: cta,
+                    variant: featured
+                        ? FkButtonVariant.primary
+                        : FkButtonVariant.ghost,
+                    expand: true,
+                    icon: FkIcons.upRightSmall,
+                    iconSize: 14,
+                    onTap: () => openExternal(Links.ticket),
+                  ),
                 ],
               ),
               // Star / heart ribbon.
@@ -195,54 +220,20 @@ class _TierCard extends StatelessWidget {
   }
 }
 
-/// Purchase not open yet — non-interactive dashed "coming soon" state.
-class _TbdCta extends StatelessWidget {
-  final String label;
-  const _TbdCta({required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.forbidden,
-      child: DashedBorder(
-        color: FKColors.borderStrong,
-        radius: FKRadii.full,
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 13.6),
-          decoration: BoxDecoration(
-            color: FKColors.white,
-            borderRadius: BorderRadius.circular(FKRadii.full),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              StrokeIcon(
-                FkIcons.clock,
-                size: 15.2,
-                color: FKColors.textDim,
-                strokeWidth: 1.9,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                label,
-                style: sans(size: 15.2, weight: 600, color: FKColors.textDim),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _Note extends StatelessWidget {
   final List<IconShape> icon;
   final bool accent;
   final String text;
+  final String? linkText;
+  final VoidCallback? onLinkTap;
 
-  const _Note({required this.icon, required this.accent, required this.text});
+  const _Note({
+    required this.icon,
+    required this.accent,
+    required this.text,
+    this.linkText,
+    this.onLinkTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -260,10 +251,38 @@ class _Note extends StatelessWidget {
         ),
         const SizedBox(width: 9.6),
         Expanded(
-          child: Text(
-            text,
-            style: sans(size: 14, color: FKColors.textDim, height: 1.55),
-          ),
+          child: linkText == null
+              ? Text(
+                  text,
+                  style: sans(size: 14, color: FKColors.textDim, height: 1.55),
+                )
+              : MouseRegion(
+                  cursor: onLinkTap != null
+                      ? SystemMouseCursors.click
+                      : MouseCursor.defer,
+                  child: GestureDetector(
+                    onTap: onLinkTap,
+                    child: Text.rich(
+                      TextSpan(
+                        text: text,
+                        style: sans(
+                            size: 14, color: FKColors.textDim, height: 1.55),
+                        children: [
+                          const TextSpan(text: ' '),
+                          TextSpan(
+                            text: linkText,
+                            style: sans(
+                              size: 14,
+                              color: FKColors.accent,
+                              weight: 600,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
         ),
       ],
     );

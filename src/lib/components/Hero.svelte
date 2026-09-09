@@ -72,7 +72,19 @@
 				{#each $t.hero.facts.slice(1) as fact (fact.label)}
 					<div class="fact">
 						<dt>{fact.label}</dt>
-						<dd>{fact.value}</dd>
+						{#if fact.href}
+							<dd>
+								<a href={fact.href} target="_blank" rel="noopener noreferrer" class="fact-link">
+									{fact.value}
+									<svg viewBox="0 0 24 24" width="0.85em" height="0.85em" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+										<path d="M7 17L17 7" />
+										<path d="M7 7h10v10" />
+									</svg>
+								</a>
+							</dd>
+						{:else}
+							<dd>{fact.value}</dd>
+						{/if}
 					</div>
 				{/each}
 			</dl>
@@ -256,6 +268,19 @@
 		font-size: 1.02rem;
 		color: var(--white);
 		letter-spacing: -0.01em;
+	}
+	.fact-link {
+		color: var(--white);
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3rem;
+		text-decoration: underline;
+		text-decoration-color: rgba(255, 255, 255, 0.45);
+		text-underline-offset: 3px;
+		transition: text-decoration-color 0.2s var(--ease);
+	}
+	.fact-link:hover {
+		text-decoration-color: var(--white);
 	}
 
 	/* --- Countdown panel ------------------------------------------------------ */

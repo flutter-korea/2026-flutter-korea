@@ -97,11 +97,9 @@ qualify; a pair of named concepts does not.
 ## "To be announced" sections
 
 Sessions, Timetable, and Sponsors are intentionally in a **TBD state**: each renders its heading plus the shared
-`ComingSoon.svelte` panel (badge / title / body / optional CTA). Tickets shows pricing but its purchase buttons
-are a non-interactive "coming soon" state (`.tier-cta-tbd`). The active conversion path is speaker recruitment —
-all "Apply to Speak" CTAs (Header, Hero, the CFP section) route to the `/speakers` overview page, whose Apply
-button links out to the Google Form (`links.cfp`). When real content is confirmed, restore the detailed
-rendering and update `content.js`.
+`ComingSoon.svelte` panel (badge / title / body / optional CTA). Tickets is open and links to the Ticketa booking
+page (`links.ticket`). The speaker recruitment path routes to the `/speakers` overview page (`links.cfp`).
+When remaining real content is confirmed, restore the detailed rendering and update `content.js`.
 
 ## Deploy
 

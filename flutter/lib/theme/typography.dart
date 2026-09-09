@@ -40,6 +40,8 @@ TextStyle sans({
   Color color = FKColors.ink,
   double? height,
   double? letterSpacing,
+  TextDecoration? decoration,
+  Color? decorationColor,
 }) {
   return TextStyle(
     fontFamily: kFontSans,
@@ -49,6 +51,8 @@ TextStyle sans({
     color: color,
     height: height,
     letterSpacing: letterSpacing,
+    decoration: decoration,
+    decorationColor: decorationColor,
   );
 }
 
