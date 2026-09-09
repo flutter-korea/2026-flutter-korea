@@ -10,8 +10,11 @@ library;
 abstract final class Links {
   /// Call for Speakers — session proposal Google Form.
   static const cfp = 'https://forms.gle/PGG9Kvd7Z7xkVPs3A';
-  static const tickettaco = 'https://tickettaco.io';
+  static const ticket = 'https://ticketa.co/event/c9xsstcs';
+  static const ticketaco = 'https://ticketa.co/event/c9xsstcs';
+  static const venueMap = 'https://maps.app.goo.gl/RSkiDXQxdRXUJqpA9';
   static const meetup = 'https://www.meetup.com/ko-kr/flutter-korea/';
+  static const kakaoTalk = 'https://open.kakao.com/o/gdL2Gj1e';
   static const discord = 'https://flutter-seoul.com';
   static const email = 'mailto:flutter-seoul@googlegroups.com';
 }
@@ -72,7 +75,8 @@ class NavStrings {
 class LabelValue {
   final String label;
   final String value;
-  const LabelValue({required this.label, required this.value});
+  final String? href;
+  const LabelValue({required this.label, required this.value, this.href});
 }
 
 class HeroStrings {
@@ -251,21 +255,29 @@ class TicketsStrings {
   final String title;
   final String lead;
   final String statusBadge;
+  final String cta;
   final String ctaTbd;
   final String currency;
   final List<TicketTier> tiers;
   final String platformNote;
   final String speakerNote;
+  final String venueNote;
+  final String venueMapLinkText;
+  final String platformLinkText;
   const TicketsStrings({
     required this.kicker,
     required this.title,
     required this.lead,
     required this.statusBadge,
+    required this.cta,
     required this.ctaTbd,
     required this.currency,
     required this.tiers,
     required this.platformNote,
     required this.speakerNote,
+    required this.venueNote,
+    required this.venueMapLinkText,
+    required this.platformLinkText,
   });
 }
 
@@ -426,7 +438,7 @@ const koContent = Content(
     facts: [
       LabelValue(label: '일시', value: '2026.11.07 (토)'),
       LabelValue(label: '시간', value: '11:00 – 18:00'),
-      LabelValue(label: '장소', value: 'Seoul (TBD)'),
+      LabelValue(label: '장소', value: 'AWS 코리아', href: Links.venueMap),
       LabelValue(label: '주최', value: 'Flutter Seoul'),
     ],
     scroll: 'Scroll',
@@ -498,6 +510,7 @@ const koContent = Content(
       LabelValue(label: 'DATE', value: '2026.11.07 (토)'),
       LabelValue(label: 'DOORS', value: '10:30 접수'),
       LabelValue(label: 'PROGRAM', value: '11:00 – 18:00'),
+      LabelValue(label: 'VENUE', value: 'AWS 코리아 (센터필드 EAST 12층)'),
     ],
     comingSoon: ComingSoonStrings(
       badge: '향후 공개 예정',
@@ -519,8 +532,10 @@ const koContent = Content(
   tickets: TicketsStrings(
     kicker: 'Tickets',
     title: '티켓',
-    lead: '티켓 예매 페이지를 준비하고 있습니다. 가격 정보를 먼저 확인하세요 — 오픈 시 안내드립니다.',
-    statusBadge: '구매 오픈 예정',
+    lead:
+        'Flutter Korea 2026 티켓 예매가 오픈되었습니다. 티켓타코(Ticketaco)에서 지금 바로 예매하세요.',
+    statusBadge: '예매 오픈',
+    cta: '티켓 예매하기',
     ctaTbd: '오픈 예정',
     currency: '₩',
     tiers: [
@@ -529,13 +544,13 @@ const koContent = Content(
         price: '10,000',
         badge: '선착순 30장',
         featured: true,
-        features: ['8월 중순 오픈 예정', '선착순 30장 한정', '전 세션 및 파이어사이드 챗 입장'],
+        features: ['얼리버드 특별가', '선착순 30장 한정', '전 세션 및 파이어사이드 챗 입장'],
       ),
       TicketTier(
         name: '일반',
         price: '20,000',
         badge: '최종 확정가',
-        features: ['전 세션 및 파이어사이드 챗 입장', '점심 및 네트워킹', '후원사 부스 참여'],
+        features: ['전 세션 및 파이어사이드 챗 입장', '네트워킹', '후원사 부스 참여'],
       ),
       TicketTier(
         name: 'Flutter Lover',
@@ -545,8 +560,11 @@ const koContent = Content(
         features: ['전 세션 및 파이어사이드 챗 입장', '개인 후원자 명단 등재'],
       ),
     ],
-    platformNote: '예매 플랫폼 · 티켓타코(Tickettaco) — 2026년 8월 오픈 예정 (대관지 확정 후)',
+    platformNote: '예매 플랫폼 · 티켓타코(Ticketaco) 공식 이벤트 페이지',
     speakerNote: '연사자는 티켓 구매가 필요하지 않습니다.',
+    venueNote: '행사 장소 · AWS 코리아 (서울 강남구 테헤란로 231 센터필드 EAST 12층 / 주차 지원 불가, 대중교통 이용 권장)',
+    venueMapLinkText: '지도 보기',
+    platformLinkText: '예매 바로가기',
   ),
   sponsors: SponsorsStrings(
     kicker: 'Sponsors',
@@ -658,7 +676,7 @@ const enContent = Content(
     facts: [
       LabelValue(label: 'Date', value: 'Sat, Nov 7, 2026'),
       LabelValue(label: 'Time', value: '11:00 – 18:00'),
-      LabelValue(label: 'Venue', value: 'Seoul (TBD)'),
+      LabelValue(label: 'Venue', value: 'AWS Korea', href: Links.venueMap),
       LabelValue(label: 'Host', value: 'Flutter Seoul'),
     ],
     scroll: 'Scroll',
@@ -741,6 +759,7 @@ const enContent = Content(
       LabelValue(label: 'DATE', value: 'Sat, Nov 7, 2026'),
       LabelValue(label: 'DOORS', value: '10:30 check-in'),
       LabelValue(label: 'PROGRAM', value: '11:00 – 18:00'),
+      LabelValue(label: 'VENUE', value: 'AWS Korea (Centerfield East 12F)'),
     ],
     comingSoon: ComingSoonStrings(
       badge: 'To be announced',
@@ -764,8 +783,9 @@ const enContent = Content(
     kicker: 'Tickets',
     title: 'Tickets',
     lead:
-        'The ticket booking page is on its way. Here’s the pricing in advance — we’ll let you know when it opens.',
-    statusBadge: 'Purchase opening soon',
+        'Tickets for Flutter Korea 2026 are now available. Get your tickets now on Ticketaco.',
+    statusBadge: 'Tickets Available',
+    cta: 'Get Tickets',
     ctaTbd: 'Coming soon',
     currency: '₩',
     tiers: [
@@ -774,13 +794,13 @@ const enContent = Content(
         price: '10,000',
         badge: 'First 30 only',
         featured: true,
-        features: ['Opens mid-August', 'Limited to the first 30', 'All sessions + fireside chat'],
+        features: ['Early bird special', 'Limited to the first 30', 'All sessions + fireside chat'],
       ),
       TicketTier(
         name: 'Standard',
         price: '20,000',
         badge: 'Final price',
-        features: ['All sessions + fireside chat', 'Lunch & networking', 'Sponsor booth access'],
+        features: ['All sessions + fireside chat', 'Networking', 'Sponsor booth access'],
       ),
       TicketTier(
         name: 'Flutter Lover',
@@ -790,8 +810,11 @@ const enContent = Content(
         features: ['All sessions + fireside chat', 'Listed as a personal supporter'],
       ),
     ],
-    platformNote: 'Booking via Tickettaco — opening August 2026 (after the venue is confirmed).',
+    platformNote: 'Ticketing platform · Available on Ticketaco official event page.',
     speakerNote: 'Speakers do not need to purchase a ticket.',
+    venueNote: 'Venue · AWS Korea (Centerfield East 12F, 231 Teheran-ro, Gangnam-gu, Seoul / Public transit recommended)',
+    venueMapLinkText: 'View Map',
+    platformLinkText: 'Go to Ticketaco',
   ),
   sponsors: SponsorsStrings(
     kicker: 'Sponsors',

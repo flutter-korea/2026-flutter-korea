@@ -250,7 +250,8 @@ class _FactsBar extends StatelessWidget {
     final narrow = vw < Bp.facts;
 
     Widget fact(LabelValue f, {required bool divider}) {
-      final content = LabeledValue(
+      final hasLink = f.href != null;
+      final labelWidget = LabeledValue(
         label: f.label,
         value: f.value,
         labelStyle: mono(
@@ -264,8 +265,33 @@ class _FactsBar extends StatelessWidget {
           weight: 700,
           color: FKColors.white,
           letterSpacing: -0.16,
+          decoration: hasLink ? TextDecoration.underline : null,
         ),
       );
+      final content = hasLink
+          ? MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () => openExternal(f.href!),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    labelWidget,
+                    const SizedBox(width: 4),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 14),
+                      child: StrokeIcon(
+                        FkIcons.upRightSmall,
+                        size: 11.2,
+                        color: const Color(0xADFFFFFF),
+                        strokeWidth: 2,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          : labelWidget;
       return IntrinsicHeight(
         child: Row(
           mainAxisSize: MainAxisSize.min,
