@@ -22,6 +22,7 @@
 					class="tier card reveal"
 					class:is-featured={tier.featured}
 					class:is-support={tier.support}
+					class:is-sold-out={tier.soldOut}
 					use:reveal={{ delay: 80 + i * 80 }}
 				>
 					{#if tier.featured}
@@ -83,30 +84,41 @@
 						{/each}
 					</ul>
 
-					<a
-						class="btn tier-cta"
-						class:btn-primary={tier.featured}
-						class:btn-ghost={!tier.featured}
-						href={links.ticket}
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						{$t.tickets.cta}
-						<svg
-							viewBox="0 0 24 24"
-							width="1.1em"
-							height="1.1em"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2.2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							aria-hidden="true"
+					{#if tier.soldOut}
+						<button
+							type="button"
+							class="btn tier-cta btn-sold-out"
+							disabled
+							aria-disabled="true"
 						>
-							<path d="M7 17L17 7" />
-							<path d="M7 7h10v10" />
-						</svg>
-					</a>
+							{$t.tickets.soldOut}
+						</button>
+					{:else}
+						<a
+							class="btn tier-cta"
+							class:btn-primary={tier.featured}
+							class:btn-ghost={!tier.featured}
+							href={links.ticket}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							{$t.tickets.cta}
+							<svg
+								viewBox="0 0 24 24"
+								width="1.1em"
+								height="1.1em"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2.2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								aria-hidden="true"
+							>
+								<path d="M7 17L17 7" />
+								<path d="M7 7h10v10" />
+							</svg>
+						</a>
+					{/if}
 				</li>
 			{/each}
 		</ul>
@@ -304,6 +316,24 @@
 	.tier-cta {
 		margin-top: auto;
 		width: 100%;
+	}
+
+	.tier.is-sold-out {
+		opacity: 0.85;
+	}
+
+	.tier.is-sold-out .price-num {
+		color: var(--text-dim);
+	}
+
+	.btn-sold-out,
+	.btn-sold-out:hover {
+		background: var(--paper-strong, #edf2f7);
+		color: var(--text-dim, #94a3b8);
+		border: 1.5px solid var(--border);
+		cursor: not-allowed;
+		box-shadow: none;
+		transform: none;
 	}
 
 	/* Status badge in the header */

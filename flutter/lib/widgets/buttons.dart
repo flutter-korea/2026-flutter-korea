@@ -24,7 +24,7 @@ enum FkButtonVariant {
 /// when [iconSlides] is set (`.apply:hover svg`).
 class FkButton extends StatelessWidget {
   final String label;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final FkButtonVariant variant;
   final List<IconShape>? icon;
   final double iconSize;
@@ -32,11 +32,12 @@ class FkButton extends StatelessWidget {
   final EdgeInsets padding;
   final bool expand;
   final bool iconSlides;
+  final bool disabled;
 
   const FkButton({
     super.key,
     required this.label,
-    required this.onTap,
+    this.onTap,
     this.variant = FkButtonVariant.primary,
     this.icon,
     this.iconSize = 17.6,
@@ -44,10 +45,41 @@ class FkButton extends StatelessWidget {
     this.padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 13.6),
     this.expand = false,
     this.iconSlides = false,
+    this.disabled = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    if (disabled || onTap == null) {
+      return Container(
+        padding: padding,
+        decoration: BoxDecoration(
+          color: FKColors.paperStrong,
+          border: Border.all(color: FKColors.border, width: 1.5),
+          borderRadius: BorderRadius.circular(FKRadii.full),
+        ),
+        child: Row(
+          mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Flexible(
+              child: Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: sans(
+                  size: fontSize,
+                  weight: 700,
+                  color: FKColors.textDim,
+                  letterSpacing: -0.01 * fontSize,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     return HoverBuilder(
       cursor: SystemMouseCursors.click,
       builder: (context, hovered) {

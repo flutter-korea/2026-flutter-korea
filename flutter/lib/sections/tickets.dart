@@ -49,6 +49,7 @@ class TicketsSection extends StatelessWidget {
               tier: t.tiers[i],
               currency: t.currency,
               cta: t.cta,
+              soldOutLabel: t.soldOut,
               vw: vw,
               cardWidth: cellWidth,
             ),
@@ -88,6 +89,7 @@ class _TierCard extends StatelessWidget {
   final TicketTier tier;
   final String currency;
   final String cta;
+  final String soldOutLabel;
   final double vw;
   final double cardWidth;
 
@@ -95,6 +97,7 @@ class _TierCard extends StatelessWidget {
     required this.tier,
     required this.currency,
     required this.cta,
+    required this.soldOutLabel,
     required this.vw,
     required this.cardWidth,
   });
@@ -102,119 +105,136 @@ class _TierCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pad = (vw * 0.03).clamp(27.2, 35.2);
-    final featured = tier.featured;
-    final support = tier.support;
+    final isSoldOut = tier.soldOut;
+    final featured = !isSoldOut && tier.featured;
+    final support = !isSoldOut && tier.support;
     // CSS container query: font-size clamp(2rem, 22cqi, 3.6rem). The card
     // width comes from the grid (a LayoutBuilder here would defeat
     // IntrinsicHeight's row-height calculation and collapse the card).
     final priceSize = (cardWidth * 0.22).clamp(32.0, 57.6).toDouble();
 
-    return LiftCard(
-      padding: EdgeInsets.all(pad),
-      color: featured ? FKColors.paperStrong : FKColors.paper,
-      borderColor: featured
-          ? FKColors.accent
-          : support
-              ? FKColors.borderStrong
-              : FKColors.border,
-      hoverBorderColor: featured ? FKColors.accent : FKColors.borderStrong,
-      lift: featured ? 6 : 4,
-      hoverShadow: featured ? FKShadows.lift : FKShadows.card,
-      topAccent: false,
-      builder: (context, hovered) => Stack(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  FkChip(
-                    label: tier.badge,
-                    uppercase: true,
-                    borderColor:
-                        featured ? FKColors.accent : FKColors.border,
-                    textColor:
-                        featured ? FKColors.accent : FKColors.textMuted,
-                  ),
-                  const SizedBox(height: 13.6),
-                  Text(tier.name, style: heading(size: FKType.h3(vw))),
-                  const SizedBox(height: 22.4),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 4),
-                        child: Text(
-                          currency,
-                          style: mono(
-                              size: 18.4,
-                              weight: 600,
-                              color: FKColors.textMuted,
-                              height: 1),
-                        ),
-                      ),
-                      const SizedBox(width: 5.6),
-                      Flexible(
-                        child: Text(
-                          tier.price,
-                          maxLines: 1,
-                          style: sans(
-                            size: priceSize,
-                            weight: 800,
-                            color: (featured || support)
-                                ? FKColors.blue700
-                                : FKColors.ink,
-                            height: 1,
-                            letterSpacing: -0.03 * priceSize,
+    return Opacity(
+      opacity: isSoldOut ? 0.78 : 1.0,
+      child: LiftCard(
+        padding: EdgeInsets.all(pad),
+        color: featured ? FKColors.paperStrong : FKColors.paper,
+        borderColor: featured
+            ? FKColors.accent
+            : isSoldOut
+                ? FKColors.border
+                : support
+                    ? FKColors.borderStrong
+                    : FKColors.border,
+        hoverBorderColor: isSoldOut
+            ? FKColors.border
+            : featured
+                ? FKColors.accent
+                : FKColors.borderStrong,
+        lift: isSoldOut ? 0 : (featured ? 6 : 4),
+        hoverShadow: isSoldOut
+            ? FKShadows.card
+            : (featured ? FKShadows.lift : FKShadows.card),
+        topAccent: false,
+        builder: (context, hovered) => Stack(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    FkChip(
+                      label: tier.badge,
+                      uppercase: true,
+                      borderColor: isSoldOut
+                          ? FKColors.border
+                          : (featured ? FKColors.accent : FKColors.border),
+                      textColor: isSoldOut
+                          ? FKColors.textDim
+                          : (featured ? FKColors.accent : FKColors.textMuted),
+                    ),
+                    const SizedBox(height: 13.6),
+                    Text(tier.name, style: heading(size: FKType.h3(vw))),
+                    const SizedBox(height: 22.4),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 4),
+                          child: Text(
+                            currency,
+                            style: mono(
+                                size: 18.4,
+                                weight: 600,
+                                color: FKColors.textMuted,
+                                height: 1),
                           ),
                         ),
+                        const SizedBox(width: 5.6),
+                        Flexible(
+                          child: Text(
+                            tier.price,
+                            maxLines: 1,
+                            style: sans(
+                              size: priceSize,
+                              weight: 800,
+                              color: isSoldOut
+                                  ? FKColors.textDim
+                                  : (featured || support)
+                                      ? FKColors.blue700
+                                      : FKColors.ink,
+                              height: 1,
+                              letterSpacing: -0.03 * priceSize,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 22.4),
+                    for (final feature in tier.features)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        child: CheckRow(feature),
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 22.4),
-                  for (final feature in tier.features)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 12),
-                      child: CheckRow(feature),
+                    const Spacer(),
+                    const SizedBox(height: 10.4),
+                    FkButton(
+                      label: isSoldOut ? soldOutLabel : cta,
+                      disabled: isSoldOut,
+                      variant: featured
+                          ? FkButtonVariant.primary
+                          : FkButtonVariant.ghost,
+                      expand: true,
+                      icon: isSoldOut ? null : FkIcons.upRightSmall,
+                      iconSize: 14,
+                      onTap: isSoldOut ? null : () => openExternal(Links.ticket),
                     ),
-                  const Spacer(),
-                  const SizedBox(height: 10.4),
-                  FkButton(
-                    label: cta,
-                    variant: featured
-                        ? FkButtonVariant.primary
-                        : FkButtonVariant.ghost,
-                    expand: true,
-                    icon: FkIcons.upRightSmall,
-                    iconSize: 14,
-                    onTap: () => openExternal(Links.ticket),
-                  ),
-                ],
-              ),
-              // Star / heart ribbon.
-              if (featured || support)
-                Positioned(
-                  top: 0,
-                  right: 0,
-                  child: Container(
-                    width: 35.2,
-                    height: 35.2,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: featured ? FKColors.accent : FKColors.white,
-                      border: featured
-                          ? null
-                          : Border.all(color: FKColors.borderStrong),
-                    ),
-                    alignment: Alignment.center,
-                    child: StrokeIcon(
-                      featured ? FkIcons.star : FkIcons.heartFill,
-                      size: 17.6,
-                      color: featured ? FKColors.white : FKColors.accent,
-                      strokeWidth: 2,
-                    ),
-                  ),
+                  ],
                 ),
-            ],
-          ),
+                // Star / heart ribbon.
+                if (featured || support)
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: Container(
+                      width: 35.2,
+                      height: 35.2,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: featured ? FKColors.accent : FKColors.white,
+                        border: featured
+                            ? null
+                            : Border.all(color: FKColors.borderStrong),
+                      ),
+                      alignment: Alignment.center,
+                      child: StrokeIcon(
+                        featured ? FkIcons.star : FkIcons.heartFill,
+                        size: 17.6,
+                        color: featured ? FKColors.white : FKColors.accent,
+                        strokeWidth: 2,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+      ),
     );
   }
 }

@@ -10,6 +10,8 @@ const assetName = (name) => {
 const schedule = Object.fromEntries(['ko', 'en'].map((lang) => [lang, {
   title: dict[lang].timetable.title,
   lead: dict[lang].timetable.lead,
+  trackAi: dict[lang].timetable.tracks.ai,
+  trackFlutter: dict[lang].timetable.tracks.flutter,
   rows: dict[lang].timetable.tracks.rows.filter((row) =>
     !row.empty && row.start >= '11:00' && row.end <= '18:00'),
 }]));

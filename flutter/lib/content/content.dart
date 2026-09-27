@@ -239,6 +239,7 @@ class TicketTier {
   final String badge;
   final bool featured;
   final bool support;
+  final bool soldOut;
   final List<String> features;
   const TicketTier({
     required this.name,
@@ -246,6 +247,7 @@ class TicketTier {
     required this.badge,
     this.featured = false,
     this.support = false,
+    this.soldOut = false,
     required this.features,
   });
 }
@@ -257,6 +259,7 @@ class TicketsStrings {
   final String statusBadge;
   final String cta;
   final String ctaTbd;
+  final String soldOut;
   final String currency;
   final List<TicketTier> tiers;
   final String platformNote;
@@ -271,6 +274,7 @@ class TicketsStrings {
     required this.statusBadge,
     required this.cta,
     required this.ctaTbd,
+    this.soldOut = '매진',
     required this.currency,
     required this.tiers,
     required this.platformNote,
@@ -549,19 +553,22 @@ const koContent = Content(
     statusBadge: '예매 오픈',
     cta: '티켓 예매하기',
     ctaTbd: '오픈 예정',
+    soldOut: '매진',
     currency: '₩',
     tiers: [
       TicketTier(
         name: '얼리버드',
         price: '10,000',
-        badge: '선착순 30장',
-        featured: true,
+        badge: '매진',
+        featured: false,
+        soldOut: true,
         features: ['얼리버드 특별가', '선착순 30장 한정', '전 세션 및 파이어사이드 챗 입장'],
       ),
       TicketTier(
         name: '일반',
         price: '20,000',
         badge: '최종 확정가',
+        featured: true,
         features: ['전 세션 및 파이어사이드 챗 입장', '네트워킹', '후원사 부스 참여'],
       ),
       TicketTier(
@@ -802,19 +809,22 @@ const enContent = Content(
     statusBadge: 'Tickets Available',
     cta: 'Get Tickets',
     ctaTbd: 'Coming soon',
+    soldOut: 'Sold Out',
     currency: '₩',
     tiers: [
       TicketTier(
         name: 'Early Bird',
         price: '10,000',
-        badge: 'First 30 only',
-        featured: true,
+        badge: 'Sold Out',
+        featured: false,
+        soldOut: true,
         features: ['Early bird special', 'Limited to the first 30', 'All sessions + fireside chat'],
       ),
       TicketTier(
         name: 'Standard',
         price: '20,000',
         badge: 'Final price',
+        featured: true,
         features: ['All sessions + fireside chat', 'Networking', 'Sponsor booth access'],
       ),
       TicketTier(
