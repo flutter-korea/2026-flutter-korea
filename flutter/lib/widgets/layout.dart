@@ -5,15 +5,20 @@ import '../theme/tokens.dart';
 /// `.container` — centered, max-width 1200, fluid gutter.
 class FkContainer extends StatelessWidget {
   final Widget child;
+  final double maxWidth;
 
-  const FkContainer({super.key, required this.child});
+  const FkContainer({
+    super.key,
+    required this.child,
+    this.maxWidth = FKLayout.container,
+  });
 
   @override
   Widget build(BuildContext context) {
     final vw = MediaQuery.sizeOf(context).width;
     return Center(
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: FKLayout.container),
+        constraints: BoxConstraints(maxWidth: maxWidth),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: FKLayout.gutter(vw)),
           child: child,
@@ -26,15 +31,20 @@ class FkContainer extends StatelessWidget {
 /// `.section` — fluid vertical rhythm around a contained child.
 class FkSection extends StatelessWidget {
   final Widget child;
+  final double maxWidth;
 
-  const FkSection({super.key, required this.child});
+  const FkSection({
+    super.key,
+    required this.child,
+    this.maxWidth = FKLayout.container,
+  });
 
   @override
   Widget build(BuildContext context) {
     final vw = MediaQuery.sizeOf(context).width;
     return Padding(
       padding: EdgeInsets.symmetric(vertical: FKLayout.sectionY(vw)),
-      child: FkContainer(child: child),
+      child: FkContainer(maxWidth: maxWidth, child: child),
     );
   }
 }
@@ -49,7 +59,7 @@ class FkSection extends StatelessWidget {
 class AutoGrid extends StatelessWidget {
   final int itemCount;
   final Widget Function(BuildContext context, int index, double cellWidth)
-      itemBuilder;
+  itemBuilder;
   final double gap;
   final double? minCellWidth;
   final int Function(double maxWidth)? columnsFor;
@@ -63,17 +73,19 @@ class AutoGrid extends StatelessWidget {
     this.minCellWidth,
     this.columnsFor,
     this.emptyCellBuilder,
-  }) : assert(minCellWidth != null || columnsFor != null,
-            'Provide minCellWidth (auto-fit) or columnsFor (explicit)');
+  }) : assert(
+         minCellWidth != null || columnsFor != null,
+         'Provide minCellWidth (auto-fit) or columnsFor (explicit)',
+       );
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
         final w = constraints.maxWidth;
-        final cols = (columnsFor?.call(w) ??
-                ((w + gap) / (minCellWidth! + gap)).floor())
-            .clamp(1, itemCount);
+        final cols =
+            (columnsFor?.call(w) ?? ((w + gap) / (minCellWidth! + gap)).floor())
+                .clamp(1, itemCount);
         final cellWidth = (w - gap * (cols - 1)) / cols;
         return Column(
           children: [
@@ -90,7 +102,7 @@ class AutoGrid extends StatelessWidget {
                           child: row * cols + c < itemCount
                               ? itemBuilder(context, row * cols + c, cellWidth)
                               : emptyCellBuilder?.call(context) ??
-                                  const SizedBox(),
+                                    const SizedBox(),
                         ),
                       ],
                     ],
@@ -169,12 +181,17 @@ class TwoCol extends StatelessWidget {
     if (!twoCol) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [left, SizedBox(height: stackedGap ?? gap), right],
+        children: [
+          left,
+          SizedBox(height: stackedGap ?? gap),
+          right,
+        ],
       );
     }
     final row = Row(
-      crossAxisAlignment:
-          stretch ? CrossAxisAlignment.stretch : CrossAxisAlignment.center,
+      crossAxisAlignment: stretch
+          ? CrossAxisAlignment.stretch
+          : CrossAxisAlignment.center,
       children: [
         Expanded(flex: leftFlex, child: left),
         SizedBox(width: gap),

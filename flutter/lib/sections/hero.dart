@@ -129,12 +129,6 @@ class _HeroSectionState extends State<HeroSection> {
             runSpacing: 13.6,
             children: [
               FkButton(
-                label: t.ctaPrimary,
-                variant: FkButtonVariant.onGradient,
-                onTap: () => goSpeakers(context),
-                icon: FkIcons.arrowRight,
-              ),
-              FkButton(
                 label: t.ctaSecondary,
                 variant: FkButtonVariant.outlineOnGradient,
                 onTap: () => widget.hub.scrollTo('about'),

@@ -2,7 +2,6 @@
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import { lang, setLang } from '$lib/i18n.js';
-	import AnnouncementBar from '$lib/components/AnnouncementBar.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 
@@ -10,10 +9,7 @@
 
 	const STORAGE_KEY = 'fk26-lang';
 
-	// At scroll 0 the announcement bar slides down and pushes the header below
-	// it; on any scroll the bar slides out and the header pins to the viewport
-	// top (both animate their `top` in AnnouncementBar/Header, driven by this
-	// one flag).
+	// Keep the header shadow state in sync with scrolling.
 	let collapsed = $state(false);
 
 	onMount(() => {
@@ -50,7 +46,6 @@
 
 <a class="skip-link" href="#main">Skip to content</a>
 
-<AnnouncementBar {collapsed} />
 <Header {collapsed} />
 
 <main id="main">

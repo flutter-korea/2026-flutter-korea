@@ -12,7 +12,7 @@ abstract final class Links {
   static const cfp = 'https://forms.gle/PGG9Kvd7Z7xkVPs3A';
   static const ticket = 'https://ticketa.co/event/c9xsstcs';
   static const ticketaco = 'https://ticketa.co/event/c9xsstcs';
-  static const venueMap = 'https://maps.app.goo.gl/RSkiDXQxdRXUJqpA9';
+  static const venueMap = 'https://naver.me/x1uTWoUP';
   static const meetup = 'https://www.meetup.com/ko-kr/flutter-korea/';
   static const kakaoTalk = 'https://open.kakao.com/o/gdL2Gj1e';
   static const discord = 'https://flutter-seoul.com';
@@ -430,7 +430,6 @@ const koContent = Content(
     brand: 'Flutter Korea 2026',
     links: [
       NavLink(id: 'about', label: '소개'),
-      NavLink(id: 'sessions', label: '세션'),
       NavLink(id: 'timetable', label: '타임테이블'),
       NavLink(id: 'tickets', label: '티켓'),
       NavLink(id: 'sponsors', label: '후원사'),
@@ -445,7 +444,7 @@ const koContent = Content(
     sloganBottom: 'Move Forward',
     subtitle: '기술의 본질로 돌아가, 두려움 없이 미래를 정의하다',
     description:
-        '변화가 일상이 된 시대. 단단한 기본기를 무기 삼아 AI와 함께 미래를 정의하는 하루. 지금은 이 무대를 채울 연사를 모집하고 있습니다.',
+        '변화가 일상이 된 시대. 단단한 기본기를 무기 삼아 AI와 함께 미래를 정의하는 하루. Flutter와 AI의 세션과 교류를 만나보세요.',
     ctaPrimary: '연사 지원하기',
     ctaSecondary: '행사 소개 보기',
     facts: [
@@ -672,7 +671,6 @@ const enContent = Content(
     brand: 'Flutter Korea 2026',
     links: [
       NavLink(id: 'about', label: 'About'),
-      NavLink(id: 'sessions', label: 'Sessions'),
       NavLink(id: 'timetable', label: 'Timetable'),
       NavLink(id: 'tickets', label: 'Tickets'),
       NavLink(id: 'sponsors', label: 'Sponsors'),
@@ -687,7 +685,7 @@ const enContent = Content(
     sloganBottom: 'Move Forward',
     subtitle: 'Return to the essence of technology, and fearlessly define the future.',
     description:
-        'In an era where change is the default, we spend a day defining the future with AI, armed with unshakable fundamentals. Right now, we’re recruiting the speakers to fill this stage.',
+        'In an era where change is the default, we spend a day defining the future with AI, armed with unshakable fundamentals. Join Flutter and AI sessions and conversations.',
     ctaPrimary: 'Apply to Speak',
     ctaSecondary: 'Learn More',
     facts: [

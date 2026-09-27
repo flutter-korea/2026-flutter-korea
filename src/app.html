@@ -8,14 +8,12 @@
 			// SvelteKit is the default; `?mode=svelte` / `?mode=sveltekit` opt in
 			// to it explicitly (the Flutter app honors them by redirecting back).
 			// Runs first thing in <head> so the redirect happens before any paint.
-			// `%sveltekit.assets%` resolves per-page ('.' from /, '..' from
-			// /speakers/), so the target works locally, on Pages, and on forks.
+			// `%sveltekit.assets%` resolves per-page, so the target works locally,
+			// on Pages, and on forks.
 			(function () {
 				var mode = (new URLSearchParams(location.search).get('mode') || '').toLowerCase();
 				if (mode !== 'flutter') return; // default & explicit svelte/sveltekit stay here
 				var url = new URL('%sveltekit.assets%/flutter/', location.href);
-				// The Flutter app routes with the URL hash.
-				if (/\/speakers\/?$/.test(location.pathname)) url.hash = '#/speakers';
 				location.replace(url);
 			})();
 		</script>

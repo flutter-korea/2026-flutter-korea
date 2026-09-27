@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "sync:flutter": "node scripts/sync-flutter-schedule.mjs",
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",

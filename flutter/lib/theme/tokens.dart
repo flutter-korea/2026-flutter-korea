@@ -84,7 +84,7 @@ abstract final class FKMotion {
 abstract final class FKLayout {
   static const container = 1200.0;
   static const headerH = 68.0;
-  static const announceH = 40.0;
+  static const announceH = 0.0;
 
   /// --gutter: clamp(1.25rem, 5vw, 3rem)
   static double gutter(double vw) => (vw * 0.05).clamp(20.0, 48.0);

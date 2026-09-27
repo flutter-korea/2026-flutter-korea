@@ -1,10 +1,8 @@
 import 'package:flutter/widgets.dart';
 
 import '../sections/about.dart';
-import '../sections/cfp.dart';
 import '../sections/hero.dart';
 import '../sections/overview.dart';
-import '../sections/sessions.dart';
 import '../sections/sponsors.dart';
 import '../sections/tickets.dart';
 import '../sections/timetable.dart';
@@ -48,17 +46,13 @@ class _HomePageState extends State<HomePage> {
       hub: _hub,
       children: [
         HeroSection(hub: _hub),
-        FkSection(
-          key: _hub.keyFor('overview'),
-          child: const OverviewSection(),
-        ),
+        FkSection(key: _hub.keyFor('overview'), child: const OverviewSection()),
         FkSection(key: _hub.keyFor('about'), child: const AboutSection()),
-        FkSection(key: _hub.keyFor('sessions'), child: const SessionsSection()),
         FkSection(
           key: _hub.keyFor('timetable'),
+          maxWidth: double.infinity,
           child: const TimetableSection(),
         ),
-        FkSection(key: _hub.keyFor('speakers'), child: const CfpSection()),
         FkSection(key: _hub.keyFor('tickets'), child: const TicketsSection()),
         FkSection(key: _hub.keyFor('sponsors'), child: const SponsorsSection()),
         SiteFooter(hub: _hub),
