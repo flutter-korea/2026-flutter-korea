@@ -221,6 +221,7 @@ class CfpStrings {
   final String ctaNote;
   final String deadlineLabel;
   final String deadline;
+  final bool closed;
   const CfpStrings({
     required this.kicker,
     required this.title,
@@ -230,6 +231,7 @@ class CfpStrings {
     required this.ctaNote,
     required this.deadlineLabel,
     required this.deadline,
+    this.closed = true,
   });
 }
 
@@ -341,6 +343,7 @@ class SpeakerPageStrings {
   final String applyCta;
   final String applyNote;
   final String back;
+  final bool closed;
   const SpeakerPageStrings({
     required this.metaTitle,
     required this.kicker,
@@ -359,6 +362,7 @@ class SpeakerPageStrings {
     required this.applyCta,
     required this.applyNote,
     required this.back,
+    this.closed = true,
   });
 }
 
@@ -503,13 +507,13 @@ const koContent = Content(
   sessions: SessionsStrings(
     kicker: 'Program',
     title: '세션',
-    lead: '세션 라인업을 준비하고 있습니다. 지금은 연사를 모집하는 중이에요. 여러분의 이야기로 무대를 채워 주세요.',
+    lead: 'AI와 Flutter의 현재를 다루는 세션과 깊이 있는 교류의 시간을 준비했습니다.',
     comingSoon: ComingSoonStrings(
-      badge: '향후 공개 예정',
-      title: '세션 라인업 준비 중',
-      body: '엄선된 세션 라인업을 곧 공개합니다. 발표에 관심이 있다면 지금 연사로 지원해 무대의 주인공이 되어 주세요.',
+      badge: '라인업 확정',
+      title: '세션 라인업 확정',
+      body: 'AI와 Flutter의 현재를 다루는 엄선된 세션 라인업입니다. 상세 일정은 타임테이블에서 확인하실 수 있습니다.',
     ),
-    cta: '연사 지원하기',
+    cta: '타임테이블 보기',
     mentoring: MentoringStrings(
       badge: 'Confirmed · 60 min',
       title: '연차별 파이어사이드 챗',
@@ -536,14 +540,15 @@ const koContent = Content(
   ),
   cfp: CfpStrings(
     kicker: 'Call for Speakers',
-    title: '무대의 주인공을 찾습니다',
+    title: '연사 모집이 마감되었습니다',
     body:
-        '당신의 기본기와 도전 이야기를 Flutter Korea 2026 무대에서 나눠 주세요. 구글러부터 일반 세션 지원자까지 누구나 환영합니다.',
+        'Flutter Korea 2026 연사 모집(Call for Speakers)이 성황리에 마감되었습니다. 많은 관심과 지원에 감사드리며, 타임테이블에서 확정된 세션을 확인해 보세요.',
     perks: ['연사자는 티켓 구매 불필요', '공식 발표 슬라이드 템플릿 제공', '세션 주제 자유 제안'],
-    cta: '연사 모집 자세히 보기',
-    ctaNote: '지원 개요 페이지로 이동합니다',
-    deadlineLabel: '모집 대상',
-    deadline: '구글러 및 일반 세션 지원자',
+    cta: '모집 마감',
+    ctaNote: '연사 모집이 종료되었습니다',
+    deadlineLabel: '모집 상태',
+    deadline: '모집 마감',
+    closed: true,
   ),
   tickets: TicketsStrings(
     kicker: 'Tickets',
@@ -603,11 +608,11 @@ const koContent = Content(
     cta: '후원 문의하기',
   ),
   speakerPage: SpeakerPageStrings(
-    metaTitle: '연사 모집 · Flutter Korea 2026',
+    metaTitle: '연사 모집 마감 · Flutter Korea 2026',
     kicker: 'Call for Speakers',
-    title: 'Flutter Korea 2026\n세션을 제안하세요',
+    title: 'Flutter Korea 2026\n연사 모집이 마감되었습니다',
     intro:
-        'Flutter 생태계에 대한 흥미롭고, 기술적이며, 혁신적인 발표를 찾고 있습니다. 여러분의 세션 제안을 기다립니다. 구글러부터 첫 발표에 도전하는 분까지 누구나 환영합니다.',
+        'Flutter 생태계에 대한 많은 관심과 지원 감사드립니다. Flutter Korea 2026 연사 모집(Call for Speakers)이 마감되었습니다. 타임테이블을 통해 확정된 세션을 만나보세요.',
     dateLabel: '행사일',
     date: '2026년 11월 7일 (토)',
     levelsTitle: '난이도 · Target Audience Level',
@@ -645,9 +650,10 @@ const koContent = Content(
     ],
     perksTitle: '연사 혜택',
     perks: ['연사 티켓 무료 제공', '공식 발표 슬라이드 템플릿 제공', '세션 주제 자유 제안'],
-    applyCta: '지원하기',
-    applyNote: 'Google Form으로 이동합니다',
+    applyCta: '모집 마감',
+    applyNote: '연사 모집이 종료되었습니다',
     back: '홈으로 돌아가기',
+    closed: true,
   ),
   footer: FooterStrings(
     tagline: '기술의 본질로 돌아가, 두려움 없이 미래를 정의하다.',
@@ -756,14 +762,14 @@ const enContent = Content(
     kicker: 'Program',
     title: 'Sessions',
     lead:
-        'The session lineup is in the works. Right now we’re recruiting speakers: help us fill the stage with your story.',
+        'Deep dives into AI and Flutter today, plus meaningful conversations across seniority levels.',
     comingSoon: ComingSoonStrings(
-      badge: 'To be announced',
-      title: 'Session lineup in the works',
+      badge: 'Lineup Confirmed',
+      title: 'Session lineup confirmed',
       body:
-          'A curated lineup is coming soon. If you’d like to present, apply to speak now and take the stage.',
+          'Explore our curated lineup of AI and Flutter sessions. Check the timetable for full details.',
     ),
-    cta: 'Apply to Speak',
+    cta: 'View Timetable',
     mentoring: MentoringStrings(
       badge: 'Confirmed · 60 min',
       title: 'Fireside Chat by Career Level',
@@ -792,14 +798,15 @@ const enContent = Content(
   ),
   cfp: CfpStrings(
     kicker: 'Call for Speakers',
-    title: 'We’re looking for the next voice on stage',
+    title: 'Call for Speakers is Closed',
     body:
-        'Share your story of fundamentals and bold challenges on the Flutter Korea 2026 stage. Everyone is welcome, from Googlers to first-time speakers.',
+        'The Call for Speakers for Flutter Korea 2026 is now closed. Thank you to everyone who submitted proposals. Please check out the confirmed schedule in the timetable.',
     perks: ['Speakers attend free', 'Official slide template provided', 'Propose your own topic'],
-    cta: 'View Call for Speakers',
-    ctaNote: 'Go to the speaker overview page',
-    deadlineLabel: 'Who can apply',
-    deadline: 'Googlers & open session applicants',
+    cta: 'Closed',
+    ctaNote: 'Speaker applications are closed',
+    deadlineLabel: 'Status',
+    deadline: 'Closed',
+    closed: true,
   ),
   tickets: TicketsStrings(
     kicker: 'Tickets',
@@ -860,11 +867,11 @@ const enContent = Content(
     cta: 'Sponsor Inquiry',
   ),
   speakerPage: SpeakerPageStrings(
-    metaTitle: 'Call for Speakers · Flutter Korea 2026',
+    metaTitle: 'Call for Speakers Closed · Flutter Korea 2026',
     kicker: 'Call for Speakers',
-    title: 'Propose a session for Flutter Korea 2026',
+    title: 'Call for Speakers is Closed',
     intro:
-        'We’re looking for engaging, technical, and innovative talks about the Flutter ecosystem. We can’t wait to see your proposal. Everyone is welcome, from Googlers to first-time speakers.',
+        'Thank you for your overwhelming interest and support. The Call for Speakers for Flutter Korea 2026 is now closed. Please check out the timetable to explore the sessions.',
     dateLabel: 'Event date',
     date: 'Saturday, November 7, 2026',
     levelsTitle: 'Target Audience Level',
@@ -900,9 +907,10 @@ const enContent = Content(
     ],
     perksTitle: 'Speaker perks',
     perks: ['Free speaker ticket', 'Official slide template provided', 'Propose any topic'],
-    applyCta: 'Apply to Speak',
-    applyNote: 'Opens a Google Form',
+    applyCta: 'Applications Closed',
+    applyNote: 'Speaker applications are now closed',
     back: 'Back to home',
+    closed: true,
   ),
   footer: FooterStrings(
     tagline: 'Return to the essence of technology, and fearlessly define the future.',

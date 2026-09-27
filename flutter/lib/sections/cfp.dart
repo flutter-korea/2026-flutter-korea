@@ -112,10 +112,11 @@ class CfpSection extends StatelessWidget {
             const SizedBox(height: 18.4),
             FkButton(
               label: t.cta,
-              onTap: () => goSpeakers(context),
-              icon: FkIcons.arrowRight,
+              disabled: t.closed,
+              onTap: t.closed ? null : () => goSpeakers(context),
+              icon: t.closed ? null : FkIcons.arrowRight,
               iconSize: 18.4,
-              iconSlides: true,
+              iconSlides: !t.closed,
               fontSize: 16.8,
               expand: true,
               padding:
