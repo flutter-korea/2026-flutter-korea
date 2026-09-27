@@ -91,8 +91,9 @@ class _SpeakersPageState extends State<SpeakersPage> {
                               _DateChip(label: t.dateLabel, value: t.date),
                               FkButton(
                                 label: t.applyCta,
-                                onTap: () => openExternal(Links.cfp),
-                                icon: FkIcons.upRightBoxed,
+                                disabled: t.closed,
+                                onTap: t.closed ? null : () => openExternal(Links.cfp),
+                                icon: t.closed ? null : FkIcons.upRightBoxed,
                                 iconSize: 17.6,
                               ),
                             ],
@@ -433,8 +434,9 @@ class _FinalCta extends StatelessWidget {
           const SizedBox(height: 20),
           FkButton(
             label: t.speakerPage.applyCta,
-            onTap: () => openExternal(Links.cfp),
-            icon: FkIcons.upRightBoxed,
+            disabled: t.speakerPage.closed,
+            onTap: t.speakerPage.closed ? null : () => openExternal(Links.cfp),
+            icon: t.speakerPage.closed ? null : FkIcons.upRightBoxed,
             iconSize: 17.6,
             fontSize: 16.8,
             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 13.6),
