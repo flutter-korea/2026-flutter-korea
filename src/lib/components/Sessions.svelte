@@ -1,8 +1,6 @@
 <script>
 	import { t } from '$lib/i18n.js';
-	import { base } from '$app/paths';
 	import { reveal } from '$lib/actions.js';
-	import ComingSoon from './ComingSoon.svelte';
 </script>
 
 <section id="sessions" class="section">
@@ -13,17 +11,8 @@
 			<p class="section-lead">{$t.sessions.lead}</p>
 		</header>
 
-		<div class="cs-wrap reveal" use:reveal={{ delay: 80 }}>
-			<ComingSoon
-				badge={$t.sessions.comingSoon.badge}
-				title={$t.sessions.comingSoon.title}
-				body={$t.sessions.comingSoon.body}
-				cta={{ label: $t.sessions.cta, href: `${base}/speakers` }}
-			/>
-		</div>
-
 		<!-- Confirmed program element -->
-		<article class="fireside reveal" use:reveal={{ delay: 140 }}>
+		<article class="fireside reveal" use:reveal={{ delay: 80 }}>
 			<div class="fs-head">
 				<span class="fs-badge">
 					<span class="fs-dot" aria-hidden="true"></span>
@@ -45,10 +34,6 @@
 	header {
 		margin-bottom: 2.5rem;
 	}
-	.cs-wrap {
-		margin-bottom: 1.5rem;
-	}
-
 	.fireside {
 		position: relative;
 		padding: clamp(1.75rem, 4vw, 2.75rem);

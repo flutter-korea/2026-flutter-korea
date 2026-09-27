@@ -60,7 +60,7 @@
 	--gutter: clamp(1.25rem, 5vw, 3rem);
 	--section-y: clamp(4rem, 9vw, 7.5rem);
 	--header-h: 68px;
-	--announce-h: 40px;
+	--announce-h: 0px;
 
 	/* --- Radii / shadow ------------------------------------------------------- */
 	--r-sm: 8px;

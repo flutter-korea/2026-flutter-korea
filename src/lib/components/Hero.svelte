@@ -52,13 +52,6 @@
 			<p class="description stagger" style="--i: 4">{$t.hero.description}</p>
 
 			<div class="ctas stagger" style="--i: 5">
-				<a class="btn btn-on-gradient" href={`${base}/speakers`}>
-					{$t.hero.ctaPrimary}
-					<svg viewBox="0 0 24 24" width="1.1em" height="1.1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-						<path d="M5 12h14" />
-						<path d="m13 6 6 6-6 6" />
-					</svg>
-				</a>
 				<a class="btn btn-outline-on-gradient" href="#about">
 					{$t.hero.ctaSecondary}
 					<svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -74,7 +67,7 @@
 						<dt>{fact.label}</dt>
 						{#if fact.href}
 							<dd>
-								<a href={fact.href} target="_blank" rel="noopener noreferrer" class="fact-link">
+							<a href={fact.href} target="_blank" rel="noopener noreferrer" class="fact-link">
 									{fact.value}
 									<svg viewBox="0 0 24 24" width="0.85em" height="0.85em" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 										<path d="M7 17L17 7" />

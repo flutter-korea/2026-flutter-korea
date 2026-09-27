@@ -5,7 +5,6 @@ import '../i18n/i18n.dart';
 import '../nav.dart';
 import '../theme/tokens.dart';
 import '../theme/typography.dart';
-import '../widgets/buttons.dart';
 import '../widgets/hover.dart';
 import '../widgets/layout.dart';
 import '../widgets/stroke_icon.dart';
@@ -68,13 +67,6 @@ class SiteHeader extends StatelessWidget {
               const Spacer(),
               LangButton(),
               const SizedBox(width: 12),
-              FkButton(
-                label: t.nav.cta,
-                onTap: () => goSpeakers(context),
-                fontSize: 14.4,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 18.4, vertical: 9.6),
-              ),
             ] else
               _Hamburger(open: menuOpen, onTap: onToggleMenu),
           ],

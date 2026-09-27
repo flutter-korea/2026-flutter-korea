@@ -40,7 +40,6 @@ class SiteFooter extends StatelessWidget {
       child: _LinkCol(
         title: t.footer.connect,
         links: [
-          _FooterLink(t.footer.speakers, () => goSpeakers(context)),
           _FooterLink(t.tickets.title, () => goHomeAnchor(context, 'tickets', hub: hub)),
           _FooterLink('Meetup', () => openExternal(Links.meetup), external: true),
           _FooterLink('Discord', () => openExternal(Links.discord), external: true),
