@@ -119,7 +119,6 @@
 				</svg>
 				<span>{$t.meta.langButton}</span>
 			</button>
-			<a class="btn btn-primary cta" href={`${base}/speakers`}>{$t.nav.cta}</a>
 		</div>
 
 		<!-- Mobile hamburger -->
@@ -176,9 +175,6 @@
 			</svg>
 			<span>{$t.meta.langButton}</span>
 		</button>
-		<a class="btn btn-primary wide" href={`${base}/speakers`} onclick={closeMenu} tabindex={open ? 0 : -1}>
-			{$t.nav.cta}
-		</a>
 	</div>
 </div>
 
@@ -308,11 +304,6 @@
 		border-color: var(--border-strong);
 		color: var(--accent);
 		background: var(--paper);
-	}
-
-	.cta {
-		padding: 0.6rem 1.15rem;
-		font-size: 0.9rem;
 	}
 
 	/* --- Mobile hamburger --- */

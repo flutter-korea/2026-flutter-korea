@@ -155,25 +155,6 @@
 					<a href={links.ticket} target="_blank" rel="noopener noreferrer" class="note-link">{$t.tickets.platformLinkText} ↗</a>
 				</span>
 			</li>
-			<li class="note">
-				<svg
-					class="note-icon"
-					viewBox="0 0 24 24"
-					width="1em"
-					height="1em"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="1.8"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					aria-hidden="true"
-				>
-					<path
-						d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.2l5.9-.9z"
-					/>
-				</svg>
-				<span>{$t.tickets.speakerNote}</span>
-			</li>
 		</ul>
 	</div>
 </section>

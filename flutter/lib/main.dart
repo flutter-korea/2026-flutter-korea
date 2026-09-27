@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 
 import 'i18n/i18n.dart';
 import 'pages/home_page.dart';
-import 'pages/speakers_page.dart';
 import 'theme/tokens.dart';
 import 'theme/typography.dart';
 
@@ -18,7 +17,6 @@ void main() {
 final _router = GoRouter(
   routes: [
     GoRoute(path: '/', builder: (context, state) => const HomePage()),
-    GoRoute(path: '/speakers', builder: (context, state) => const SpeakersPage()),
   ],
 );
 

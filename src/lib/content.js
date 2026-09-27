@@ -7,11 +7,9 @@
 
 /** Links used across the site. */
 export const links = {
-	// Call for Speakers — session proposal Google Form
-	cfp: 'https://forms.gle/PGG9Kvd7Z7xkVPs3A',
 	ticket: 'https://ticketa.co/event/c9xsstcs',
 	ticketaco: 'https://ticketa.co/event/c9xsstcs',
-	venueMap: 'https://maps.app.goo.gl/RSkiDXQxdRXUJqpA9',
+	venueMap: 'https://naver.me/x1uTWoUP',
 	meetup: 'https://www.meetup.com/ko-kr/flutter-korea/',
 	kakaoTalk: 'https://open.kakao.com/o/gdL2Gj1e',
 	discord: 'https://flutter-seoul.com',
@@ -21,7 +19,6 @@ export const links = {
 /** Internal route paths (prefix with `base` from $app/paths in components). */
 export const routes = {
 	home: '/',
-	speakers: '/speakers',
 	previousEvents: '/previous-events'
 };
 
@@ -35,10 +32,6 @@ export const dict = {
 			langButtonLabel: 'Switch to English'
 		},
 
-		announce: {
-			text: '연사 모집 중 · 지금 바로 세션을 제안해 보세요'
-		},
-
 		countdown: {
 			label: '행사까지 남은 시간',
 			live: '지금 진행 중입니다',
@@ -50,13 +43,11 @@ export const dict = {
 			brand: 'Flutter Korea 2026',
 			links: [
 				{ id: 'about', label: '소개', href: '#about' },
-				{ id: 'sessions', label: '세션', href: '#sessions' },
 				{ id: 'timetable', label: '타임테이블', href: '#timetable' },
 				{ id: 'tickets', label: '티켓', href: '#tickets' },
 				{ id: 'sponsors', label: '후원사', href: '#sponsors' },
 				{ id: 'previous-events', label: '이전 행사 보기', href: '/previous-events' }
 			],
-			cta: '연사 지원',
 			menu: '메뉴',
 			close: '닫기'
 		},
@@ -67,13 +58,12 @@ export const dict = {
 			sloganBottom: 'Move Forward',
 			subtitle: '기술의 본질로 돌아가, 두려움 없이 미래를 정의하다',
 			description:
-				'변화가 일상이 된 시대. 단단한 기본기를 무기 삼아 AI와 함께 미래를 정의하는 하루. 지금은 이 무대를 채울 연사를 모집하고 있습니다.',
-			ctaPrimary: '연사 지원하기',
+				'변화가 일상이 된 시대. 단단한 기본기를 바탕으로 AI와 함께 미래를 정의하는 하루입니다. Flutter와 AI를 둘러싼 깊이 있는 세션과 교류를 만나보세요.',
 			ctaSecondary: '행사 소개 보기',
 			facts: [
 				{ label: '일시', value: '2026.11.07 (토)' },
 				{ label: '시간', value: '11:00 – 18:00' },
-				{ label: '장소', value: 'AWS 코리아', href: links.venueMap },
+				{ label: '장소', value: '12층 AWS 코리아', href: links.venueMap },
 				{ label: '주최', value: 'Flutter Seoul' }
 			],
 			scroll: 'Scroll'
@@ -120,13 +110,7 @@ export const dict = {
 		sessions: {
 			kicker: 'Program',
 			title: '세션',
-			lead: '세션 라인업을 준비하고 있습니다. 지금은 연사를 모집하는 중이에요. 여러분의 이야기로 무대를 채워 주세요.',
-			comingSoon: {
-				badge: '향후 공개 예정',
-				title: '세션 라인업 준비 중',
-				body: '엄선된 세션 라인업을 곧 공개합니다. 발표에 관심이 있다면 지금 연사로 지원해 무대의 주인공이 되어 주세요.'
-			},
-			cta: '연사 지원하기',
+			lead: 'AI와 Flutter의 현재를 다루는 세션과 깊이 있는 교류의 시간을 준비했습니다.',
 			mentoring: {
 				badge: 'Confirmed · 60 min',
 				title: '연차별 파이어사이드 챗',
@@ -138,29 +122,41 @@ export const dict = {
 		timetable: {
 			kicker: 'Timetable',
 			title: '타임테이블',
-			lead: '11:00부터 18:00까지, 하루를 가득 채우는 프로그램. 세부 타임테이블은 확정되는 대로 공개합니다.',
+			lead: 'AI Track과 Flutter Track으로 나뉘어 진행되는 11:00부터 18:00까지의 프로그램입니다.',
 			frame: [
 				{ label: 'DATE', value: '2026.11.07 (토)' },
 				{ label: 'DOORS', value: '10:30 접수' },
 				{ label: 'PROGRAM', value: '11:00 – 18:00' },
 				{ label: 'VENUE', value: 'AWS 코리아 (센터필드 EAST 12층)' }
 			],
-			comingSoon: {
-				badge: '향후 공개 예정',
-				title: '상세 타임테이블 준비 중',
-				body: '오프닝 키노트부터 클로징까지, 세션과 파이어사이드 챗으로 구성된 상세 일정표를 곧 공개합니다.'
+			tracks: {
+				ai: 'AI Track',
+				flutter: 'Flutter Track',
+				columns: ['시작', '종료', '룸', '세션', '발표자'],
+				rows: [
+					{ start: '10:00', end: '11:00', ai: { room: '401호', title: '장비 체크', speaker: '오거나이저 1' }, flutter: { room: '300/301/400호', title: '장비 체크', speaker: '오거나이저 1' } },
+					{ start: '11:00', end: '11:10', shared: '오프닝', speaker: 'Flutter Seoul' },
+					{ start: '11:10', end: '11:40', shared: 'Keynote: Flutter is Everywhere (ENG)', speaker: 'Google / Craig Labenz & Khanh Nguyen' },
+					{ start: '11:40', end: '11:50', kind: 'break', label: '휴식' },
+					{ start: '11:50', end: '12:20', ai: { room: '401호', title: '천재 개발자와 그 이후', speaker: '박성수', image: '/assets/flutter-seoul/speaker/park-seongsu.jpg' }, flutter: { room: '300/301/400호', title: '첫 프로젝트가 글로벌 앱 런칭이라구요?', speaker: '이웅재', image: '/assets/flutter-seoul/speaker/lee-woongjae.jpg' } },
+					{ start: '12:20', end: '13:00', shared: '네트워킹 런치', speaker: '' },
+					{ start: '13:00', end: '13:30', ai: { room: '401호', title: 'llamAdart로 시작하는 플러터 온디바이스 에이전트(feat: tool call parser)', speaker: '권태형', image: '/assets/flutter-seoul/speaker/kwon-taehyeong.jpg' }, flutter: { room: '300/301/400호', title: '안 되는 건 안 된다고 말하는 플러그인: 알람 플러그인으로 본 capability-first federated plugin 설계', speaker: '유동민', image: '/assets/flutter-seoul/speaker/yoo-dongmin.png' } },
+					{ start: '13:30', end: '13:40', kind: 'break', label: '휴식' },
+					{ start: '13:40', end: '14:10', ai: { room: '401호', title: 'AI와 함께 스타트업에서 생존하기', speaker: '한상욱', image: '/assets/flutter-seoul/speaker/han-sangwook.jpeg' }, flutter: { room: '300/301/400호', title: 'Technical Session: A2UI: Build dynamic Flutter apps with Generative UI (ENG)', speaker: 'Google / Khanh Nguyen' } },
+					{ start: '14:10', end: '14:20', kind: 'break', label: '휴식' },
+					{ start: '14:20', end: '14:50', ai: { room: '401호', title: 'AI가 개발자를 대체할까 걱정했는데, 1년 동안 같이 일해보니 일단 재밌습니다', speaker: '김준호', image: '/assets/flutter-seoul/speaker/kim-junho.jpeg' }, flutter: { room: '300/301/400호', title: 'Technical Session: Building the harness: How we grade and optimize AI for Dart & Flutter (ENG)', speaker: 'Google / Mariam Hasnany' } },
+					{ start: '14:50', end: '15:00', kind: 'break', label: '휴식' },
+					{ start: '15:00', end: '15:30', highlight: true, ai: { room: '401호', title: 'Agent와 함께 Flutter 운영 프로젝트 일대기', speaker: '박준우', image: '/assets/flutter-seoul/speaker/park-junwoo.jpg' }, flutter: { room: '300/301/400호', title: 'Flutter Desktop 멀티윈도우 개발기', speaker: '추세일' } },
+					{ start: '15:30', end: '15:40', kind: 'break', label: '휴식' },
+					{ start: '15:40', end: '16:10', highlight: true, ai: { room: '401호', title: '비전공 기계설계자가 AI를 활용해 SW를 개발해 온 과정과 경험', speaker: '유진식', image: '/assets/flutter-seoul/speaker/yoo-jinsik.jpg' }, flutter: { room: '300/301/400호', title: 'Navigating Flutter: AI 시대, 우리는 왜 Engine을 이해해야 하는가', speaker: '박예승', image: '/assets/flutter-seoul/speaker/park-yeseung.jpg' } },
+					{ start: '16:10', end: '16:20', kind: 'break', label: '휴식' },
+					{ start: '16:20', end: '16:50', ai: { room: '401호', title: '10년 차 개발자의 Flutter × AI: 패키지의 한계를 넘어서', speaker: '가애KAAE', image: '/assets/flutter-seoul/speaker/kaae.jpeg' }, flutter: { room: '300/301/400호', title: 'dart:ffi 네이티브 다루기', speaker: '최선호', image: '/assets/flutter-seoul/speaker/choi-sunho.jpg' } },
+					{ start: '16:50', end: '17:00', kind: 'break', label: '휴식' },
+					{ start: '17:00', end: '17:30', shared: 'Q&A Panel: Ask the Flutter Core Team & Fireside Chat (ENG)', speaker: 'Google / Craig Labenz, Khanh Nguyen, & Mariam Hasnany' },
+					{ start: '17:30', end: '18:00', shared: '단체 사진', speaker: '' },
+					{ start: '18:00', end: '19:00', empty: true }
+				]
 			}
-		},
-
-		cfp: {
-			kicker: 'Call for Speakers',
-			title: '무대의 주인공을 찾습니다',
-			body: '당신의 기본기와 도전 이야기를 Flutter Korea 2026 무대에서 나눠 주세요. 구글러부터 일반 세션 지원자까지 누구나 환영합니다.',
-			perks: ['연사자는 티켓 구매 불필요', '공식 발표 슬라이드 템플릿 제공', '세션 주제 자유 제안'],
-			cta: '연사 모집 자세히 보기',
-			ctaNote: '지원 개요 페이지로 이동합니다',
-			deadlineLabel: '모집 대상',
-			deadline: '구글러 및 일반 세션 지원자'
 		},
 
 		tickets: {
@@ -196,7 +192,6 @@ export const dict = {
 				}
 			],
 			platformNote: '예매 플랫폼 · 티켓타코(Ticketaco) 공식 이벤트 페이지',
-			speakerNote: '연사자는 티켓 구매가 필요하지 않습니다.',
 			venueNote: '행사 장소 · AWS 코리아 (서울 강남구 테헤란로 231 센터필드 EAST 12층 / 주차 지원 불가, 대중교통 이용 권장)',
 			venueMapLinkText: '지도 보기',
 			platformLinkText: '예매 바로가기'
@@ -217,53 +212,6 @@ export const dict = {
 			ctaTitle: '후원사로 함께하시겠어요?',
 			ctaBody: '국내 최대 규모의 Flutter 커뮤니티와 만나고, 브랜드를 개발자에게 각인시킬 기회입니다.',
 			cta: '후원 문의하기'
-		},
-
-		speakerPage: {
-			metaTitle: '연사 모집 · Flutter Korea 2026',
-			metaDesc: 'Flutter Korea 2026 세션 제안: 지원 가능 분야와 지원 방법 안내.',
-			kicker: 'Call for Speakers',
-			title: 'Flutter Korea 2026\n세션을 제안하세요',
-			intro:
-				'Flutter 생태계에 대한 흥미롭고, 기술적이며, 혁신적인 발표를 찾고 있습니다. 여러분의 세션 제안을 기다립니다. 구글러부터 첫 발표에 도전하는 분까지 누구나 환영합니다.',
-			dateLabel: '행사일',
-			date: '2026년 11월 7일 (토)',
-			levelsTitle: '난이도 · Target Audience Level',
-			levels: [
-				{ name: 'Beginner', desc: '입문 · 기초 (Introduction / Fundamentals)' },
-				{ name: 'Intermediate', desc: '응용 · 일반 패턴 (Applied skills / Common patterns)' },
-				{ name: 'Advanced', desc: '아키텍처 · 심화 · 내부 구조 (Architecture / Deep Dive / Internals)' }
-			],
-			categoriesTitle: '지원 가능 분야 · Session Category',
-			categories: [
-				'State Management',
-				'Performance Optimization',
-				'UI/UX & Design',
-				'Backend / Firebase Integration',
-				'Testing & CI/CD',
-				'Platform Specific (Web/Desktop/Mobile)',
-				'Dart Language Features',
-				'Case Studies / Real-world Apps',
-				'Package Development',
-				'AI, GenAI, Agents',
-				'Other'
-			],
-			submitTitle: '지원 시 작성 항목',
-			submitItems: [
-				'성함 · 이메일',
-				'세션 제목',
-				'난이도',
-				'세션 주제 분야',
-				'세션 간략 소개 (Abstract)',
-				'발표 경험',
-				'라이브 데모 포함 여부',
-				'SNS · GitHub (선택)'
-			],
-			perksTitle: '연사 혜택',
-			perks: ['연사 티켓 무료 제공', '공식 발표 슬라이드 템플릿 제공', '세션 주제 자유 제안'],
-			applyCta: '지원하기',
-			applyNote: 'Google Form으로 이동합니다',
-			back: '홈으로 돌아가기'
 		},
 
 		previousEventsPage: {
@@ -593,7 +541,6 @@ export const dict = {
 			org: 'Flutter Seoul',
 			nav: '바로가기',
 			connect: '연락처',
-			speakers: '연사 모집',
 			rights: '© 2026 Flutter Seoul · Flutter Korea 2026',
 			trademark:
 				'Flutter와 Flutter 로고는 Google LLC의 상표입니다. 본 행사는 커뮤니티가 운영하는 비영리 행사입니다.',
@@ -610,10 +557,6 @@ export const dict = {
 			langButtonLabel: '한국어로 전환'
 		},
 
-		announce: {
-			text: 'Call for Speakers is open · Propose your session now'
-		},
-
 		countdown: {
 			label: 'Until the event',
 			live: 'Happening right now',
@@ -625,13 +568,11 @@ export const dict = {
 			brand: 'Flutter Korea 2026',
 			links: [
 				{ id: 'about', label: 'About', href: '#about' },
-				{ id: 'sessions', label: 'Sessions', href: '#sessions' },
 				{ id: 'timetable', label: 'Timetable', href: '#timetable' },
 				{ id: 'tickets', label: 'Tickets', href: '#tickets' },
 				{ id: 'sponsors', label: 'Sponsors', href: '#sponsors' },
 				{ id: 'previous-events', label: 'Previous Events', href: '/previous-events' }
 			],
-			cta: 'Apply to Speak',
 			menu: 'Menu',
 			close: 'Close'
 		},
@@ -642,13 +583,12 @@ export const dict = {
 			sloganBottom: 'Move Forward',
 			subtitle: 'Return to the essence of technology, and fearlessly define the future.',
 			description:
-				'In an era where change is the default, we spend a day defining the future with AI, armed with unshakable fundamentals. Right now, we’re recruiting the speakers to fill this stage.',
-			ctaPrimary: 'Apply to Speak',
+				'In an era where change is the default, we spend a day defining the future with AI, armed with unshakable fundamentals. Join us for deep sessions and meaningful conversations about Flutter and AI.',
 			ctaSecondary: 'Learn More',
 			facts: [
 				{ label: 'Date', value: 'Sat, Nov 7, 2026' },
 				{ label: 'Time', value: '11:00 – 18:00' },
-				{ label: 'Venue', value: 'AWS Korea', href: links.venueMap },
+				{ label: 'Venue', value: 'AWS Korea, 12F', href: links.venueMap },
 				{ label: 'Host', value: 'Flutter Seoul' }
 			],
 			scroll: 'Scroll'
@@ -695,13 +635,7 @@ export const dict = {
 		sessions: {
 			kicker: 'Program',
 			title: 'Sessions',
-			lead: 'The session lineup is in the works. Right now we’re recruiting speakers: help us fill the stage with your story.',
-			comingSoon: {
-				badge: 'To be announced',
-				title: 'Session lineup in the works',
-				body: 'A curated lineup is coming soon. If you’d like to present, apply to speak now and take the stage.'
-			},
-			cta: 'Apply to Speak',
+			lead: 'Spend the day with sessions on the present of AI and Flutter, plus meaningful conversations with the community.',
 			mentoring: {
 				badge: 'Confirmed · 60 min',
 				title: 'Fireside Chat by Career Level',
@@ -713,29 +647,41 @@ export const dict = {
 		timetable: {
 			kicker: 'Timetable',
 			title: 'Timetable',
-			lead: 'From 11:00 to 18:00, a full day of program. The detailed timetable will be published once confirmed.',
+			lead: 'A full day from 11:00 to 18:00, split across the AI Track and Flutter Track.',
 			frame: [
 				{ label: 'DATE', value: 'Sat, Nov 7, 2026' },
 				{ label: 'DOORS', value: '10:30 check-in' },
 				{ label: 'PROGRAM', value: '11:00 – 18:00' },
 				{ label: 'VENUE', value: 'AWS Korea (Centerfield East 12F)' }
 			],
-			comingSoon: {
-				badge: 'To be announced',
-				title: 'Detailed timetable in the works',
-				body: 'From opening keynote to closing, the full schedule of sessions and the fireside chat is coming soon.'
+			tracks: {
+				ai: 'AI Track',
+				flutter: 'Flutter Track',
+				columns: ['Start', 'End', 'Room', 'Session', 'Speaker'],
+				rows: [
+					{ start: '10:00', end: '11:00', ai: { room: 'Room 401', title: 'Equipment check', speaker: 'Organizer 1' }, flutter: { room: 'Rooms 300/301/400', title: 'Equipment check', speaker: 'Organizer 1' } },
+					{ start: '11:00', end: '11:10', shared: 'Opening', speaker: 'Flutter Seoul' },
+					{ start: '11:10', end: '11:40', shared: 'Keynote: Flutter is Everywhere (ENG)', speaker: 'Google / Craig Labenz & Khanh Nguyen' },
+					{ start: '11:40', end: '11:50', kind: 'break', label: 'Break' },
+					{ start: '11:50', end: '12:20', ai: { room: 'Room 401', title: 'After becoming a genius developer', speaker: 'Park Seongsu', image: '/assets/flutter-seoul/speaker/park-seongsu.jpg' }, flutter: { room: 'Rooms 300/301/400', title: 'Your first project is a global app launch?', speaker: 'Lee Woongjae', image: '/assets/flutter-seoul/speaker/lee-woongjae.jpg' } },
+					{ start: '12:20', end: '13:00', shared: 'Networking lunch', speaker: '' },
+					{ start: '13:00', end: '13:30', ai: { room: 'Room 401', title: 'Starting with llamAdart: a Flutter on-device agent (feat. tool call parser)', speaker: 'Kwon Taehyeong', image: '/assets/flutter-seoul/speaker/kwon-taehyeong.jpg' }, flutter: { room: 'Rooms 300/301/400', title: 'A capability-first federated plugin design through an alarm plugin', speaker: 'Yoo Dongmin', image: '/assets/flutter-seoul/speaker/yoo-dongmin.png' } },
+					{ start: '13:30', end: '13:40', kind: 'break', label: 'Break' },
+					{ start: '13:40', end: '14:10', ai: { room: 'Room 401', title: 'Surviving at a startup with AI', speaker: 'Han Sangwook', image: '/assets/flutter-seoul/speaker/han-sangwook.jpeg' }, flutter: { room: 'Rooms 300/301/400', title: 'Technical Session: A2UI: Build dynamic Flutter apps with Generative UI (ENG)', speaker: 'Google / Khanh Nguyen' } },
+					{ start: '14:10', end: '14:20', kind: 'break', label: 'Break' },
+					{ start: '14:20', end: '14:50', ai: { room: 'Room 401', title: 'I worried AI would replace developers, but working together for a year was fun', speaker: 'Kim Junho', image: '/assets/flutter-seoul/speaker/kim-junho.jpeg' }, flutter: { room: 'Rooms 300/301/400', title: 'Technical Session: Building the harness: How we grade and optimize AI for Dart & Flutter (ENG)', speaker: 'Google / Mariam Hasnany' } },
+					{ start: '14:50', end: '15:00', kind: 'break', label: 'Break' },
+					{ start: '15:00', end: '15:30', highlight: true, ai: { room: 'Room 401', title: 'A Flutter operations project with an Agent', speaker: 'Park Junwoo', image: '/assets/flutter-seoul/speaker/park-junwoo.jpg' }, flutter: { room: 'Rooms 300/301/400', title: 'Flutter Desktop multi-window development', speaker: 'Chuseil' } },
+					{ start: '15:30', end: '15:40', kind: 'break', label: 'Break' },
+					{ start: '15:40', end: '16:10', highlight: true, ai: { room: 'Room 401', title: 'A mechanical designer without a software background: the journey and experience of developing software with AI', speaker: 'Yoo Jinsik', image: '/assets/flutter-seoul/speaker/yoo-jinsik.jpg' }, flutter: { room: 'Rooms 300/301/400', title: 'Navigating Flutter: Why understand the Engine in the AI era', speaker: 'Park Yeseung', image: '/assets/flutter-seoul/speaker/park-yeseung.jpg' } },
+					{ start: '16:10', end: '16:20', kind: 'break', label: 'Break' },
+					{ start: '16:20', end: '16:50', ai: { room: 'Room 401', title: 'A decade-long developer’s Flutter × AI: beyond package limits', speaker: 'KAAE', image: '/assets/flutter-seoul/speaker/kaae.jpeg' }, flutter: { room: 'Rooms 300/301/400', title: 'Working with dart:ffi and native code', speaker: 'Choi Sunho', image: '/assets/flutter-seoul/speaker/choi-sunho.jpg' } },
+					{ start: '16:50', end: '17:00', kind: 'break', label: 'Break' },
+					{ start: '17:00', end: '17:30', shared: 'Q&A Panel: Ask the Flutter Core Team & Fireside Chat (ENG)', speaker: 'Google / Craig Labenz, Khanh Nguyen, & Mariam Hasnany' },
+					{ start: '17:30', end: '18:00', shared: 'Group photo', speaker: '' },
+					{ start: '18:00', end: '19:00', empty: true }
+				]
 			}
-		},
-
-		cfp: {
-			kicker: 'Call for Speakers',
-			title: 'We’re looking for the next voice on stage',
-			body: 'Share your story of fundamentals and bold challenges on the Flutter Korea 2026 stage. Everyone is welcome, from Googlers to first-time speakers.',
-			perks: ['Speakers attend free', 'Official slide template provided', 'Propose your own topic'],
-			cta: 'View Call for Speakers',
-			ctaNote: 'Go to the speaker overview page',
-			deadlineLabel: 'Who can apply',
-			deadline: 'Googlers & open session applicants'
 		},
 
 		tickets: {
@@ -771,7 +717,6 @@ export const dict = {
 				}
 			],
 			platformNote: 'Ticketing platform · Available on Ticketaco official event page.',
-			speakerNote: 'Speakers do not need to purchase a ticket.',
 			venueNote: 'Venue · AWS Korea (Centerfield East 12F, 231 Teheran-ro, Gangnam-gu, Seoul / Public transit recommended)',
 			venueMapLinkText: 'View Map',
 			platformLinkText: 'Go to Ticketaco'
@@ -792,53 +737,6 @@ export const dict = {
 			ctaTitle: 'Become a sponsor',
 			ctaBody: 'Meet Korea’s largest Flutter community and put your brand in front of developers who build.',
 			cta: 'Sponsor Inquiry'
-		},
-
-		speakerPage: {
-			metaTitle: 'Call for Speakers · Flutter Korea 2026',
-			metaDesc: 'Propose a session for Flutter Korea 2026: categories, levels, and how to apply.',
-			kicker: 'Call for Speakers',
-			title: 'Propose a session for Flutter Korea 2026',
-			intro:
-				'We’re looking for engaging, technical, and innovative talks about the Flutter ecosystem. We can’t wait to see your proposal. Everyone is welcome, from Googlers to first-time speakers.',
-			dateLabel: 'Event date',
-			date: 'Saturday, November 7, 2026',
-			levelsTitle: 'Target Audience Level',
-			levels: [
-				{ name: 'Beginner', desc: 'Introduction / Fundamentals' },
-				{ name: 'Intermediate', desc: 'Applied skills / Common patterns' },
-				{ name: 'Advanced', desc: 'Architecture / Deep Dive / Internals' }
-			],
-			categoriesTitle: 'Session Category',
-			categories: [
-				'State Management',
-				'Performance Optimization',
-				'UI/UX & Design',
-				'Backend / Firebase Integration',
-				'Testing & CI/CD',
-				'Platform Specific (Web/Desktop/Mobile)',
-				'Dart Language Features',
-				'Case Studies / Real-world Apps',
-				'Package Development',
-				'AI, GenAI, Agents',
-				'Other'
-			],
-			submitTitle: 'What you’ll submit',
-			submitItems: [
-				'Name · Email',
-				'Session title',
-				'Target audience level',
-				'Session category',
-				'Session abstract',
-				'Previous speaking experience',
-				'Whether you’ll include a live demo',
-				'Social · GitHub (optional)'
-			],
-			perksTitle: 'Speaker perks',
-			perks: ['Free speaker ticket', 'Official slide template provided', 'Propose any topic'],
-			applyCta: 'Apply to Speak',
-			applyNote: 'Opens a Google Form',
-			back: 'Back to home'
 		},
 
 		previousEventsPage: {
@@ -1168,7 +1066,6 @@ export const dict = {
 			org: 'Flutter Seoul',
 			nav: 'Navigate',
 			connect: 'Connect',
-			speakers: 'Call for Speakers',
 			rights: '© 2026 Flutter Seoul · Flutter Korea 2026',
 			trademark:
 				'Flutter and the Flutter logo are trademarks of Google LLC. This is a non-profit, community-run event.',

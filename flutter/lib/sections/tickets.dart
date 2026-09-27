@@ -76,7 +76,6 @@ class TicketsSection extends StatelessWidget {
                 onLinkTap: () => openExternal(Links.ticket),
               ),
               const SizedBox(height: 11.2),
-              _Note(icon: FkIcons.star, accent: false, text: t.speakerNote),
             ],
           ),
         ),

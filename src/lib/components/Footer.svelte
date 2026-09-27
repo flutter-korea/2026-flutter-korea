@@ -53,9 +53,6 @@
 				<h2 class="col-title">{$t.footer.connect}</h2>
 				<ul class="link-list">
 					<li>
-						<a href={`${base}/speakers`}>{$t.footer.speakers}</a>
-					</li>
-					<li>
 						<a href={`${base}/#tickets`}>{$t.tickets.title}</a>
 					</li>
 					<li>

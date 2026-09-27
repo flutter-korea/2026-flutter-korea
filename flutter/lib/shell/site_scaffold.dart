@@ -6,10 +6,8 @@ import '../i18n/i18n.dart';
 import '../nav.dart';
 import '../theme/tokens.dart';
 import '../theme/typography.dart';
-import '../widgets/buttons.dart';
 import '../widgets/hover.dart';
 import '../widgets/stroke_icon.dart';
-import 'announcement_bar.dart';
 import 'scroll_hub.dart';
 import 'site_header.dart';
 
@@ -116,16 +114,6 @@ class _SiteScaffoldState extends State<SiteScaffold> {
               ),
             ],
 
-            // Announcement bar — slides fully out when collapsed.
-            AnimatedPositioned(
-              duration: barDur,
-              curve: FKMotion.ease,
-              top: collapsed ? -FKLayout.announceH : 0,
-              left: 0,
-              right: 0,
-              height: FKLayout.announceH,
-              child: const AnnouncementBar(),
-            ),
 
             // Header — pins to the viewport top when collapsed.
             AnimatedPositioned(
@@ -211,14 +199,6 @@ class _MobilePanel extends StatelessWidget {
           const Spacer(),
           const LangButton(wide: true),
           const SizedBox(height: 12),
-          FkButton(
-            label: t.nav.cta,
-            onTap: () {
-              onClose();
-              goSpeakers(context);
-            },
-            expand: true,
-          ),
         ],
       ),
     );
