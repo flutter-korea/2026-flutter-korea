@@ -173,21 +173,14 @@ class _ScheduleRow extends StatelessWidget {
           const SizedBox(width: 16),
           Text(
             row['label'] as String,
-            style: sans(
-              size: 13.5,
-              weight: 700,
-              color: FKColors.textDim,
-            ),
+            style: sans(size: 13.5, weight: 700, color: FKColors.textDim),
           ),
         ],
       );
     } else if (row['shared'] != null) {
       body = _Session(
         time: time,
-        session: {
-          'title': row['shared'],
-          'speaker': row['speaker'],
-        },
+        session: {'title': row['shared'], 'speaker': row['speaker']},
         shared: true,
       );
     } else {
@@ -259,21 +252,17 @@ class _TimeChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 5),
-        decoration: BoxDecoration(
-          color: FKColors.white,
-          border: Border.all(color: FKColors.border),
-          borderRadius: BorderRadius.circular(FKRadii.full),
-        ),
-        child: Text(
-          time,
-          style: mono(
-            size: 11.5,
-            weight: 700,
-            color: const Color(0xFF3A3F48),
-          ),
-        ),
-      );
+    padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 5),
+    decoration: BoxDecoration(
+      color: FKColors.white,
+      border: Border.all(color: FKColors.border),
+      borderRadius: BorderRadius.circular(FKRadii.full),
+    ),
+    child: Text(
+      time,
+      style: mono(size: 11.5, weight: 700, color: const Color(0xFF3A3F48)),
+    ),
+  );
 }
 
 class _Session extends StatelessWidget {
@@ -365,7 +354,10 @@ class _Session extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 4),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 2,
+                    ),
                     decoration: BoxDecoration(
                       color: FKColors.paperStrong,
                       borderRadius: BorderRadius.circular(4),
@@ -387,7 +379,11 @@ class _Session extends StatelessWidget {
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   Text(
-                    speaker.isEmpty ? 'Flutter Korea 2026' : speaker,
+                    speaker.isEmpty
+                        ? 'Flutter Korea 2026'
+                        : session['org'] != null
+                        ? '$speaker / ${session['org']}'
+                        : speaker,
                     style: sans(
                       color: const Color(0xFF1681E8),
                       size: 14.5,
@@ -427,11 +423,7 @@ class _Session extends StatelessWidget {
         if (constraints.maxWidth < 420) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _TimeChip(time),
-              const SizedBox(height: 14),
-              content,
-            ],
+            children: [_TimeChip(time), const SizedBox(height: 14), content],
           );
         }
         return Row(
