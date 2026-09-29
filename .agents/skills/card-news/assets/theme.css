@@ -52,6 +52,9 @@
 	--card-h: 1350px;
 	--pad: 76px;
 
+	/* Drawn check for bullet points (used as a mask, tinted by background) */
+	--check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.5 4.5 4.5L19 7.5'/%3E%3C/svg%3E");
+
 	/* Superellipse mask shape (used by .mask-squircle) */
 	--squircle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath d='M100 0C170 0 200 30 200 100S170 200 100 200 0 170 0 100 30 0 100 0Z'/%3E%3C/svg%3E");
 }
@@ -166,8 +169,9 @@ em.hl {
 	padding-top: 28px;
 	border-top: 1px solid var(--border);
 	font-family: var(--font-mono);
-	font-size: 22px;
-	letter-spacing: 0.04em;
+	font-size: 24px;
+	letter-spacing: 0.02em;
+	font-variant-numeric: tabular-nums;
 	color: var(--text-dim);
 }
 .card-foot .page {
@@ -215,7 +219,7 @@ em.hl {
 	padding: 10px 22px;
 	border-radius: var(--r-full);
 	font-family: var(--font-mono);
-	font-size: 22px;
+	font-size: 24px;
 	font-weight: 700;
 	letter-spacing: 0.06em;
 	border: 1.5px solid var(--border-strong);
@@ -243,7 +247,7 @@ em.hl {
 
 .label {
 	font-family: var(--font-mono);
-	font-size: 21px;
+	font-size: 24px;
 	font-weight: 700;
 	letter-spacing: 0.14em;
 	text-transform: uppercase;
@@ -330,41 +334,16 @@ em.hl {
 	text-transform: uppercase;
 }
 
-/* Portrait with an offset backdrop of the same shape (speaker cards) */
+/* Portrait: masked photo lifted by a soft drop shadow. drop-shadow (not
+   box-shadow) follows the mask, so squircle / leaf / arch all get a true edge. */
 .portrait {
 	position: relative;
 	flex: none;
-}
-.portrait::before {
-	content: '';
-	position: absolute;
-	inset: 0;
-	transform: translate(22px, 22px);
-	background: var(--paper-strong);
-	border: 2px solid var(--border-strong);
-	border-radius: inherit;
-}
-.portrait.shape-squircle::before {
-	border: 0;
+	filter: drop-shadow(0 28px 36px rgba(11, 18, 32, 0.2)) drop-shadow(0 2px 3px rgba(11, 18, 32, 0.12));
 }
 .portrait > .frame {
-	position: relative;
 	width: 100%;
 	height: 100%;
-}
-/* Portrait shape (for the backdrop) mirrors the frame's mask class */
-.portrait.shape-circle,
-.portrait.shape-circle > .frame {
-	border-radius: 50%;
-}
-.portrait.shape-rounded {
-	border-radius: var(--r-lg);
-}
-.portrait.shape-arch {
-	border-radius: 999px 999px var(--r-lg) var(--r-lg);
-}
-.portrait.shape-leaf {
-	border-radius: 46% 12% 46% 12%;
 }
 
 /* Small avatar */
@@ -392,13 +371,13 @@ em.hl {
 .points li::before {
 	content: '';
 	position: absolute;
-	left: 4px;
-	top: 0.5em;
-	width: 22px;
-	height: 12px;
-	border-left: 4px solid var(--accent);
-	border-bottom: 4px solid var(--accent);
-	transform: rotate(-45deg);
+	left: 0;
+	top: 0.28em;
+	width: 32px;
+	height: 32px;
+	background: var(--accent);
+	-webkit-mask: var(--check) center / contain no-repeat;
+	mask: var(--check) center / contain no-repeat;
 }
 
 .meta-row {
@@ -406,8 +385,9 @@ em.hl {
 	flex-wrap: wrap;
 	gap: 14px 32px;
 	font-family: var(--font-mono);
-	font-size: 25px;
+	font-size: 26px;
 	font-weight: 600;
+	font-variant-numeric: tabular-nums;
 	color: var(--text-muted);
 }
 .meta-row b {
@@ -494,8 +474,11 @@ em.hl {
 	color: var(--blue-700);
 	display: grid;
 	place-items: center;
-	font-size: 44px;
-	font-weight: 800;
+}
+.icon-arrow {
+	width: 40px;
+	height: 40px;
+	flex: none;
 }
 .t-cover .cover-art {
 	position: absolute;
@@ -615,6 +598,7 @@ em.hl {
 .size-story.t-speaker .hero {
 	grid-template-columns: 1fr;
 	justify-items: start;
+	gap: 40px;
 }
 .size-story.t-speaker .portrait {
 	width: 420px;
@@ -639,6 +623,8 @@ em.hl {
 	display: flex;
 	align-items: center;
 	gap: 32px;
+	padding-top: 36px;
+	border-top: 1.5px solid var(--border);
 }
 .t-session .by .name {
 	font-size: 40px;
@@ -659,23 +645,20 @@ em.hl {
 }
 .t-timetable .row {
 	display: grid;
-	grid-template-columns: 190px 1fr;
+	grid-template-columns: 170px 1fr;
 	gap: 28px;
 	align-items: baseline;
-	padding: 22px 0;
-	border-bottom: 1px solid var(--border);
+	padding: 30px 20px;
+	border-bottom: 1.5px solid var(--border);
 }
 .t-timetable .row.is-highlight {
 	background: var(--paper);
-	margin-inline: -20px;
-	padding-inline: 20px;
-	border-radius: var(--r-sm);
-	border-bottom-color: transparent;
 }
 .t-timetable .time {
 	font-family: var(--font-mono);
-	font-size: 27px;
+	font-size: 29px;
 	font-weight: 700;
+	font-variant-numeric: tabular-nums;
 	color: var(--accent);
 }
 .t-timetable .what {
@@ -684,32 +667,32 @@ em.hl {
 	gap: 6px;
 }
 .t-timetable .what .t {
-	font-size: 31px;
+	font-size: 34px;
 	font-weight: 700;
 	line-height: 1.35;
 	letter-spacing: -0.01em;
 }
 .t-timetable .what .s {
-	font-size: 25px;
+	font-size: 27px;
 	color: var(--text-muted);
 }
 .t-timetable .what .chip {
 	align-self: flex-start;
-	font-size: 18px;
-	padding: 6px 14px;
+	font-size: 24px;
+	padding: 6px 16px;
 	margin-top: 4px;
 }
 .t-timetable.is-dense .row {
-	padding: 14px 0;
+	padding: 18px 20px;
 }
 .t-timetable.is-dense .what .t {
-	font-size: 27px;
+	font-size: 30px;
 }
 .t-timetable.is-dense .what .s {
-	font-size: 22px;
+	font-size: 24px;
 }
 .t-timetable.is-dense .time {
-	font-size: 23px;
+	font-size: 26px;
 }
 
 /* --- sponsor -------------------------------------------------------------- */
@@ -805,14 +788,13 @@ em.hl {
 	letter-spacing: -0.02em;
 }
 .t-goods .item .cap .p {
-	font-family: var(--font-mono);
-	font-size: 24px;
+	font-size: 25px;
 	font-weight: 700;
 	color: var(--accent);
 	white-space: nowrap;
 }
 .t-goods .item .cap .d {
-	font-size: 24px;
+	font-size: 25px;
 	color: var(--text-muted);
 }
 
@@ -855,9 +837,10 @@ em.hl {
 }
 .t-cta .info > div {
 	display: grid;
-	grid-template-columns: 200px 1fr;
+	grid-template-columns: 180px 1fr;
+	align-items: baseline;
 	gap: 24px;
-	padding: 22px 0;
+	padding: 26px 0;
 	border-bottom: 1.5px solid var(--border);
 	font-size: 30px;
 	font-weight: 700;
@@ -872,7 +855,7 @@ em.hl {
 	align-self: flex-start;
 	display: inline-flex;
 	align-items: center;
-	gap: 18px;
+	gap: 14px;
 	padding: 26px 44px;
 	border-radius: var(--r-full);
 	background: var(--blue-700);
@@ -884,9 +867,13 @@ em.hl {
 	background: var(--white);
 	color: var(--blue-700);
 }
+.t-cta .button .icon-arrow {
+	width: 34px;
+	height: 34px;
+}
 .t-cta .url {
 	font-family: var(--font-mono);
-	font-size: 26px;
+	font-size: 27px;
 	color: var(--text-dim);
 	word-break: break-all;
 }
@@ -920,8 +907,8 @@ html.wire [data-slot]::after {
 	white-space: nowrap;
 	pointer-events: none;
 }
-html.wire .portrait::before {
-	display: none;
+html.wire .portrait {
+	filter: none;
 }
 html.wire [data-overflow] {
 	outline: 4px solid #e5484d;

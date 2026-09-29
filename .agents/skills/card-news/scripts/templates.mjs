@@ -52,12 +52,23 @@ export function media(img, defaults = {}, { cls = '', name = 'image', label } = 
 	return `<div class="${classes.join(' ')}" ${slot(name)}${style ? ` style="${style}"` : ''}><img src="${esc(img.src)}" alt="${esc(o.alt ?? '')}"></div>`;
 }
 
-const heading = (d, fallbackKicker) => `
+const ARROW = `<svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15"/><path d="m13 6 6 6-6 6"/></svg>`;
+
+/** Same word modulo case / plural — used to drop a kicker that repeats the tag chip. */
+const sameWord = (a, b) => {
+	const n = (v) => String(v ?? '').trim().toLowerCase().replace(/s$/, '');
+	return n(a) && n(a) === n(b);
+};
+
+const heading = (d, fallbackKicker, tag) => {
+	const kicker = d.kicker ?? fallbackKicker;
+	return `
 	<div ${slot('heading')}>
-		<span class="kicker" ${slot('kicker')}>${esc(d.kicker ?? fallbackKicker)}</span>
+		${kicker && !sameWord(kicker, d.tag ?? tag) ? `<span class="kicker" ${slot('kicker')}>${esc(kicker)}</span>` : ''}
 		${when(d.title, () => `<h2 class="title${long(d.title, 22)}" ${slot('title')}>${rich(d.title)}</h2>`)}
 		${when(d.lead, () => `<p class="lead" ${slot('lead')}>${rich(d.lead)}</p>`)}
 	</div>`;
+};
 
 const metaRow = (pairs) => {
 	const items = pairs.filter(([, v]) => v);
@@ -73,7 +84,7 @@ const L = {
 
 export const templates = {
 	cover: {
-		tag: 'NEWS',
+		tag: '',
 		description: '덱 표지 — 히어로 그라디언트 위 대형 타이틀 (시리즈 첫 장)',
 		required: ['title'],
 		fields: {
@@ -89,7 +100,7 @@ export const templates = {
 			${when(d.subtitle, () => `<p class="subtitle" ${slot('subtitle')}>${rich(d.subtitle)}</p>`)}
 			<div class="series">
 				${when(d.series, () => `<span class="series-label" ${slot('series')}>${esc(d.series)}</span>`) || '<span></span>'}
-				${d.swipe === false ? '' : `<span class="swipe" aria-hidden="true">→</span>`}
+				${d.swipe === false ? '' : `<span class="swipe" aria-hidden="true">${ARROW}</span>`}
 			</div>`
 	},
 
@@ -213,7 +224,7 @@ export const templates = {
 		},
 		cardClass: (d) => ((d.rows ?? []).length > 5 ? 'is-dense' : ''),
 		body: (d) => `
-			${heading(d, 'Timetable')}
+			${heading(d, 'Timetable', 'TIMETABLE')}
 			<div class="rows" ${slot('rows')}>
 				${(d.rows ?? [])
 					.map(
@@ -249,7 +260,7 @@ export const templates = {
 			if (all.length === 1 && !d.tiers) {
 				const s = all[0];
 				return `
-			${heading(d, 'Sponsors')}
+			${heading(d, 'Sponsors', 'SPONSOR')}
 			<div class="spotlight">
 				${media(s.logo, { fit: 'contain', mask: 'rounded', plate: 'white' }, { cls: 'logo', name: 'logo', label: 'LOGO' })}
 				<div>
@@ -259,7 +270,7 @@ export const templates = {
 			</div>`;
 			}
 			return `
-			${heading(d, 'Sponsors')}
+			${heading(d, 'Sponsors', 'SPONSOR')}
 			${tiers
 				.map(
 					(t, i) => `
@@ -293,7 +304,7 @@ export const templates = {
 		body: (d) => {
 			const items = (d.items ?? []).slice(0, 4);
 			return `
-			${heading(d, 'Goods')}
+			${heading(d, 'Goods', 'GOODS')}
 			<div class="gallery n-${items.length}" ${slot('gallery')}>
 				${items
 					.map(
@@ -336,7 +347,7 @@ export const templates = {
 					.map((r) => `<div><span class="label">${esc(r.label)}</span><span>${rich(r.value)}</span></div>`)
 					.join('')}</div>`
 			)}
-			${when(d.button, () => `<span class="button" ${slot('button')}>${esc(d.button)} →</span>`)}
+			${when(d.button, () => `<span class="button" ${slot('button')}>${esc(d.button)}${ARROW}</span>`)}
 			${when(d.url, () => `<span class="url" ${slot('url')}>${esc(d.url)}</span>`)}`
 	}
 };
@@ -359,7 +370,10 @@ export function renderCard(card, ctx) {
 	${coverArt}
 	<header class="card-top">
 		<span class="brand">${BRAND_MARK}${esc(ctx.brand)}</span>
-		<span class="chip${card.template === 'cover' ? '' : ' solid'}" ${slot('tag')}>${esc(d.tag ?? tpl.tag)}</span>
+		${
+			// the cover carries its own badge; it only gets a chip when asked for
+			card.template === 'cover' && !d.tag ? '' : `<span class="chip${card.template === 'cover' ? '' : ' solid'}" ${slot('tag')}>${esc(d.tag ?? tpl.tag)}</span>`
+		}
 	</header>
 	<div class="card-body">${tpl.body(d, ctx)}</div>
 	<footer class="card-foot">
