@@ -19,7 +19,7 @@ export default {
 	<div class="sk-stage">
 		<div class="sk-photo">${photo(d, { mask: 'circle' })}</div>
 		<div class="sk-tagwrap">
-			<img class="sk-dash" src="assets/brand/dash.png" alt="">
+			${/^dash/.test(d.photo?.brandFallback ?? '') ? '' : `<img class="sk-dash" src="assets/brand/dash.png" alt="">`}
 			<div class="sk-tag" ${slot('name')}>
 				<span class="sk-hello">${esc(ctx.lang === 'ko' ? '안녕하세요, 연사' : 'HELLO, my name is')}</span>
 				<strong>${esc(d.name)}</strong>

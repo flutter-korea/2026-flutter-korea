@@ -33,6 +33,9 @@ node $CN render  <deck> [--scale 2] [--format jpg]
   - `scaffold session --name 가애KAAE` · `scaffold timetable` (트랙별 6행씩 자동 분할) · `scaffold sponsors` · `scaffold goods` · `scaffold blank --template <t>`
   - 공통 옵션: `--size portrait|square|story`, `--style <name>`, `--slug`, `--force`
 - **사용자가 인자로 준 정보/이미지**가 있으면 저장소 정보보다 우선한다. 이미지 경로(절대·상대·`/assets/...`=`static/` 기준)나 URL을 그대로 spec에 넣으면 build가 덱 폴더로 복사한다. 원격 URL은 가능하면 먼저 로컬로 내려받는다.
+- **사진이 없는 연사**는 먼저 사용자에게 실제 사진을 요청한다. 없으면 공식 대체 이미지 중 하나를 고르게 한다(`photo.fallback` / `spec.photoFallback`).
+  선택지는 `dash`(기본), `dash-cheer`, `dash-team`, `dash-plush`, `flutter`, `dart`, `auto`(Dash 버전을 돌아가며 사용)이다. 로고보다 Dash를 우선한다.
+  build가 알려 주는 문구(로고는 상표 고지, Dash는 CC BY 3.0 출처 표기)는 **카드 이미지에 넣지 않고** 게시글 캡션이나 웹사이트에 넣으라고 사용자에게 전한다. 기준은 references/design.md의 "사진이 없는 연사" 절이다.
 - 저장소에 없는 사실(소속, 소개, 발표 요약, 가격 등)을 **지어내지 않는다.** scaffold는 이런 칸을 `TODO: …`로 남기므로, 사용자에게 받거나 비워 둔다(빈 칸은 렌더되지 않음).
 
 ### 2. 디자인 스타일 선택

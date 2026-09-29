@@ -43,8 +43,13 @@ export const L = {
 };
 
 /** Portrait in the style's own shape: the style decides mask/fit; the spec keeps focus/zoom. */
-export const photo = (d, opts = {}, name = 'photo') =>
-	media(d.photo?.src ? { ...d.photo, fit: 'cover', mask: 'none', plate: undefined, ...opts } : d.photo, { fit: 'cover', mask: 'none', ...opts }, { name, label: 'PROFILE' });
+export const photo = (d, opts = {}, name = 'photo') => {
+	const p = d.photo;
+	// A brand stand-in (Dash / Flutter / Dart, see FALLBACKS in card-news.mjs) keeps
+	// its own fit/plate/inset so the artwork is never cropped; it only takes the mask.
+	if (p?.brandFallback) return media({ ...p, mask: opts.mask ?? 'none', zoom: undefined }, { mask: 'none' }, { name, label: 'PROFILE' });
+	return media(p?.src ? { ...p, fit: 'cover', mask: 'none', plate: undefined, ...opts } : p, { fit: 'cover', mask: 'none', ...opts }, { name, label: 'PROFILE' });
+};
 
 /* ----------------------------------------------------------------- styles */
 

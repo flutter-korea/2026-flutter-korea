@@ -51,6 +51,31 @@ Flutter Korea 2026 / Flutter Seoul 행사 정보를 사이트 디자인 테마 �
 - 준 사진 경로를 spec에 넣고 `focus`를 `"50% 30%"`쯤으로 맞춥니다. 사진은 덱 폴더로 복사되어 결과물이 자기 완결적입니다.
 - 원본 해상도가 스타일 권장치(대부분 600px, split은 1100px)보다 작으면 경고와 함께 원형 사진 스타일을 권합니다.
 
+### 1-1. 사진이 없는 연사
+
+> Khanh Nguyen님 연사 카드 만들어줘. 사진은 아직 없어.
+
+- 에이전트가 먼저 실제 사진이 있는지 묻고, 없으면 공식 대체 이미지 중에서 고르게 합니다. 기본값은 `dash`이고, scaffold가 미리 넣어 둡니다.
+
+> 사진 대신 Dash 3마리 응원하는 그림으로 해줘. / Flutter 로고로 해줘. / Dart 세션이니까 Dart 로고로.
+
+- `"photo": { "fallback": "dash-cheer" }`, `"flutter"` 또는 `"dart"`로 바꿉니다. 카드 이미지에는 출처나 상표 문구가 들어가지 않습니다. 대신 로고를 쓰면 상표 고지 문구를, Dash를 쓰면 CC BY 3.0 출처 표기 문구를 게시글 캡션에 넣으라고 알려 줍니다.
+
+> 라인업 전체에서 사진 없는 분들은 Dash를 다양하게 써줘.
+
+- `"photoFallback": "auto"`로 사진 없는 카드마다 `dash` → `dash-cheer` → `dash-team` → `dash-plush`를 돌아가며 씁니다.
+
+| fallback | 이미지 | 추천 상황 |
+| --- | --- | --- |
+| `dash` | 공식 3D Dash | 기본 |
+| `dash-cheer` | 응원하는 Dash 3마리 | 커뮤니티 세션, 패널 |
+| `dash-team` | 모자·안경·노트북 Dash 3마리 | 팀 발표 |
+| `dash-plush` | Dash 인형 사진 | 밋업 톤 (풀폭 split 스타일은 피하기) |
+| `flutter` / `dart` | 공식 로고마크 | 주제를 강조할 때. 상표 고지 필요 |
+| `auto` | Dash 4종 순환 | 라인업 시리즈 |
+
+모든 이미지는 flutter.dev·dart.dev·flutter/website의 공식 에셋이며 출처는 [SOURCES.md](assets/brand/SOURCES.md)에 있습니다.
+
 ### 2. 연사 라인업: 시리즈 전체
 
 > 전체 연사 라인업 카드뉴스를 ticket 스타일로 만들어줘. 첫 장은 표지로.
@@ -185,5 +210,6 @@ node $CN render speaker-kaae-ko [--scale 2] [--format jpg]
 
 - **렌더링이 "승인 기록이 없습니다"라며 멈춰요.** 의도된 동작입니다. preview를 보고 명시적으로 승인해야 렌더링됩니다.
 - **사진이 흐릿해요.** check의 "해상도 부족" 경고를 확인하세요. 원본이 표시 크기보다 작습니다. 더 큰 원본을 쓰거나 원형 사진 스타일을 고르세요.
+- **사진이 없는데 줄무늬 상자가 나와요.** 검토용 placeholder입니다. `photo.fallback`(또는 덱 전체 `photoFallback`)에 `dash` 등을 지정하세요.
 - **Flutter 로고나 Dash를 넣고 싶어요.** `assets/brand/`에 있는 공식 원본만 씁니다. 출처와 사용 규칙은 [SOURCES.md](assets/brand/SOURCES.md)에 있습니다. 검색으로 찾은 이미지는 쓰지 않습니다.
 - **Gemini CLI에서 스킬이 안 보여요.** 저장소 폴더를 신뢰 폴더로 지정했는지 확인하세요(`gemini skills list`).

@@ -34,6 +34,27 @@ const SIZES = {
 	square: { w: 1080, h: 1080, note: '1:1 — feed, X, Facebook' },
 	story: { w: 1080, h: 1920, note: '9:16 — Stories/Reels (safe areas padded)' }
 };
+/**
+ * Stand-ins for a missing speaker photo — official brand art only (assets/brand/,
+ * provenance in SOURCES.md). Illustrations and logos use `contain` so nothing of
+ * the artwork is cropped; the plush photo is a real photo and fills with `cover`.
+ */
+export const FALLBACKS = {
+	dash: { file: 'dash.png', fit: 'contain', inset: '12%', plate: 'paper', attribution: 'Dash artwork © the Flutter project authors, CC BY 3.0 (github.com/flutter/website)', note: '공식 3D Dash (flutter.dev/brand)' },
+	'dash-cheer': { file: 'dash-cheer.png', fit: 'contain', inset: '8%', plate: 'white', attribution: 'Dash artwork © the Flutter project authors, CC BY 3.0 (github.com/flutter/website)', note: '응원하는 Dash 3마리 일러스트' },
+	'dash-team': { file: 'dash-team.png', fit: 'contain', inset: '8%', plate: 'paper', attribution: 'Dash artwork © the Flutter project authors, CC BY 3.0 (github.com/flutter/website)', note: '모자·안경·노트북 Dash 3마리 (Dashatars)' },
+	'dash-plush': { file: 'dash-plush.png', fit: 'cover', focus: '45% 45%', attribution: 'Dash artwork © the Flutter project authors, CC BY 3.0 (github.com/flutter/website)', note: '큰 Dash·작은 Dash 인형 사진' },
+	flutter: {
+		file: 'flutter-logomark.svg', fit: 'contain', inset: '26%', plate: 'white', note: 'Flutter 로고마크 (변형 금지)',
+		trademark: 'Flutter and the related logo are trademarks of Google LLC. Flutter Korea 2026 is not affiliated with or otherwise sponsored by Google LLC.'
+	},
+	dart: {
+		file: 'dart-logomark.svg', fit: 'contain', inset: '26%', plate: 'white', note: 'Dart 로고마크 (변형 금지)',
+		trademark: 'Dart and the related logo are trademarks of Google LLC. We are not endorsed by or affiliated with Google LLC.'
+	}
+};
+const AUTO_FALLBACK = ['dash', 'dash-cheer', 'dash-team', 'dash-plush'];
+
 const FONT_CSS =
 	'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css';
 
@@ -171,7 +192,7 @@ function speakerCards(tk, lang) {
 		{
 			template: 'speaker',
 			data: {
-				photo: tk.image ? { src: tk.image, focus: '50% 35%' } : TODO(ko ? '프로필 이미지 경로' : 'profile image path'),
+				photo: tk.image ? { src: tk.image, focus: '50% 35%' } : { src: TODO(ko ? '프로필 이미지 경로' : 'profile image path'), fallback: 'dash' },
 				name: tk.speaker,
 				role: TODO(ko ? '소속 · 직함' : 'affiliation · title'),
 				bio: TODO(ko ? '연사 소개 2~3문장' : '2–3 sentence bio'),
@@ -195,7 +216,7 @@ function sessionCard(tk, lang) {
 			speaker: {
 				name: tk.speaker,
 				role: TODO(ko ? '소속' : 'affiliation'),
-				...(tk.image ? { photo: tk.image } : {})
+				photo: tk.image ? tk.image : { src: TODO(ko ? '프로필 이미지 경로' : 'profile image path'), fallback: 'dash' }
 			}
 		}
 	};
@@ -386,13 +407,27 @@ async function normalizeImages(value, ctx, path = '') {
 		if (IMAGE_KEYS.has(k) && v) {
 			const img = typeof v === 'string' ? { src: v } : { ...v };
 			if (!img.src || /^TODO:/.test(img.src)) {
-				ctx.warnings.push(`${p}: 이미지 미지정 (placeholder로 표시됨)`);
-				out[k] = { ...img, src: undefined };
+				let fb = k === 'photo' ? (img.fallback ?? ctx.photoFallback) : undefined;
+				if (fb === 'auto') fb = AUTO_FALLBACK[ctx.autoIndex.n++ % AUTO_FALLBACK.length];
+				if (fb && FALLBACKS[fb]) {
+					const f = FALLBACKS[fb];
+					ctx.warnings.push(`#${ctx.page} ${p}: 사진이 없어 "${fb}"(${f.note})로 대체했습니다. 실제 사진이 생기면 src 를 채우세요`);
+					if (f.trademark) ctx.trademarks.add(`상표 고지: "${f.trademark}"`);
+					if (f.attribution) ctx.trademarks.add(`출처 표기(CC BY 3.0): "${f.attribution}"`);
+					const { file, note, trademark, attribution, ...look } = f;
+					out[k] = { ...look, alt: '', ...img, src: `assets/brand/${file}`, brandFallback: fb };
+				} else {
+					if (fb) ctx.errors.push(`#${ctx.page} ${p}: 알 수 없는 fallback "${fb}" (가능: ${Object.keys(FALLBACKS).join(', ')}, auto)`);
+					ctx.warnings.push(
+						`#${ctx.page} ${p}: 이미지 미지정 (검토용 placeholder로 표시됨)${k === 'photo' ? ` — 사진이 없으면 photo.fallback 또는 spec.photoFallback 으로 ${Object.keys(FALLBACKS).join('/')}/auto 중 하나를 지정하세요` : ''}`
+					);
+					out[k] = { ...img, src: undefined };
+				}
 				continue;
 			}
 			const r = resolveImageFile(img.src, ctx.specDir);
 			if (r.missing) {
-				ctx.errors.push(`${p}: 이미지 파일을 찾을 수 없음 → ${img.src}`);
+				ctx.errors.push(`#${ctx.page} ${p}: 이미지 파일을 찾을 수 없음 → ${img.src}`);
 				out[k] = { ...img, src: undefined };
 			} else if (r.remote) {
 				ctx.warnings.push(`${p}: 원격 이미지 (${img.src}) — 가능하면 로컬 파일로 받아 두세요`);
@@ -418,8 +453,8 @@ const clip = (s, n = 90) => {
 function flatten(v, p = '') {
 	if (Array.isArray(v)) return v.flatMap((x, i) => flatten(x, `${p}[${i}]`));
 	if (v && typeof v === 'object') {
-		if ('src' in v && Object.keys(v).every((k) => ['src', 'fit', 'focus', 'zoom', 'mask', 'plate', 'inset', 'alt'].includes(k)))
-			return [[p, `🖼 ${v.src ?? '(비어 있음)'}${['fit', 'mask', 'focus', 'zoom'].filter((k) => v[k]).map((k) => ` · ${k}=${v[k]}`).join('')}`]];
+		if ('src' in v && Object.keys(v).every((k) => ['src', 'fit', 'focus', 'zoom', 'mask', 'plate', 'inset', 'alt', 'fallback', 'brandFallback'].includes(k)))
+			return [[p, `🖼 ${v.brandFallback ? `대체 이미지: ${v.brandFallback}` : (v.src ?? '(비어 있음)')}${['fit', 'mask', 'focus', 'zoom'].filter((k) => v[k]).map((k) => ` · ${k}=${v[k]}`).join('')}`]];
 		return Object.entries(v).flatMap(([k, x]) => flatten(x, p ? `${p}.${k}` : k));
 	}
 	return [[p, v]];
@@ -583,7 +618,16 @@ async function cmdBuild(pos) {
 	const defaultFooter = [`${frame.DATE} ${frame.PROGRAM}`, frame.VENUE];
 	const event = { date: frame.DATE, time: frame.PROGRAM, venue: frame.VENUE, doors: frame.DOORS };
 
-	const ctx = { specDir: dirname(P.spec), assets: P.assets, warnings: [], errors: [], images: [] };
+	const ctx = {
+		specDir: dirname(P.spec),
+		assets: P.assets,
+		warnings: [],
+		errors: [],
+		images: [],
+		photoFallback: spec.photoFallback,
+		autoIndex: { n: 0 },
+		trademarks: new Set()
+	};
 	const built = [];
 	for (const [i, card] of spec.cards.entries()) {
 		const page = i + 1;
@@ -602,7 +646,8 @@ async function cmdBuild(pos) {
 			if (v === undefined || v === '' || (Array.isArray(v) && !v.length)) ctx.errors.push(`#${page} ${card.template}: 필수 필드 "${k}" 누락`);
 		}
 		for (const [k, v] of flatten(data)) if (typeof v === 'string' && /^TODO:/.test(v)) ctx.warnings.push(`#${page} ${k}: ${v}`);
-		const normalized = await normalizeImages(data, { ...ctx, warnings: ctx.warnings, errors: ctx.errors });
+		ctx.page = page;
+		const normalized = await normalizeImages(data, ctx);
 		const html = renderCard(
 			{ template: card.template, data: normalized },
 			{
@@ -623,6 +668,8 @@ async function cmdBuild(pos) {
 		built.push({ page, template: card.template, style, file, html, rows: flatten(normalized) });
 	}
 
+	// Notices never go on the card image itself — only into the post caption / event site.
+	for (const notice of ctx.trademarks) ctx.warnings.push(`대체 이미지를 사용했습니다. 카드에는 넣지 말고 게시글 캡션(또는 행사 웹사이트)에 넣으세요 — ${notice}`);
 	await writeFile(P.preview, previewDoc(spec, built, size, ctx));
 
 	const md = [
@@ -757,6 +804,7 @@ function inspect(scale) {
 			issues.push({ level: 'error', msg: `이미지 "${name}" 로드 실패 (${img.getAttribute('src')})` });
 			continue;
 		}
+		if (/\.svg(\?|$)/i.test(img.getAttribute('src') ?? '')) continue; // vectors scale cleanly
 		const f = frame.getBoundingClientRect();
 		const cs = getComputedStyle(img);
 		const zoom = Number(getComputedStyle(frame).getPropertyValue('--zoom')) || 1;
@@ -941,7 +989,10 @@ function cmdTemplates() {
 	log('\nStyles (spec.style 또는 card.style — 해당 템플릿을 스타일 전용 레이아웃으로 렌더):');
 	for (const [k, st] of Object.entries(styles)) log(`    ${k.padEnd(12)} ${st.label} — ${st.description} [${Object.keys(st.cards).join(', ')}]`);
 	log('\nImage options (photo/image/logo/banner 필드에 문자열 또는 객체):');
-	log('    { src, fit: cover|contain, mask: circle|squircle|rounded|arch|leaf|none, focus: "50% 30%", zoom: 1.2, plate: white|paper|none, inset: "12%" }');
+	log('    { src, fit: cover|contain, mask: circle|squircle|rounded|arch|leaf|none, focus: "50% 30%", zoom: 1.2, plate: white|paper|none, inset: "12%", fallback }');
+	log('\nPhoto fallbacks (사진이 없을 때 photo.fallback 또는 spec.photoFallback):');
+	for (const [k, f] of Object.entries(FALLBACKS)) log(`    ${k.padEnd(12)} ${f.note}`);
+	log(`    ${'auto'.padEnd(12)} 사진 없는 카드마다 ${AUTO_FALLBACK.join(' → ')} 순서로 돌아가며 사용`);
 }
 
 const [cmd, ...rest] = process.argv.slice(2);

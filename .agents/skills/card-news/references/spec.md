@@ -8,6 +8,7 @@
 	"brand": "Flutter Korea 2026", // (선택) 헤더 브랜드 텍스트
 	"footer": ["2026.11.07 (토) 11:00 – 18:00", "AWS 코리아 (센터필드 EAST 12층)"], // (선택) 푸터 왼쪽. 문자열 또는 줄 배열. 생략 시 content.js 타임테이블의 DATE·PROGRAM / VENUE
 	"handle": "#FlutterKorea2026", // (선택) 푸터 오른쪽. 2장 이상이면 "n / N" 페이지가 붙음
+	"photoFallback": "auto", // (선택) 사진 없는 카드 전체의 대체 이미지 (design.md "사진이 없는 연사")
 	"style": "app", // (선택) 디자인 스타일. card.style로 카드별 지정 가능 (design.md의 스타일 표 참고)
 	"cards": [{ "template": "speaker", "data": { /* 템플릿별 필드 */ } }]
 }
@@ -31,7 +32,8 @@
 	"zoom": 1.15,            // cover 확대 (focus 기준)
 	"plate": "white",        // 배경 판: white | paper | none (contain일 때 주로 사용)
 	"inset": "12%",          // contain 여백
-	"alt": "…"
+	"alt": "…",
+	"fallback": "dash"        // 사진이 없을 때 대체: dash | dash-cheer | dash-team | dash-plush | flutter | dart | auto
 }
 ```
 
