@@ -667,7 +667,11 @@ function inspect(scale) {
 		if (r.height > 0 && (r.bottom > limit.bottom + 1 || r.right > limit.right + 1)) {
 			el.dataset.overflow = '';
 			issues.push({ level: 'error', msg: `슬롯 "${name}" 이 영역 밖으로 넘침` });
-		} else if (el.scrollWidth > el.clientWidth + 2 && getComputedStyle(el).overflow !== 'visible') {
+		} else if (
+			!el.classList.contains('frame') && // frames clip zoomed images on purpose
+			el.scrollWidth > el.clientWidth + 2 &&
+			getComputedStyle(el).overflow !== 'visible'
+		) {
 			issues.push({ level: 'warn', msg: `슬롯 "${name}" 가로 넘침` });
 		}
 	}
