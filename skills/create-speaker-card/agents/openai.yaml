@@ -1,0 +1,8 @@
+interface:
+  display_name: "Create Speaker Card"
+  short_description: "Create a Flutter Korea speaker card"
+  icon_small: "./assets/preview.png"
+  icon_large: "./assets/preview.png"
+  default_prompt: "Create an image using the Flutter Korea Speaker Card template."
+policy:
+  allow_implicit_invocation: true
