@@ -65,15 +65,19 @@ Shared URLs (Call for Speakers form, ticket platform, contact) live in the `link
 this site's design theme. It works in **Claude Code**, **Codex**, and **Gemini CLI**: Codex and Gemini
 read `.agents/skills/` directly, and `.claude/skills/card-news` is a symlink to the same folder.
 
-Ask your agent for a card, e.g. *"박성수 연사 소개 카드뉴스 만들어줘"*, or drive the CLI yourself:
+Ask your agent for a card, e.g. *"가애KAAE 연사 소개 카드뉴스 만들어줘"*, or drive the CLI yourself:
 
 ```bash
-bun run card-news scaffold speaker --name 박성수   # draft card-news/<slug>/spec.json from content.js
+bun run card-news scaffold speaker --name 가애KAAE # draft card-news/<slug>/spec.json from content.js
 bun run card-news build <slug>                    # HTML cards + preview.html (structure review)
 bun run card-news check <slug>                    # headless overflow / image-resolution QA
 bun run card-news approve <slug> --by "<name>"    # human sign-off (hash-locked)
 bun run card-news render <slug>                   # PNGs in card-news/<slug>/out/
 ```
+
+> **Gemini CLI** only loads project skills in a *trusted* folder. Trust this repo once (answer the trust
+> prompt when you first run `gemini` here, or use `/permissions`); otherwise `card-news` won't show up in
+> `gemini skills list`.
 
 Rendering needs Chrome, or a Chromium installed via `bunx playwright-core install chromium`.
 `card-news/` is a gitignored workspace. See the skill's [SKILL.md](.agents/skills/card-news/SKILL.md).

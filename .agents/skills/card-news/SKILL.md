@@ -27,8 +27,8 @@ node $CN render  <deck> [--scale 2] [--format jpg]
 ### 1. 요청 파악 & 정보 수집
 - 어떤 카드인지 정한다: 연사(speaker) / 발표(session) / 행사(event) / 타임테이블 / 후원사 / 굿즈 / 공지(cta), 여러 장이면 표지(cover)부터.
 - **저장소 정보**: `scaffold`가 `src/lib/content.js`(타임테이블·연사 사진·행사 정보·후원사·링크)를 읽어 초안을 만든다.
-  - `scaffold event [--lang en]` · `scaffold speaker --name 박성수` (`--all`이면 표지+전체 라인업, `--name` 없이 실행하면 연사 목록 출력)
-  - `scaffold session --name 유동민` · `scaffold timetable` (트랙별 6행씩 자동 분할) · `scaffold sponsors` · `scaffold goods` · `scaffold blank --template <t>`
+  - `scaffold event [--lang en]` · `scaffold speaker --name 가애KAAE` (`--all`이면 표지+전체 라인업, `--name` 없이 실행하면 연사 목록 출력)
+  - `scaffold session --name 가애KAAE` · `scaffold timetable` (트랙별 6행씩 자동 분할) · `scaffold sponsors` · `scaffold goods` · `scaffold blank --template <t>`
   - 공통 옵션: `--size portrait|square|story`, `--slug`, `--force`
 - **사용자가 인자로 준 정보/이미지**가 있으면 저장소 정보보다 우선한다. 이미지 경로(절대·상대·`/assets/...`=`static/` 기준)나 URL을 그대로 spec에 넣으면 build가 덱 폴더로 복사한다. 원격 URL은 가능하면 먼저 로컬로 내려받는다.
 - 저장소에 없는 사실(소속, 소개, 발표 요약, 가격 등)을 **지어내지 않는다.** scaffold는 이런 칸을 `TODO: …`로 남기므로, 사용자에게 받거나 비워 둔다(빈 칸은 렌더되지 않음).

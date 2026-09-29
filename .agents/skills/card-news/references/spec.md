@@ -2,7 +2,7 @@
 
 ```jsonc
 {
-	"title": "연사 소개 — 박성수", // 미리보기/구조 요약 제목 (카드에는 안 나옴)
+	"title": "연사 소개 — 가애KAAE", // 미리보기/구조 요약 제목 (카드에는 안 나옴)
 	"lang": "ko", // ko | en — 라벨(시간/장소 등)과 기본 푸터 언어
 	"size": "portrait", // portrait 1080×1350 (기본) | square 1080×1080 | story 1080×1920
 	"brand": "Flutter Korea 2026", // (선택) 헤더 브랜드 텍스트
@@ -21,7 +21,7 @@
 키 이름이 `photo`, `image`, `logo`, `banner`인 필드는 이미지로 처리된다. 문자열이나 객체로 쓴다.
 
 ```jsonc
-"photo": "/assets/flutter-seoul/speaker/park-seongsu.jpg"
+"photo": "/assets/flutter-seoul/speaker/kaae.jpeg"
 "photo": {
 	"src": "~/Downloads/profile.jpg",   // 절대경로 | spec 기준 상대경로 | 저장소 기준 경로 | /assets/…(static/) | https://…
 	"fit": "cover",          // cover(채워서 크롭) | contain(전체가 보이게, 여백)
