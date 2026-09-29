@@ -38,6 +38,8 @@ node $CN render  <deck> [--scale 2] [--format jpg]
 [references/design.md](references/design.md)를 따른다. 핵심:
 - 카드 1장 = 정보 한 덩어리. 텍스트가 넘치면 글을 줄이거나 카드를 나눈다(폰트를 억지로 줄이지 않는다).
 - 사진은 `focus`(object-position)로 얼굴 위치를, `mask`로 형태를 정한다. 로고·누끼 이미지는 `fit: "contain"`.
+- 디자인 방향은 `style`로 고른다(speaker 템플릿 10종: facets, editorial, duotone, split, poster, badge, inspector, code, sticker, magazine).
+  사용자가 지정하지 않으면 기본 디자인을 쓰고, 고르기 어려워하면 `examples/speaker-kaae-styles.json` 비교 덱을 보여 준다.
 
 ### 3. build → check (에이전트 자체 QA)
 ```bash
@@ -71,7 +73,8 @@ node $CN build <slug> && node $CN check <slug>
 ## 파일
 - `scripts/card-news.mjs`: CLI(scaffold/build/check/approve/render)
 - `scripts/templates.mjs`: 템플릿 8종 (구조별 HTML, `data-slot` 표기)
+- `scripts/styles.mjs` + `assets/styles.css`: 디자인 스타일 10종 (같은 데이터, 다른 레이아웃)
 - `assets/theme.css`: `src/app.css` 토큰 미러와 카드·마스크·와이어프레임 스타일 (사이트 테마가 바뀌면 `:root`를 동기화)
 - `assets/brand/`: 출처를 검증한 브랜드 에셋(Flutter Seoul 마크, 공식 Flutter 로고, 공식 Dash)과 `SOURCES.md`
 - `references/spec.md`: spec 형식과 템플릿별 필드 · `references/design.md`: 디자인·이미지 마스킹 가이드
-- `examples/showcase.json`: 8종 템플릿 예시 덱 (회귀 확인용) · `examples/speaker-kaae.json`: 실제 연사 소개 예시 (저장소 사실만 사용)
+- `examples/showcase.json`: 8종 템플릿 예시 덱 (회귀 확인용) · `examples/speaker-kaae-styles.json`: 스타일 10종 비교 덱 · `examples/speaker-kaae.json`: 실제 연사 소개 예시 (저장소 사실만 사용)

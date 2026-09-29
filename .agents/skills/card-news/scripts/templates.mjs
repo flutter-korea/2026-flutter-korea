@@ -1,3 +1,5 @@
+import { styles } from './styles.mjs';
+
 /**
  * Card news templates. Every template shares the same frame (brand header →
  * body → footer) and theme (assets/theme.css), but lays out its body with a
@@ -25,8 +27,8 @@ export const rich = (v) =>
 		.replace(/\*\*(.+?)\*\*/g, '<em class="hl">$1</em>')
 		.replace(/\n/g, '<br>');
 
-const slot = (name) => `data-slot="${name}"`;
-const when = (v, html) => (v === undefined || v === null || v === '' || (Array.isArray(v) && !v.length) ? '' : html());
+export const slot = (name) => `data-slot="${name}"`;
+export const when = (v, html) => (v === undefined || v === null || v === '' || (Array.isArray(v) && !v.length) ? '' : html());
 const long = (v, n) => (String(v ?? '').replace(/\*\*/g, '').length > n ? ' is-long' : '');
 
 /**
@@ -52,7 +54,7 @@ export function media(img, defaults = {}, { cls = '', name = 'image', label } = 
 	return `<div class="${classes.join(' ')}" ${slot(name)}${style ? ` style="${style}"` : ''}><img src="${esc(img.src)}" alt="${esc(o.alt ?? '')}"></div>`;
 }
 
-const ARROW = `<svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15"/><path d="m13 6 6 6-6 6"/></svg>`;
+export const ARROW = `<svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15"/><path d="m13 6 6 6-6 6"/></svg>`;
 
 /** Same word modulo case / plural — used to drop a kicker that repeats the tag chip. */
 const sameWord = (a, b) => {
@@ -360,6 +362,9 @@ export const IMAGE_KEYS = new Set(['photo', 'image', 'logo', 'banner']);
 
 /** Full card <article>: shared frame around the template body. */
 export function renderCard(card, ctx) {
+	// A design style may own the whole card for a template (see styles.mjs).
+	const styled = ctx.style && styles[ctx.style]?.cards?.[card.template];
+	if (styled) return styled(card.data ?? {}, ctx);
 	const tpl = templates[card.template];
 	const d = card.data ?? {};
 	const extra = tpl.cardClass?.(d) ?? '';

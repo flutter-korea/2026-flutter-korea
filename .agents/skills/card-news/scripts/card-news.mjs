@@ -21,6 +21,7 @@ import { basename, dirname, extname, isAbsolute, join, relative, resolve } from 
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { spawn } from 'node:child_process';
 import { IMAGE_KEYS, esc, renderCard, templates } from './templates.mjs';
+import { styles } from './styles.mjs';
 
 const SKILL_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const REPO = findRepoRoot(SKILL_DIR);
@@ -414,6 +415,7 @@ function cardDoc(inner, { w, h, title }) {
 <title>${esc(title)}</title>
 <link rel="stylesheet" href="${FONT_CSS}">
 <link rel="stylesheet" href="assets/theme.css">
+<link rel="stylesheet" href="assets/styles.css">
 <style>html,body{width:${w}px;height:${h}px;overflow:hidden}</style>
 <script>if(/[?&]mode=wire/.test(location.search))document.documentElement.classList.add('wire')</script>
 </head>
@@ -432,8 +434,8 @@ function previewDoc(spec, built, size, { warnings, errors }) {
 <section class="pv-card" id="card-${b.page}">
 	<div class="pv-stage" style="--w:${w}px;--h:${h}px">${b.html}</div>
 	<div class="pv-meta">
-		<h2>${b.page} / ${built.length} · <code>${b.template}</code></h2>
-		<p class="pv-desc">${esc(templates[b.template].description)}</p>
+		<h2>${b.page} / ${built.length} · <code>${b.template}</code>${b.style ? ` · <code>style: ${b.style}</code>` : ''}</h2>
+		<p class="pv-desc">${esc(b.style ? `${styles[b.style].label} — ${styles[b.style].description}` : templates[b.template].description)}</p>
 		<p class="pv-file"><a href="cards/${b.file}">cards/${b.file}</a></p>
 		<table>
 			<thead><tr><th>필드</th><th>값</th><th>길이</th></tr></thead>
@@ -456,6 +458,7 @@ function previewDoc(spec, built, size, { warnings, errors }) {
 <title>${esc(spec.title ?? 'Card news')} · 구조 검토</title>
 <link rel="stylesheet" href="${FONT_CSS}">
 <link rel="stylesheet" href="assets/theme.css">
+<link rel="stylesheet" href="assets/styles.css">
 <style>
 	html, body { background: #f4f6fa; }
 	body { font-family: var(--font-sans); }
@@ -544,6 +547,10 @@ async function cmdBuild(pos) {
 	await mkdir(P.cards, { recursive: true });
 	await mkdir(join(P.assets, 'img'), { recursive: true });
 	await copyFile(join(SKILL_DIR, 'assets/theme.css'), join(P.assets, 'theme.css'));
+	await copyFile(join(SKILL_DIR, 'assets/styles.css'), join(P.assets, 'styles.css'));
+	await mkdir(join(P.assets, 'brand'), { recursive: true });
+	for (const f of await readdir(join(SKILL_DIR, 'assets/brand')))
+		if (!f.endsWith('.md')) await copyFile(join(SKILL_DIR, 'assets/brand', f), join(P.assets, 'brand', f));
 	const brandMark = (await readFile(join(SKILL_DIR, 'assets/brand/flutter-seoul-mark.svg'), 'utf8'))
 		.replace(/<svg[^>]*?width="\d+" height="\d+"/, (m) => m.replace(/ width="\d+" height="\d+"/, ''))
 		.replace('<svg', '<svg aria-hidden="true" focusable="false"');
@@ -552,6 +559,7 @@ async function cmdBuild(pos) {
 	// (src/lib/content.js), so cards never drift from the published event facts.
 	const frame = Object.fromEntries((await loadContent()).dict[lang].timetable.frame.map((f) => [f.label, f.value]));
 	const defaultFooter = [`${frame.DATE} ${frame.PROGRAM}`, frame.VENUE];
+	const event = { date: frame.DATE, time: frame.PROGRAM, venue: frame.VENUE, doors: frame.DOORS };
 
 	const ctx = { specDir: dirname(P.spec), assets: P.assets, warnings: [], errors: [], images: [] };
 	const built = [];
@@ -563,6 +571,8 @@ async function cmdBuild(pos) {
 			continue;
 		}
 		const data = card.data ?? {};
+		const style = card.style ?? spec.style;
+		if (style && !styles[style]) ctx.errors.push(`#${page}: 알 수 없는 style "${style}" (가능: ${Object.keys(styles).join(', ')})`);
 		for (const k of tpl.required) {
 			const v = data[k];
 			if (v === undefined || v === '' || (Array.isArray(v) && !v.length)) ctx.errors.push(`#${page} ${card.template}: 필수 필드 "${k}" 누락`);
@@ -579,12 +589,14 @@ async function cmdBuild(pos) {
 				brand: spec.brand ?? 'Flutter Korea 2026',
 				footer: spec.footer ?? defaultFooter,
 				handle: spec.handle ?? '#FlutterKorea2026',
-				brandMark
+				brandMark,
+				event,
+				style
 			}
 		);
 		const file = `${String(page).padStart(2, '0')}-${card.template}.html`;
 		await writeFile(join(P.cards, file), cardDoc(html, { ...SIZES[size], title: `${page} · ${card.template}` }));
-		built.push({ page, template: card.template, file, html, rows: flatten(normalized) });
+		built.push({ page, template: card.template, style, file, html, rows: flatten(normalized) });
 	}
 
 	await writeFile(P.preview, previewDoc(spec, built, size, ctx));
@@ -662,7 +674,7 @@ async function openCard(browser, P, file, size, scale, query = '') {
 /** In-page QA: overflow of the body / slots, broken and upscaled images. */
 function inspect(scale) {
 	const card = document.querySelector('.card');
-	const body = card.querySelector('.card-body');
+	const body = card.querySelector('.card-body') ?? card;
 	const cb = card.getBoundingClientRect();
 	const bb = body.getBoundingClientRect();
 	const issues = [];
@@ -670,7 +682,7 @@ function inspect(scale) {
 		issues.push({ level: 'error', msg: `본문이 카드 높이를 ${body.scrollHeight - body.clientHeight}px 초과 (텍스트를 줄이거나 항목 수를 줄이세요)` });
 	for (const el of card.querySelectorAll('[data-slot]')) {
 		const r = el.getBoundingClientRect();
-		const inBody = body.contains(el);
+		const inBody = body !== card && body.contains(el);
 		const limit = inBody ? bb : cb;
 		const name = el.dataset.slot;
 		if (r.height > 0 && (r.bottom > limit.bottom + 1 || r.right > limit.right + 1)) {
@@ -727,16 +739,19 @@ async function cmdCheck(pos, opt) {
 	const scale = Number(opt.scale ?? 1);
 	const browser = await launch();
 	let errors = 0;
+	await rm(P.proof, { recursive: true, force: true });
+	await mkdir(P.proof, { recursive: true });
 	try {
 		for (const file of (await readdir(P.cards)).filter((f) => f.endsWith('.html')).sort()) {
 			const page = await openCard(browser, P, file, size, 1);
+			// Per-card proof image for self-review only — final images come from `render` after approval.
+			await page.locator('.card').screenshot({ path: join(P.proof, file.replace(/\.html$/, '.png')) });
 			const issues = await page.evaluate(inspect, scale);
 			errors += issues.filter((i) => i.level === 'error').length;
 			log(`${issues.length ? (issues.some((i) => i.level === 'error') ? '✖' : '⚠') : '✔'} ${file}`);
 			for (const i of issues) log(`   ${i.level === 'error' ? '✖' : '⚠'} ${i.msg}`);
 			await page.close();
 		}
-		await mkdir(P.proof, { recursive: true });
 		const pv = await browser.newPage({ viewport: { width: 1400, height: 900 } });
 		for (const mode of ['design', 'wire']) {
 			await pv.goto(`${pathToFileURL(P.preview).href}?mode=${mode}&scale=0.36`, { waitUntil: 'load' });
@@ -744,7 +759,7 @@ async function cmdCheck(pos, opt) {
 			await pv.screenshot({ path: join(P.proof, `proof-${mode}.png`), fullPage: true });
 		}
 		await pv.close();
-		log(`\n  proof: ${rel(join(P.proof, 'proof-design.png'))}, ${rel(join(P.proof, 'proof-wire.png'))}`);
+		log(`\n  proof: ${rel(P.proof)}/ (카드별 NN-*.png, proof-design.png, proof-wire.png — 검토용, 배포용 아님)`);
 	} finally {
 		await browser.close();
 	}
@@ -821,6 +836,8 @@ function cmdTemplates() {
 	}
 	log('Sizes:');
 	for (const [k, s] of Object.entries(SIZES)) log(`    ${k.padEnd(10)} ${s.w}×${s.h}  ${s.note}`);
+	log('\nStyles (spec.style 또는 card.style — 해당 템플릿을 스타일 전용 레이아웃으로 렌더):');
+	for (const [k, st] of Object.entries(styles)) log(`    ${k.padEnd(12)} ${st.label} — ${st.description} [${Object.keys(st.cards).join(', ')}]`);
 	log('\nImage options (photo/image/logo/banner 필드에 문자열 또는 객체):');
 	log('    { src, fit: cover|contain, mask: circle|squircle|rounded|arch|leaf|none, focus: "50% 30%", zoom: 1.2, plate: white|paper|none, inset: "12%" }');
 }

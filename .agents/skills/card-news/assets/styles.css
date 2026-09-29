@@ -1,0 +1,1311 @@
+/* ============================================================================
+   Card news — design styles (see scripts/styles.mjs)
+   Each style is scoped by `.style-<name>` and reuses the tokens in theme.css.
+   Portrait (1080×1350) is the reference canvas for every style.
+   ========================================================================== */
+
+/* Shared: Flutter Seoul mark */
+.fs-mark {
+	display: inline-flex;
+	flex: none;
+}
+.fs-mark svg {
+	width: 70px;
+	height: auto;
+	display: block;
+}
+.fs-mark.on-plate {
+	padding: 9px 11px;
+	border-radius: 12px;
+	background: var(--white);
+}
+.style-editorial .where,
+.style-poster .where,
+.style-duotone .where,
+.style-badge .where,
+.style-code .where,
+.style-inspector .where,
+.style-split .where,
+.style-magazine .where,
+.style-facets .where,
+.style-sticker .where {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+.card[data-style] .where > :first-child {
+	font-weight: 700;
+}
+.card[data-style] .line {
+	display: block;
+}
+
+/* ==========================================================================
+   1. editorial — white page, horizontal rules, oversized name, table meta
+   ========================================================================== */
+.card.style-editorial {
+	padding: 64px 72px;
+	gap: 0;
+}
+.style-editorial .ed-top {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-bottom: 26px;
+	border-bottom: 3px solid var(--ink);
+}
+.style-editorial .ed-brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 16px;
+	font-size: 30px;
+	font-weight: 800;
+	letter-spacing: -0.02em;
+}
+.style-editorial .ed-kind {
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+.style-editorial .card-body {
+	gap: 0;
+}
+.style-editorial .ed-hero {
+	display: grid;
+	grid-template-columns: 1fr 440px;
+	gap: 40px;
+	padding: 36px 0 0;
+}
+.style-editorial .ed-side {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	gap: 14px;
+	padding-bottom: 8px;
+}
+.style-editorial .ed-track {
+	align-self: flex-start;
+	padding: 8px 18px;
+	background: var(--ink);
+	color: var(--white);
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+}
+.style-editorial .ed-role {
+	font-size: 34px;
+	font-weight: 700;
+	color: var(--text-muted);
+}
+.style-editorial .ed-photo .frame {
+	width: 440px;
+	height: 440px;
+}
+.style-editorial .ed-name {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 0;
+	font-size: 168px;
+	line-height: 1;
+	letter-spacing: -0.05em;
+	padding: 26px 0 30px;
+	border-bottom: 1.5px solid var(--ink);
+}
+.style-editorial .ed-name .en {
+	color: var(--accent);
+}
+.style-editorial .ed-talk {
+	display: grid;
+	grid-template-columns: 150px 1fr;
+	gap: 24px;
+	padding: 30px 0;
+	border-bottom: 1.5px solid var(--ink);
+}
+.style-editorial .ed-label,
+.style-editorial dt {
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--text-dim);
+	padding-top: 10px;
+}
+.style-editorial .ed-talk h3 {
+	font-size: 50px;
+	line-height: 1.24;
+}
+.style-editorial .ed-meta {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+}
+.style-editorial .ed-meta > div {
+	padding: 22px 0 0 24px;
+	border-left: 1.5px solid var(--border-strong);
+}
+.style-editorial .ed-meta > div:first-child {
+	padding-left: 0;
+	border-left: 0;
+}
+.style-editorial dd {
+	margin-top: 4px;
+	font-size: 38px;
+	font-weight: 800;
+	letter-spacing: -0.02em;
+	font-variant-numeric: tabular-nums;
+}
+.style-editorial .ed-foot {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	padding-top: 24px;
+	border-top: 3px solid var(--ink);
+	font-size: 25px;
+	color: var(--text-muted);
+}
+.style-editorial .ed-foot > span:last-child {
+	font-family: var(--font-mono);
+	font-size: 26px;
+}
+
+/* ==========================================================================
+   2. poster — solid brand blue, giant Latin name type, arch photo, white slab
+   ========================================================================== */
+.card.style-poster {
+	background: var(--blue-700);
+	color: var(--white);
+	padding: 64px 72px 56px;
+	gap: 0;
+}
+.style-poster .po-top {
+	position: relative;
+	z-index: 3;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.style-poster .po-brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 16px;
+	font-size: 30px;
+	font-weight: 800;
+}
+.style-poster .po-kind {
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--sky);
+}
+.style-poster .po-type {
+	position: absolute;
+	left: 50px;
+	top: 150px;
+	z-index: 1;
+	font-size: 330px;
+	font-weight: 900;
+	line-height: 0.82;
+	letter-spacing: -0.06em;
+	color: var(--sky);
+	white-space: nowrap;
+}
+.style-poster .po-photo {
+	position: absolute;
+	right: 72px;
+	top: 250px;
+	z-index: 2;
+	width: 400px;
+	height: 500px;
+	filter: drop-shadow(0 30px 40px rgba(3, 25, 64, 0.45));
+}
+.style-poster .po-photo .frame {
+	width: 100%;
+	height: 100%;
+}
+.style-poster .po-who {
+	position: absolute;
+	left: 72px;
+	top: 520px;
+	z-index: 3;
+	max-width: 520px;
+}
+.style-poster .po-name {
+	display: flex;
+	flex-direction: column;
+	font-size: 120px;
+	line-height: 1;
+	letter-spacing: -0.04em;
+	color: var(--white);
+}
+.style-poster .po-name .en {
+	font-size: 64px;
+	letter-spacing: -0.02em;
+	margin-top: 8px;
+}
+.style-poster .po-role {
+	margin-top: 18px;
+	font-size: 32px;
+	font-weight: 700;
+	color: #cfe6ff;
+}
+.style-poster .po-slab {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 530px;
+	flex: none;
+	background: var(--white);
+	color: var(--ink);
+	padding: 52px 72px 48px;
+	gap: 26px;
+}
+.style-poster .po-track {
+	display: inline-block;
+	margin-bottom: 16px;
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+.style-poster .po-slab h3 {
+	font-size: 52px;
+	line-height: 1.24;
+}
+.style-poster .po-meta {
+	display: flex;
+	gap: 28px;
+	font-size: 32px;
+	font-weight: 600;
+	color: var(--text-muted);
+	font-variant-numeric: tabular-nums;
+}
+.style-poster .po-meta b {
+	color: var(--ink);
+}
+.style-poster .po-foot {
+	margin-top: auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	padding-top: 22px;
+	border-top: 1.5px solid var(--border);
+	font-size: 25px;
+	color: var(--text-muted);
+}
+.style-poster .po-foot > span:last-child {
+	font-family: var(--font-mono);
+	font-size: 26px;
+}
+
+/* ==========================================================================
+   3. duotone — full-bleed navy↔sky duotone photo into a navy panel
+   ========================================================================== */
+.card.style-duotone {
+	background: #06377a;
+	color: var(--white);
+	padding: 0;
+	gap: 0;
+}
+.style-duotone .dt-photo {
+	position: absolute;
+	inset: 0 0 auto;
+	height: 640px;
+	background: #9fd6fb; /* highlight tone */
+	isolation: isolate;
+}
+.style-duotone .dt-photo .frame {
+	width: 100%;
+	height: 100%;
+	background: transparent;
+	mix-blend-mode: multiply;
+}
+.style-duotone .dt-photo img {
+	filter: grayscale(1) contrast(1.15) brightness(1.08);
+}
+.style-duotone .dt-photo::after {
+	/* shadow tone: darks lift to the brand navy */
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: #06377a;
+	mix-blend-mode: lighten;
+}
+.style-duotone .dt-top {
+	position: relative;
+	z-index: 2;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 64px 72px 0;
+}
+.style-duotone .dt-brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 16px;
+	font-size: 30px;
+	font-weight: 800;
+	text-shadow: 0 2px 12px rgba(3, 25, 64, 0.5);
+}
+.style-duotone .dt-kind {
+	padding: 10px 22px;
+	border-radius: var(--r-full);
+	background: var(--white);
+	color: var(--blue-900);
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
+.style-duotone .dt-panel {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 640px;
+	padding: 48px 72px 56px;
+	gap: 18px;
+	z-index: 2;
+}
+.style-duotone .dt-name {
+	font-size: 124px;
+	line-height: 0.95;
+	letter-spacing: -0.045em;
+	color: var(--white);
+}
+.style-duotone .dt-role {
+	font-size: 34px;
+	font-weight: 700;
+	color: var(--sky);
+}
+.style-duotone .dt-talk {
+	margin-top: 16px;
+	padding-top: 30px;
+	border-top: 1.5px solid rgba(255, 255, 255, 0.25);
+	display: flex;
+	flex-direction: column;
+	gap: 22px;
+}
+.style-duotone .dt-talk h3 {
+	font-size: 50px;
+	line-height: 1.24;
+	color: var(--white);
+}
+.style-duotone .dt-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+}
+.style-duotone .dt-meta span {
+	padding: 8px 20px;
+	border-radius: var(--r-full);
+	border: 1.5px solid rgba(143, 195, 255, 0.6);
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	color: #cfe6ff;
+}
+.style-duotone .dt-foot {
+	margin-top: auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	font-size: 25px;
+	color: rgba(255, 255, 255, 0.78);
+}
+.style-duotone .dt-foot > span:last-child {
+	font-family: var(--font-mono);
+	font-size: 26px;
+}
+
+/* ==========================================================================
+   4. badge — lanyard name badge on a paper backdrop
+   ========================================================================== */
+.card.style-badge {
+	background: var(--paper-strong);
+	padding: 0;
+	gap: 0;
+	align-items: center;
+}
+.style-badge .bd-strap {
+	position: absolute;
+	left: 50%;
+	top: 0;
+	width: 150px;
+	height: 150px;
+	transform: translateX(-50%);
+	background: var(--blue-700);
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+}
+.style-badge .bd-strap span {
+	writing-mode: vertical-rl;
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.18em;
+	color: rgba(255, 255, 255, 0.85);
+	white-space: nowrap;
+	transform: translateY(-40px);
+}
+.style-badge .bd-clip {
+	position: absolute;
+	left: 50%;
+	top: 118px;
+	width: 120px;
+	height: 58px;
+	transform: translateX(-50%);
+	border-radius: 14px;
+	background: #c8d3e3;
+	box-shadow: inset 0 -6px 0 rgba(11, 18, 32, 0.12);
+	z-index: 2;
+}
+.style-badge .bd-badge {
+	position: absolute;
+	left: 76px;
+	right: 76px;
+	top: 150px;
+	bottom: 56px;
+	background: var(--white);
+	border-radius: 36px;
+	box-shadow: 0 40px 60px -30px rgba(11, 18, 32, 0.35), 0 2px 4px rgba(11, 18, 32, 0.08);
+	overflow: hidden;
+	align-items: center;
+	text-align: center;
+	gap: 18px;
+	padding-bottom: 36px;
+}
+.style-badge .bd-band {
+	align-self: stretch;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 48px 48px 26px;
+	background: var(--blue-700);
+	color: var(--white);
+}
+.style-badge .bd-kind {
+	font-family: var(--font-mono);
+	font-size: 40px;
+	font-weight: 800;
+	letter-spacing: 0.24em;
+}
+.style-badge .bd-photo {
+	margin-top: -4px;
+	width: 290px;
+	height: 290px;
+	margin-top: 26px;
+	filter: drop-shadow(0 18px 24px rgba(11, 18, 32, 0.18));
+}
+.style-badge .bd-photo .frame {
+	width: 100%;
+	height: 100%;
+	box-shadow: none;
+}
+.style-badge .bd-name {
+	font-size: 104px;
+	line-height: 1;
+	letter-spacing: -0.04em;
+}
+.style-badge .bd-role {
+	font-size: 32px;
+	font-weight: 700;
+	color: var(--text-muted);
+}
+.style-badge .bd-perf {
+	align-self: stretch;
+	margin: 8px 0;
+	border-top: 3px dashed var(--border-strong);
+}
+.style-badge .bd-talk {
+	padding: 0 56px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 12px;
+}
+.style-badge .bd-track {
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+.style-badge .bd-talk h3 {
+	font-size: 44px;
+	line-height: 1.26;
+}
+.style-badge .bd-meta {
+	font-size: 30px;
+	font-weight: 700;
+	color: var(--text-muted);
+	font-variant-numeric: tabular-nums;
+}
+.style-badge .bd-event {
+	margin-top: auto;
+	font-size: 25px;
+	color: var(--text-muted);
+}
+.style-badge .bd-event .where {
+	align-items: center;
+}
+
+/* ==========================================================================
+   5. code — the talk as a Dart constructor in a dark editor window
+   ========================================================================== */
+.card.style-code {
+	background: var(--paper);
+	padding: 64px 72px 56px;
+	gap: 36px;
+}
+.style-code .cd-top {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.style-code .cd-brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 16px;
+	font-size: 30px;
+	font-weight: 800;
+}
+.style-code .cd-brand .fs-mark.on-plate {
+	box-shadow: inset 0 0 0 1.5px var(--border);
+}
+.style-code .cd-kind {
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+.style-code .cd-who {
+	display: flex;
+	align-items: center;
+	gap: 40px;
+}
+.style-code .cd-photo {
+	width: 300px;
+	height: 300px;
+	flex: none;
+	filter: drop-shadow(0 20px 26px rgba(11, 18, 32, 0.2));
+}
+.style-code .cd-photo .frame {
+	width: 100%;
+	height: 100%;
+}
+.style-code .cd-comment {
+	font-family: var(--font-mono);
+	font-size: 28px;
+	font-weight: 600;
+	color: var(--text-dim);
+}
+.style-code .cd-name {
+	font-size: 110px;
+	line-height: 1;
+	letter-spacing: -0.045em;
+	margin-top: 6px;
+}
+.style-code .cd-role {
+	font-size: 32px;
+	font-weight: 700;
+	color: var(--text-muted);
+	margin-top: 12px;
+}
+.style-code .cd-editor {
+	flex: none;
+	background: #0c1424;
+	border-radius: 28px;
+	box-shadow: 0 30px 50px -28px rgba(6, 55, 122, 0.55);
+	gap: 0;
+}
+.style-code .cd-tabs {
+	display: flex;
+	padding: 0 28px;
+	background: #111c31;
+	border-bottom: 1px solid #1d2a44;
+}
+.style-code .cd-tab {
+	padding: 18px 26px;
+	font-family: var(--font-mono);
+	font-size: 26px;
+	color: #e6edf7;
+	border-bottom: 3px solid var(--sky);
+}
+.style-code .cd-code {
+	list-style: none;
+	counter-reset: ln;
+	padding: 26px 32px 30px 0;
+	font-family: var(--font-mono);
+	font-size: 35px;
+	line-height: 1.7;
+	color: #9aa8bf;
+}
+.style-code .cd-code li {
+	counter-increment: ln;
+	display: grid;
+	grid-template-columns: 76px 1fr;
+	white-space: pre;
+}
+.style-code .cd-code li::before {
+	content: counter(ln);
+	text-align: right;
+	padding-right: 24px;
+	color: #4b5a74;
+	font-size: 26px;
+	line-height: 1.95;
+}
+.style-code code {
+	font: inherit;
+	white-space: pre-wrap;
+	word-break: keep-all;
+}
+.style-code .c-kw {
+	color: var(--sky);
+	font-weight: 700;
+}
+.style-code .c-type {
+	color: #8fc3ff;
+}
+.style-code .c-key {
+	color: #b7cdef;
+}
+.style-code .c-pad {
+	visibility: hidden;
+}
+.style-code .c-str {
+	color: var(--white);
+	font-weight: 700;
+}
+.style-code .c-num {
+	color: #7fe0ff;
+}
+.style-code .cd-foot {
+	margin-top: auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	font-size: 25px;
+	color: var(--text-muted);
+}
+.style-code .cd-foot > span:last-child {
+	font-family: var(--font-mono);
+	font-size: 26px;
+}
+
+/* ==========================================================================
+   6. inspector — Flutter debug-paint outlines + debug banner
+   ========================================================================== */
+.card.style-inspector {
+	padding: 64px 72px 56px;
+	gap: 34px;
+}
+.style-inspector .in-banner {
+	position: absolute;
+	top: 46px;
+	right: -92px;
+	width: 380px;
+	transform: rotate(45deg);
+	background: #b71c1c;
+	color: var(--white);
+	text-align: center;
+	padding: 10px 0;
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 800;
+	letter-spacing: 0.14em;
+	box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+	z-index: 5;
+}
+.style-inspector .in-top {
+	display: flex;
+	align-items: center;
+}
+.style-inspector .in-brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 16px;
+	font-size: 30px;
+	font-weight: 800;
+}
+.style-inspector .in-brand .fs-mark.on-plate {
+	box-shadow: inset 0 0 0 1.5px var(--border);
+}
+.style-inspector .card-body {
+	gap: 34px;
+}
+.style-inspector .in-box {
+	position: relative;
+	outline: 2.5px solid #29b6f6;
+	outline-offset: 10px;
+}
+.style-inspector .in-tag {
+	position: absolute;
+	top: -46px;
+	left: -12px;
+	padding: 2px 12px;
+	background: #29b6f6;
+	color: #04213f;
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	white-space: nowrap;
+	border-radius: 6px 6px 6px 0;
+}
+.style-inspector .in-hero {
+	display: grid;
+	grid-template-columns: 360px 1fr;
+	gap: 56px;
+	align-items: center;
+	margin-top: 40px;
+}
+.style-inspector .in-photo {
+	width: 360px;
+	height: 360px;
+	border-radius: 50%;
+	outline-offset: 8px;
+}
+.style-inspector .in-photo .frame {
+	width: 100%;
+	height: 100%;
+}
+.style-inspector .in-who {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	align-items: flex-start;
+}
+.style-inspector .in-name {
+	font-size: 104px;
+	line-height: 1;
+	letter-spacing: -0.045em;
+}
+.style-inspector .in-role {
+	font-size: 32px;
+	font-weight: 700;
+	color: var(--text-muted);
+}
+.style-inspector .in-chip {
+	padding: 8px 20px;
+	border-radius: var(--r-full);
+	background: var(--accent);
+	color: var(--white);
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+}
+.style-inspector .in-talk {
+	margin-top: 50px;
+	padding: 36px 40px;
+	background: var(--paper);
+	border-radius: var(--r-lg);
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+.style-inspector .in-label {
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	color: var(--text-dim);
+}
+.style-inspector .in-talk h3 {
+	font-size: 48px;
+	line-height: 1.26;
+}
+.style-inspector .in-meta {
+	margin-top: 44px;
+	display: flex;
+	gap: 44px;
+	font-size: 34px;
+	font-weight: 800;
+	font-variant-numeric: tabular-nums;
+}
+.style-inspector .in-meta b {
+	display: block;
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	color: var(--text-dim);
+	margin-bottom: 4px;
+}
+.style-inspector .in-foot {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	padding-top: 24px;
+	border-top: 1.5px solid var(--border);
+	font-size: 25px;
+	color: var(--text-muted);
+}
+.style-inspector .in-foot > span:last-child {
+	font-family: var(--font-mono);
+	font-size: 26px;
+}
+html.wire .style-inspector .in-box {
+	outline: none;
+}
+
+/* ==========================================================================
+   7. split — photo on top, navy information panel below
+   ========================================================================== */
+.card.style-split {
+	background: var(--blue-900);
+	color: var(--white);
+	padding: 0;
+	gap: 0;
+}
+.style-split .sp-photo {
+	position: absolute;
+	inset: 0 0 auto;
+	height: 600px;
+}
+.style-split .sp-photo .frame {
+	width: 100%;
+	height: 100%;
+}
+.style-split .sp-top {
+	position: relative;
+	z-index: 2;
+	padding: 56px 64px 0;
+}
+.style-split .sp-brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 16px;
+	padding: 10px 24px 10px 10px;
+	border-radius: var(--r-full);
+	background: var(--white);
+	color: var(--ink);
+	font-size: 28px;
+	font-weight: 800;
+	box-shadow: 0 10px 24px -12px rgba(0, 0, 0, 0.4);
+}
+.style-split .sp-brand .fs-mark.on-plate {
+	padding: 6px 8px;
+	background: var(--paper);
+	border-radius: var(--r-full);
+}
+.style-split .sp-brand .fs-mark svg {
+	width: 56px;
+}
+.style-split .sp-panel {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 600px;
+	bottom: 0;
+	padding: 70px 72px 56px;
+	gap: 16px;
+	overflow: visible;
+}
+.style-split .sp-track {
+	position: absolute;
+	top: -30px;
+	left: 72px;
+	padding: 12px 26px;
+	border-radius: var(--r-full);
+	background: var(--sky);
+	color: var(--blue-900);
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 800;
+	letter-spacing: 0.08em;
+}
+.style-split .sp-name {
+	font-size: 112px;
+	line-height: 1;
+	letter-spacing: -0.045em;
+	color: var(--white);
+}
+.style-split .sp-role {
+	font-size: 32px;
+	font-weight: 700;
+	color: #8fc3ff;
+}
+.style-split .sp-title {
+	margin-top: 22px;
+	font-size: 48px;
+	line-height: 1.26;
+	color: var(--white);
+}
+.style-split .sp-meta {
+	display: flex;
+	gap: 40px;
+	margin-top: 10px;
+	font-size: 30px;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+}
+.style-split .sp-meta b {
+	margin-right: 12px;
+	font-family: var(--font-mono);
+	font-size: 26px;
+	color: var(--sky);
+}
+.style-split .sp-foot {
+	margin-top: auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	padding-top: 22px;
+	border-top: 1.5px solid rgba(255, 255, 255, 0.2);
+	font-size: 25px;
+	color: rgba(255, 255, 255, 0.75);
+}
+.style-split .sp-foot > span:last-child {
+	font-family: var(--font-mono);
+	font-size: 26px;
+}
+
+/* ==========================================================================
+   8. magazine — full-bleed portrait, masthead, cover lines on a navy base
+   ========================================================================== */
+.card.style-magazine {
+	background: #06377a;
+	color: var(--white);
+	padding: 0;
+	gap: 0;
+}
+.style-magazine .mg-photo {
+	position: absolute;
+	inset: 0 0 auto;
+	height: 760px;
+}
+.style-magazine .mg-photo .frame {
+	width: 100%;
+	height: 100%;
+}
+.style-magazine .mg-top {
+	position: relative;
+	z-index: 2;
+	padding: 52px 64px 0;
+}
+.style-magazine .mg-mast {
+	font-size: 168px;
+	font-weight: 900;
+	line-height: 0.84;
+	letter-spacing: -0.055em;
+	color: var(--white);
+	text-shadow: 0 4px 30px rgba(3, 25, 64, 0.35);
+}
+.style-magazine .mg-issue {
+	display: flex;
+	align-items: center;
+	gap: 18px;
+	margin-top: 26px;
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	text-shadow: 0 2px 10px rgba(3, 25, 64, 0.5);
+}
+.style-magazine .mg-issue .fs-mark svg {
+	width: 56px;
+}
+.style-magazine .mg-issue > span + span::before {
+	content: '/';
+	margin-right: 18px;
+	opacity: 0.6;
+}
+.style-magazine .mg-lines {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 760px;
+	padding: 48px 64px 52px;
+	gap: 12px;
+	background: #06377a;
+}
+.style-magazine .mg-name {
+	font-size: 118px;
+	line-height: 1;
+	letter-spacing: -0.045em;
+	color: var(--white);
+}
+.style-magazine .mg-role {
+	font-size: 32px;
+	font-weight: 700;
+	color: var(--sky);
+}
+.style-magazine .mg-title {
+	margin-top: 18px;
+	font-size: 46px;
+	line-height: 1.26;
+	color: var(--white);
+}
+.style-magazine .mg-meta {
+	font-family: var(--font-mono);
+	font-size: 27px;
+	font-weight: 700;
+	color: #cfe6ff;
+	white-space: pre;
+}
+.style-magazine .mg-foot {
+	margin-top: auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	font-size: 25px;
+	color: rgba(255, 255, 255, 0.75);
+}
+.style-magazine .mg-foot > span:last-child {
+	font-family: var(--font-mono);
+	font-size: 26px;
+}
+
+/* ==========================================================================
+   9. facets — Flutter Seoul pavilion frame; the portrait is the door
+   ========================================================================== */
+.card.style-facets {
+	padding: 64px 72px 56px;
+	gap: 30px;
+}
+.style-facets .fc-top {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.style-facets .fc-brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 16px;
+	font-size: 30px;
+	font-weight: 800;
+}
+.style-facets .fc-kind {
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+.style-facets .fc-pavilion {
+	position: relative;
+	flex: none;
+	width: 936px;
+	margin-top: 6px;
+}
+.style-facets .fc-art {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+.style-facets .fc-door {
+	position: absolute;
+	left: calc(50% - var(--door) / 2);
+	top: var(--roof);
+	width: var(--door);
+	height: var(--door);
+}
+.style-facets .fc-door .frame {
+	width: 100%;
+	height: 100%;
+}
+.style-facets .fc-info {
+	gap: 14px;
+	align-items: center;
+	text-align: center;
+}
+.style-facets .fc-name {
+	font-size: 108px;
+	line-height: 1;
+	letter-spacing: -0.045em;
+}
+.style-facets .fc-role {
+	font-size: 32px;
+	font-weight: 700;
+	color: var(--text-muted);
+}
+.style-facets .fc-talk {
+	margin-top: 14px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 18px;
+}
+.style-facets .fc-talk h3 {
+	font-size: 46px;
+	line-height: 1.26;
+}
+.style-facets .fc-meta {
+	display: flex;
+	align-items: center;
+	gap: 22px;
+	font-size: 30px;
+	font-weight: 700;
+	color: var(--text-muted);
+	font-variant-numeric: tabular-nums;
+}
+.style-facets .fc-chip {
+	padding: 8px 20px;
+	border-radius: var(--r-full);
+	background: #103e86;
+	color: var(--white);
+	font-family: var(--font-mono);
+	font-size: 26px;
+}
+.style-facets .fc-foot {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	padding-top: 22px;
+	border-top: 1.5px solid var(--border);
+	font-size: 25px;
+	color: var(--text-muted);
+}
+.style-facets .fc-foot > span:last-child {
+	font-family: var(--font-mono);
+	font-size: 26px;
+}
+
+/* ==========================================================================
+   10. sticker — community stickers with the official Dash
+   ========================================================================== */
+.card.style-sticker {
+	background: var(--paper-strong);
+	padding: 64px 72px 56px;
+	gap: 0;
+}
+.style-sticker .sk-top {
+	display: flex;
+	align-items: center;
+}
+.style-sticker .sk-brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 16px;
+	font-size: 30px;
+	font-weight: 800;
+}
+.style-sticker .sk-board {
+	position: relative;
+	overflow: visible;
+}
+.style-sticker .sk-photo {
+	position: absolute;
+	left: -6px;
+	top: 40px;
+	width: 420px;
+	height: 420px;
+	padding: 16px;
+	border-radius: 50%;
+	background: var(--white);
+	transform: rotate(-5deg);
+	box-shadow: 0 24px 40px -20px rgba(11, 18, 32, 0.35);
+}
+.style-sticker .sk-photo .frame {
+	width: 100%;
+	height: 100%;
+}
+.style-sticker .sk-dash {
+	position: absolute;
+	right: -10px;
+	top: 330px;
+	width: 250px;
+	height: auto;
+	transform: rotate(9deg);
+	filter: drop-shadow(0 18px 20px rgba(11, 18, 32, 0.25));
+	z-index: 3;
+}
+.style-sticker .sk-tag {
+	position: absolute;
+	right: 20px;
+	top: 60px;
+	width: 450px;
+	display: flex;
+	flex-direction: column;
+	border-radius: 28px;
+	overflow: hidden;
+	background: var(--white);
+	transform: rotate(3deg);
+	box-shadow: 0 24px 40px -22px rgba(11, 18, 32, 0.35);
+	z-index: 2;
+}
+.style-sticker .sk-hello {
+	padding: 20px 30px;
+	background: var(--blue-700);
+	color: var(--white);
+	font-size: 30px;
+	font-weight: 800;
+}
+.style-sticker .sk-tag strong {
+	padding: 26px 30px 6px;
+	font-size: 96px;
+	font-weight: 900;
+	line-height: 1;
+	letter-spacing: -0.045em;
+	word-break: keep-all;
+}
+.style-sticker .sk-role {
+	padding: 6px 30px 28px;
+	font-size: 30px;
+	font-weight: 700;
+	color: var(--text-muted);
+}
+.style-sticker .sk-talk {
+	position: absolute;
+	left: 0;
+	right: 40px;
+	bottom: 20px;
+	padding: 40px 44px;
+	border-radius: 32px;
+	background: var(--white);
+	transform: rotate(-1.5deg);
+	box-shadow: 0 26px 44px -24px rgba(11, 18, 32, 0.35);
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+.style-sticker .sk-track {
+	align-self: flex-start;
+	padding: 8px 20px;
+	border-radius: var(--r-full);
+	background: var(--sky);
+	color: var(--blue-900);
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 800;
+}
+.style-sticker .sk-talk h3 {
+	font-size: 48px;
+	line-height: 1.26;
+}
+.style-sticker .sk-meta {
+	font-size: 30px;
+	font-weight: 700;
+	color: var(--text-muted);
+	font-variant-numeric: tabular-nums;
+}
+.style-sticker .sk-foot {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	padding-top: 22px;
+	border-top: 1.5px solid var(--border-strong);
+	font-size: 25px;
+	color: var(--text-muted);
+}
+.style-sticker .sk-foot > span:last-child {
+	font-family: var(--font-mono);
+	font-size: 26px;
+}

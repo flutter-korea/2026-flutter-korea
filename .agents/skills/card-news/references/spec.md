@@ -8,6 +8,7 @@
 	"brand": "Flutter Korea 2026", // (선택) 헤더 브랜드 텍스트
 	"footer": ["2026.11.07 (토) 11:00 – 18:00", "AWS 코리아 (센터필드 EAST 12층)"], // (선택) 푸터 왼쪽. 문자열 또는 줄 배열. 생략 시 content.js 타임테이블의 DATE·PROGRAM / VENUE
 	"handle": "#FlutterKorea2026", // (선택) 푸터 오른쪽. 2장 이상이면 "n / N" 페이지가 붙음
+	"style": "facets", // (선택) 디자인 스타일. card.style로 카드별 지정 가능 (design.md의 스타일 표 참고)
 	"cards": [{ "template": "speaker", "data": { /* 템플릿별 필드 */ } }]
 }
 ```
