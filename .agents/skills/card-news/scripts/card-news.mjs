@@ -5,6 +5,8 @@
  *
  *   scaffold <preset> [opts]   draft a spec.json from this repo's content (src/lib/content.js)
  *   templates                  list templates and their fields
+ *   styles                     list design styles (spec.style / card.style)
+ *   compare <deck> [--all]     build <deck>-styles: the deck's first styleable card in every style
  *   build <deck>               spec.json → cards/*.html + preview.html + structure.md
  *   check <deck>               headless QA: overflow, broken / low-res images, proof PNGs
  *   preview <deck>             open preview.html in the default browser
@@ -327,16 +329,20 @@ async function cmdScaffold(pos, opt) {
 			break;
 		}
 		default:
-			fail('preset: event | speaker [--name N | --all] | session --name N | timetable | sponsors | goods | blank --template T');
+			fail('preset: event | speaker [--name N | --all] | session --name N | timetable | sponsors | goods | blank --template T  (공통: --lang --size --style --slug --force)');
 	}
 	slug = (opt.slug ?? slug).replace(/[\s/\\]+/g, '-');
 	const dir = join(WORK, slug);
 	const specPath = join(dir, 'spec.json');
 	if (existsSync(specPath) && !opt.force) fail(`${rel(specPath)} 이미 존재합니다 (--force 로 덮어쓰기).`);
-	const spec = { title, lang, size, cards };
+	if (opt.style && opt.style !== true && opt.style !== 'default' && !styles[opt.style])
+		fail(`--style 은 default 또는 다음 중 하나: ${Object.keys(styles).join(', ')} (node card-news.mjs styles)`);
+	const style = opt.style && opt.style !== true && opt.style !== 'default' ? opt.style : undefined;
+	const spec = { title, lang, size, ...(style ? { style } : {}), cards };
 	await mkdir(dir, { recursive: true });
 	await writeFile(specPath, JSON.stringify(spec, null, '\t') + '\n');
-	log(`✔ ${rel(specPath)} (${cards.length} cards)`);
+	log(`✔ ${rel(specPath)} (${cards.length} cards, style: ${style ?? 'default'})`);
+	if (!style) log(`  디자인 스타일: 기본(default). 바꾸려면 spec.json 에 "style" 을 넣거나 --style 로 다시 scaffold 하세요. 비교: compare ${slug}`);
 	const todos = JSON.stringify(spec).match(/TODO:[^"]*/g) ?? [];
 	if (todos.length) log(`  채워야 할 항목 ${todos.length}개:\n${[...new Set(todos)].map((x) => `   - ${x}`).join('\n')}`);
 }
@@ -571,8 +577,10 @@ async function cmdBuild(pos) {
 			continue;
 		}
 		const data = card.data ?? {};
-		const style = card.style ?? spec.style;
-		if (style && !styles[style]) ctx.errors.push(`#${page}: 알 수 없는 style "${style}" (가능: ${Object.keys(styles).join(', ')})`);
+		const style = (card.style ?? spec.style) === 'default' ? undefined : (card.style ?? spec.style);
+		if (style && style !== 'default' && !styles[style]) ctx.errors.push(`#${page}: 알 수 없는 style "${style}" (가능: default, ${Object.keys(styles).join(', ')})`);
+		else if (style && styles[style] && !styles[style].cards[card.template])
+			ctx.warnings.push(`#${page} ${card.template}: style "${style}" 는 이 템플릿을 지원하지 않아 기본 디자인으로 렌더됩니다`);
 		for (const k of tpl.required) {
 			const v = data[k];
 			if (v === undefined || v === '' || (Array.isArray(v) && !v.length)) ctx.errors.push(`#${page} ${card.template}: 필수 필드 "${k}" 누락`);
@@ -604,11 +612,11 @@ async function cmdBuild(pos) {
 	const md = [
 		`# ${spec.title ?? 'Card news'} — 구조 검토`,
 		'',
-		`- 크기: ${size} (${SIZES[size].w}×${SIZES[size].h}) · 언어: ${lang} · 카드 ${built.length}장`,
+		`- 크기: ${size} (${SIZES[size].w}×${SIZES[size].h}) · 언어: ${lang} · 카드 ${built.length}장 · 스타일: ${spec.style && spec.style !== 'default' ? spec.style : 'default'}`,
 		`- 미리보기: ${rel(P.preview)}`,
 		'',
 		...built.flatMap((b) => [
-			`## ${b.page}. ${b.template} — ${templates[b.template].description}`,
+			`## ${b.page}. ${b.template}${b.style ? ` · style: ${b.style} (${styles[b.style].label})` : ''} — ${templates[b.template].description}`,
 			'',
 			...b.rows.map(([k, v]) => `- \`${k}\`: ${clip(v, 120)}`),
 			''
@@ -855,6 +863,54 @@ async function cmdPreview(pos, opt) {
 	spawn(cmd, args, { stdio: 'ignore', detached: true }).on('error', () => {}).unref();
 }
 
+function cmdStyles() {
+	log('디자인 스타일 — spec.style(덱 전체) 또는 card.style(카드 한 장)로 지정. 생략하거나 "default"면 기본 디자인.\n');
+	log(`■ default — 기본 디자인 (사이트 테마 그대로, 모든 템플릿 지원)`);
+	for (const [k, st] of Object.entries(styles)) {
+		log(`■ ${k} — ${st.label}`);
+		log(`    ${st.description}`);
+		log(`    지원 템플릿: ${Object.keys(st.cards).join(', ')} (그 외는 기본 디자인) · 권장 사진 원본: ${st.photoMin ?? 600}px 이상 · 참고: ${st.inspiration}`);
+	}
+	log('\n내 데이터로 비교하려면: compare <deck>  → 모든 스타일로 렌더한 비교 덱을 만든다');
+}
+
+/** Render the deck's styleable cards in every style so a human can pick one with real data. */
+async function cmdCompare(pos, opt) {
+	const P = deckPaths(pos[0]);
+	const spec = JSON.parse(await readFile(P.spec, 'utf8'));
+	const only = typeof opt.styles === 'string' ? opt.styles.split(',') : Object.keys(styles);
+	const bad = only.filter((k) => !styles[k] && k !== 'default');
+	if (bad.length) fail(`알 수 없는 style: ${bad.join(', ')}`);
+	const source = spec.cards.filter((c) => only.some((k) => k === 'default' || styles[k].cards[c.template]));
+	if (!source.length) fail(`스타일을 지원하는 카드가 없습니다 (지원 템플릿: ${[...new Set(Object.values(styles).flatMap((st) => Object.keys(st.cards)))].join(', ')}).`);
+	const pick = opt.all ? source : [source[0]];
+	const cards = ['default', ...only.filter((k) => k !== 'default')].flatMap((k) =>
+		pick
+			.filter((c) => k === 'default' || styles[k].cards[c.template])
+			.map((c) => ({ ...c, style: k }))
+	);
+	const dir = `${P.dir}-styles`;
+	await mkdir(dir, { recursive: true });
+	// Image paths in the source spec resolve relative to its folder; keep them working from the sibling deck.
+	const fix = (v) =>
+		Array.isArray(v)
+			? v.map(fix)
+			: v && typeof v === 'object'
+				? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, IMAGE_KEYS.has(k) ? fixImg(x) : fix(x)]))
+				: v;
+	const fixImg = (x) => {
+		const src = typeof x === 'string' ? x : x?.src;
+		if (!src || /^(https?:|data:|\/)/.test(src) || isAbsolute(src) || !existsSync(join(dirname(P.spec), src))) return x;
+		const abs = join(dirname(P.spec), src);
+		return typeof x === 'string' ? abs : { ...x, src: abs };
+	};
+	const out = { title: `${spec.title ?? 'Card news'} — 스타일 비교`, lang: spec.lang, size: spec.size, cards: fix(cards) };
+	await writeFile(join(dir, 'spec.json'), JSON.stringify(out, null, '\t') + '\n');
+	log(`✔ 비교 덱: ${rel(join(dir, 'spec.json'))} (${cards.length}장 = default + 스타일 ${only.filter((k) => k !== 'default').length}종)`);
+	await cmdBuild([dir]);
+	log(`\n사용자에게 ${rel(join(dir, 'preview.html'))} 를 보여 주고 스타일을 고르게 하세요. 고른 값을 원래 spec의 "style" 에 넣습니다.`);
+}
+
 function cmdTemplates() {
 	log('Templates (공통 프레임: 브랜드 헤더 → 본문 → 푸터, 공통 옵션: data.tag = 우상단 칩 라벨)\n');
 	for (const [name, t] of Object.entries(templates)) {
@@ -879,6 +935,8 @@ const commands = {
 	check: cmdCheck,
 	preview: cmdPreview,
 	approve: cmdApprove,
+	styles: cmdStyles,
+	compare: cmdCompare,
 	render: cmdRender
 };
 if (!commands[cmd]) {

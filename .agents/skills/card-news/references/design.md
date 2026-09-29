@@ -53,11 +53,10 @@ paper-blue 패널, 거의 검정인 헤딩, 절제된 blue-700 accent, mono 키�
 | `badge` | 랜야드 명찰 메타포 | 600px 이상 |
 | `rail` | 좌측 네이비 레일에 일정, 우측에 연사 | 600px 이상 |
 | `inspector` | Flutter 디버그 페인트 라벨과 디버그 배너 | 600px 이상 |
-| `slide` | 발표 표지 슬라이드에 제목을 크게 (제목 우선형) | 600px 이상 |
 | `code` | Dart 생성자 코드 에디터 | 600px 이상 |
 | `sticker` | 커뮤니티 스티커와 공식 Dash | 600px 이상 |
 | `split` | 사진 / 네이비 패널 2분할 | 1100px 이상 |
 
 스타일 전용 규칙: 이름 96px 이상, 발표 제목 44px 이상, mono 텍스트 26px 이상. 정보는 이름, 소속, 제목, 일정, 장소로
-제한한다. 텍스트는 단색 면 위에 둔다. `examples/speaker-kaae-styles.json`이 10종 비교 덱이다.
+제한한다. 텍스트는 단색 면 위에 둔다. `examples/speaker-kaae-styles.json`이 9종 비교 덱이다.
 Google I/O의 장치(`{ }` 괄호, 검정 배경, 무지개 그라디언트)는 쓰지 않는다.

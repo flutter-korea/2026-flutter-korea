@@ -12,7 +12,9 @@ SNS 공유용 카드뉴스를 **HTML로 조립 → 사람이 구조 검토 → �
 ```bash
 CN=".agents/skills/card-news/scripts/card-news.mjs"   # 저장소 루트 기준 (bun run card-news … 도 동일)
 node $CN templates                 # 템플릿·필드·사이즈·이미지 옵션 목록
-node $CN scaffold <preset> [...]   # 저장소 콘텐츠로 spec 초안 생성
+node $CN styles                    # 디자인 스타일 목록 (지원 템플릿·권장 사진 크기)
+node $CN scaffold <preset> [...]   # 저장소 콘텐츠로 spec 초안 생성 (--style <name>)
+node $CN compare <deck> [--all]    # 내 데이터로 모든 스타일을 렌더한 비교 덱 (<deck>-styles)
 node $CN build   <deck>            # spec → cards/*.html + preview.html + structure.md
 node $CN check   <deck>            # 헤드리스 QA (넘침·깨진/저해상도 이미지) + proof PNG
 node $CN preview <deck>            # 사람이 볼 preview.html 열기
@@ -29,19 +31,27 @@ node $CN render  <deck> [--scale 2] [--format jpg]
 - **저장소 정보**: `scaffold`가 `src/lib/content.js`(타임테이블·연사 사진·행사 정보·후원사·링크)를 읽어 초안을 만든다.
   - `scaffold event [--lang en]` · `scaffold speaker --name 가애KAAE` (`--all`이면 표지+전체 라인업, `--name` 없이 실행하면 연사 목록 출력)
   - `scaffold session --name 가애KAAE` · `scaffold timetable` (트랙별 6행씩 자동 분할) · `scaffold sponsors` · `scaffold goods` · `scaffold blank --template <t>`
-  - 공통 옵션: `--size portrait|square|story`, `--slug`, `--force`
+  - 공통 옵션: `--size portrait|square|story`, `--style <name>`, `--slug`, `--force`
 - **사용자가 인자로 준 정보/이미지**가 있으면 저장소 정보보다 우선한다. 이미지 경로(절대·상대·`/assets/...`=`static/` 기준)나 URL을 그대로 spec에 넣으면 build가 덱 폴더로 복사한다. 원격 URL은 가능하면 먼저 로컬로 내려받는다.
 - 저장소에 없는 사실(소속, 소개, 발표 요약, 가격 등)을 **지어내지 않는다.** scaffold는 이런 칸을 `TODO: …`로 남기므로, 사용자에게 받거나 비워 둔다(빈 칸은 렌더되지 않음).
 
-### 2. spec 작성
+### 2. 디자인 스타일 선택
+카드뉴스의 디자인 스타일을 정한다. 사용자가 요청에서 이미 스타일을 지정했으면(예: "티켓 스타일로") 그대로 쓴다.
+지정하지 않았으면 초안을 만든 뒤 **사용자에게 묻는다.**
+- `node $CN styles`로 선택지(default + 스타일 9종)를 보여 준다. 각 스타일의 한 줄 설명과 권장 사진 크기를 함께 전한다.
+- 고르기 어려워하면 `node $CN compare <slug>`로 **사용자 자신의 카드**를 모든 스타일로 렌더한 비교 덱
+  (`card-news/<slug>-styles/preview.html`)을 만들어 보여 준다. `--styles app,ticket`으로 후보를 좁힐 수 있다.
+- 선택한 값은 spec의 `"style"`(덱 전체)에 넣는다. 카드마다 다르게 하려면 `card.style`을 쓴다. `"default"` 또는 생략은 기본 디자인이다.
+- 스타일은 현재 **speaker** 템플릿에만 있다. 다른 템플릿은 기본 디자인으로 렌더되고, build가 그 사실을 경고로 알린다.
+- 원본 사진이 스타일의 권장 크기보다 작으면(`check`가 경고) 원형 사진 스타일을 권하고, 풀폭 사진 스타일(split)은 피한다.
+
+### 3. spec 작성
 `card-news/<slug>/spec.json`을 편집한다. 형식과 템플릿별 필드는 [references/spec.md](references/spec.md), 디자인·이미지 규칙은
 [references/design.md](references/design.md)를 따른다. 핵심:
 - 카드 1장 = 정보 한 덩어리. 텍스트가 넘치면 글을 줄이거나 카드를 나눈다(폰트를 억지로 줄이지 않는다).
 - 사진은 `focus`(object-position)로 얼굴 위치를, `mask`로 형태를 정한다. 로고·누끼 이미지는 `fit: "contain"`.
-- 디자인 방향은 `style`로 고른다(speaker 템플릿 10종: app, ticket, poster, badge, rail, inspector, slide, code, sticker, split).
-  사용자가 지정하지 않으면 기본 디자인을 쓰고, 고르기 어려워하면 `examples/speaker-kaae-styles.json` 비교 덱을 보여 준다.
 
-### 3. build → check (에이전트 자체 QA)
+### 4. build → check (에이전트 자체 QA)
 ```bash
 node $CN build <slug> && node $CN check <slug>
 ```
@@ -49,7 +59,7 @@ node $CN build <slug> && node $CN check <slug>
 - 이미지를 볼 수 있는 에이전트는 `card-news/<slug>/proof/proof-design.png`, `proof-wire.png`를 직접 열어 확인한다.
 - Chromium은 playwright 캐시 → 시스템 Chrome → Edge 순으로 찾는다. 없으면 `CARD_NEWS_BROWSER=<경로>` 또는 `bunx playwright-core install chromium`.
 
-### 4. 사람의 구조 검증 (필수 게이트, 여기서 멈춘다)
+### 5. 사람의 구조 검증 (필수 게이트, 여기서 멈춘다)
 사용자에게 다음을 제시하고 **응답을 기다린다**:
 1. `node $CN preview <slug>`로 연 `card-news/<slug>/preview.html` 경로. 상단 토글에서 **디자인/구조** 모드를 바꿀 수 있고,
    구조 모드에서는 모든 슬롯이 이름표와 함께 점선으로 표시된다. 오른쪽 표에는 필드와 값, 글자 수가 나온다.
@@ -58,7 +68,7 @@ node $CN build <slug> && node $CN check <slug>
 
 그리고 "구조를 확인하고 승인해 주시면 PNG로 렌더링하겠습니다"라고 묻는다. 수정 요청이 오면 spec 수정 → build → check → 다시 검토를 요청한다.
 
-### 5. 승인 → 렌더링
+### 6. 승인 → 렌더링
 - 사용자가 **이번 대화에서 명시적으로 승인**했을 때만 `approve --by "<승인자>"`를 실행한다. 승인 여부를 추측하지 않는다.
   "좋네요, 근데 제목만 바꿔 주세요"는 승인이 아니다.
 - `approve`는 빌드 산출물의 해시를 기록한다. 이후 spec이나 산출물이 바뀌면 `render`가 거부하므로 다시 build → 검토 → approve 해야 한다.
@@ -73,8 +83,8 @@ node $CN build <slug> && node $CN check <slug>
 ## 파일
 - `scripts/card-news.mjs`: CLI(scaffold/build/check/approve/render)
 - `scripts/templates.mjs`: 템플릿 8종 (구조별 HTML, `data-slot` 표기)
-- `scripts/styles.mjs` + `assets/styles.css`: 디자인 스타일 10종 (같은 데이터, 다른 레이아웃)
+- `scripts/styles.mjs` + `assets/styles.css`: 디자인 스타일 9종 (같은 데이터, 다른 레이아웃)
 - `assets/theme.css`: `src/app.css` 토큰 미러와 카드·마스크·와이어프레임 스타일 (사이트 테마가 바뀌면 `:root`를 동기화)
 - `assets/brand/`: 출처를 검증한 브랜드 에셋(Flutter Seoul 마크, 공식 Flutter 로고, 공식 Dash)과 `SOURCES.md`
 - `references/spec.md`: spec 형식과 템플릿별 필드 · `references/design.md`: 디자인·이미지 마스킹 가이드
-- `examples/showcase.json`: 8종 템플릿 예시 덱 (회귀 확인용) · `examples/speaker-kaae-styles.json`: 스타일 10종 비교 덱 · `examples/speaker-kaae.json`: 실제 연사 소개 예시 (저장소 사실만 사용)
+- `examples/showcase.json`: 8종 템플릿 예시 덱 (회귀 확인용) · `examples/speaker-kaae-styles.json`: 스타일 9종 비교 덱 · `examples/speaker-kaae.json`: 실제 연사 소개 예시 (저장소 사실만 사용)

@@ -60,6 +60,7 @@ const photo = (d, opts = {}, name = 'photo') =>
 export const styles = {
 	poster: {
 		label: 'Bold Poster',
+		photoMin: 600, // px — smaller originals get upscaled (check warns)
 		inspiration: 'Config (Figma) · Smashing Conference · 타이포 포스터',
 		description: '단색 브랜드 블루 위 초대형 라틴 이름 타이포와 원형 사진, 하단 흰 정보 슬랩',
 		cards: {
@@ -98,6 +99,7 @@ export const styles = {
 
 	badge: {
 		label: 'Name Badge',
+		photoMin: 600, // px — smaller originals get upscaled (check warns)
 		inspiration: 'GitHub Universe · Laracon 행사 명찰',
 		description: '행사장 명찰(랜야드 배지) 메타포. 스트랩에 Flutter Seoul, 배지 한 장에 연사 정보가 완결',
 		cards: {
@@ -132,6 +134,7 @@ export const styles = {
 
 	code: {
 		label: 'Dart Snippet',
+		photoMin: 600, // px — smaller originals get upscaled (check warns)
 		inspiration: 'JSConf · dev.to · 코드 스니펫 공지',
 		description: '발표 정보를 Dart 생성자 코드로 표현한 에디터 창. 문자열(핵심 정보)을 가장 밝고 크게',
 		cards: {
@@ -180,6 +183,7 @@ export const styles = {
 
 	inspector: {
 		label: 'Widget Inspector',
+		photoMin: 600, // px — smaller originals get upscaled (check warns)
 		inspiration: 'Flutter DevTools · debugPaintSizeEnabled',
 		description: 'Flutter 디버그 페인트처럼 각 정보 블록에 위젯 이름과 크기 라벨. 모서리 디버그 배너로 Flutter 개발자 위트',
 		cards: {
@@ -222,6 +226,7 @@ export const styles = {
 
 	split: {
 		label: 'Split Navy',
+		photoMin: 1100, // px — smaller originals get upscaled (check warns)
 		inspiration: 'KotlinConf · droidcon · Android Dev Summit',
 		description: '상단 사진 / 하단 네이비 정보 패널의 명확한 2분할. 트랙 칩이 경계에 걸쳐 두 영역을 잇는다',
 		cards: {
@@ -254,6 +259,7 @@ export const styles = {
 
 	sticker: {
 		label: 'Community Stickers',
+		photoMin: 600, // px — smaller originals get upscaled (check warns)
 		inspiration: 'PyCon · Fluttercon 커뮤니티 굿즈 · 노트북 스티커',
 		description: '사진·이름표·발표 정보를 스티커처럼 붙인 커뮤니티 무드. 공식 Dash가 함께하는 친근한 톤',
 		cards: {
@@ -287,6 +293,7 @@ export const styles = {
 	},
 	ticket: {
 		label: 'Admission Ticket',
+		photoMin: 600, // px — smaller originals get upscaled (check warns)
 		inspiration: 'PyCon “I’m a speaker” 공유 카드 · 공연 입장권',
 		description: '입장권 메타포. 본권에 연사와 발표, 절취선 아래 스텁에 날짜·시간·장소를 크게 배치',
 		cards: {
@@ -328,6 +335,7 @@ export const styles = {
 
 	rail: {
 		label: 'Side Rail',
+		photoMin: 600, // px — smaller originals get upscaled (check warns)
 		inspiration: 'Smashing Conference 사이드 레일',
 		description: '왼쪽 네이비 레일에 날짜·시간·장소를 크게 세로로 쌓고, 오른쪽 넓은 면은 연사와 발표에 집중',
 		cards: {
@@ -367,6 +375,7 @@ export const styles = {
 
 	app: {
 		label: 'Flutter App Screen',
+		photoMin: 600, // px — smaller originals get upscaled (check warns)
 		inspiration: 'Material 3 · Flutter 앱 화면',
 		description: 'Material 3 앱의 연사 상세 화면처럼 앱 바, 프로필 헤더, 세션 정보 ListTile로 구성. Flutter로 만든 앱 같은 카드',
 		cards: {
@@ -416,47 +425,4 @@ export const styles = {
 		}
 	},
 
-	slide: {
-		label: 'Title Slide',
-		inspiration: 'Fluttercon EU · droidcon 제목 우선 세션 카드 · 발표 표지 슬라이드',
-		description: '발표 표지 슬라이드(16:9)에 제목을 크게 싣고, 아래에 발표자 한 줄과 일정. 사람보다 “무엇을 듣는가”를 먼저 전하는 제목 우선형',
-		cards: {
-			speaker: (d, ctx) => {
-				const s = d.session ?? {};
-				const l = L[ctx.lang];
-				return article(
-					'slide',
-					ctx,
-					`
-	<header class="sl-top">
-		<span class="sl-brand">${mark(ctx, 'on-plate')}<span>${esc(ctx.brand)}</span></span>
-		<span class="sl-kind" ${slot('tag')}>${esc(d.tag ?? 'Session')}</span>
-	</header>
-	<div class="card-body sl-body">
-		<div class="sl-screen" ${slot('session')}>
-			<div class="sl-slide">
-				${when(s.track, () => `<span class="sl-track">${esc(s.track)}</span>`)}
-				<h3 class="sl-title" ${slot('session.title')}>${titleHtml(s.title)}</h3>
-				<div class="sl-slide-foot" aria-hidden="true">${mark(ctx, 'on-plate')}<span>${esc(ctx.brand)}</span></div>
-			</div>
-		</div>
-		<div class="sl-presenter">
-			<div class="sl-photo">${photo(d, { mask: 'circle' })}</div>
-			<div>
-				<span class="sl-by">${esc(l.speaker)}</span>
-				<h2 class="sl-name" ${slot('name')}>${esc(d.name)}</h2>
-				${when(d.role, () => `<p class="sl-role" ${slot('role')}>${rich(d.role)}</p>`)}
-			</div>
-		</div>
-		<dl class="sl-meta" ${slot('meta')}>
-			<div><dt>${esc(l.date)}</dt><dd>${esc(shortDate(ctx.event.date, ctx.lang))}</dd></div>
-			<div><dt>${esc(l.time)}</dt><dd>${esc(s.time ?? '')}</dd></div>
-			<div><dt>${esc(l.room)}</dt><dd>${esc(s.room ?? '')}</dd></div>
-		</dl>
-	</div>
-	<footer class="sl-foot">${whereLines(ctx)}<span>${esc(ctx.handle)}</span></footer>`
-				);
-			}
-		}
-	}
 };

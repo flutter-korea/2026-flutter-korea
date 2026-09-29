@@ -1,5 +1,5 @@
 {
-	"title": "연사 소개 시안 10종 — 가애KAAE",
+	"title": "연사 소개 시안 9종 — 가애KAAE",
 	"lang": "ko",
 	"size": "portrait",
 	"cards": [
@@ -214,32 +214,6 @@
 		{
 			"template": "speaker",
 			"style": "app",
-			"data": {
-				"photo": {
-					"src": "/assets/flutter-seoul/speaker/kaae.jpeg",
-					"mask": "squircle",
-					"focus": "50% 32%",
-					"zoom": 1.3
-				},
-				"nameSub": "Speaker · AI Track",
-				"name": "가애KAAE",
-				"role": "Flutter Seoul",
-				"bio": "**10년 차 개발자**. Flutter Korea 2025, Flutter In Production Extended Seoul 등 Flutter Seoul 무대에서 서비스 운영 경험을 나눠 왔습니다.",
-				"tags": [
-					"Flutter",
-					"AI"
-				],
-				"session": {
-					"title": "10년 차 개발자의 Flutter × AI: 패키지의 한계를 넘어서",
-					"track": "AI Track",
-					"time": "16:20 – 16:50",
-					"room": "401호"
-				}
-			}
-		},
-		{
-			"template": "speaker",
-			"style": "slide",
 			"data": {
 				"photo": {
 					"src": "/assets/flutter-seoul/speaker/kaae.jpeg",

@@ -69,6 +69,8 @@ Ask your agent for a card, e.g. *"가애KAAE 연사 소개 카드뉴스 만들�
 
 ```bash
 bun run card-news scaffold speaker --name 가애KAAE # draft card-news/<slug>/spec.json from content.js
+bun run card-news styles                          # design styles; pick one with --style or spec.style
+bun run card-news compare <slug>                  # your own card rendered in every style, side by side
 bun run card-news build <slug>                    # HTML cards + preview.html (structure review)
 bun run card-news check <slug>                    # headless overflow / image-resolution QA
 bun run card-news approve <slug> --by "<name>"    # human sign-off (hash-locked)
