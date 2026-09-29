@@ -696,6 +696,34 @@ function inspect(scale) {
 			issues.push({ level: 'warn', msg: `슬롯 "${name}" 가로 넘침` });
 		}
 	}
+	// Anything painted outside a clipping body gets cut off: element boxes, and
+	// outlines drawn outside the box (outline-offset). Zoomed images inside a
+	// .frame are clipped on purpose and skipped.
+	if (body !== card && getComputedStyle(body).overflow !== 'visible') {
+		const seen = new Set();
+		for (const el of body.querySelectorAll('*')) {
+			if (el.closest('.frame') && !el.classList.contains('frame')) continue;
+			const r = el.getBoundingClientRect();
+			if (!r.width || !r.height) continue;
+			const cs = getComputedStyle(el);
+			const out = cs.outlineStyle !== 'none' ? (parseFloat(cs.outlineOffset) || 0) + (parseFloat(cs.outlineWidth) || 0) : 0;
+			const cut = Math.max(bb.left - (r.left - out), r.right + out - bb.right);
+			if (cut > 1) {
+				const name = el.closest('[data-slot]')?.dataset.slot ?? el.className ?? el.tagName;
+				if (seen.has(name)) continue;
+				seen.add(name);
+				issues.push({ level: 'error', msg: `"${name}" 이 본문 좌우 경계에서 ${Math.round(cut)}px 잘림` });
+			}
+		}
+	}
+	// Text that runs past its own box (it paints over — or under — its neighbours).
+	// Decorative, aria-hidden type is allowed to bleed.
+	for (const el of card.querySelectorAll('*')) {
+		if (el.children.length || !el.textContent.trim() || el.closest('[aria-hidden="true"]')) continue;
+		if (el.scrollWidth > el.clientWidth + 2 && el.clientWidth > 0) {
+			issues.push({ level: 'error', msg: `텍스트 "${el.textContent.trim().slice(0, 20)}" 가 상자 폭을 ${el.scrollWidth - el.clientWidth}px 넘침` });
+		}
+	}
 	for (const img of card.querySelectorAll('.frame img')) {
 		const frame = img.closest('.frame');
 		const name = frame.dataset.slot;

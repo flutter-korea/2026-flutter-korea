@@ -5,59 +5,7 @@
 	"cards": [
 		{
 			"template": "speaker",
-			"style": "editorial",
-			"data": {
-				"photo": {
-					"src": "/assets/flutter-seoul/speaker/kaae.jpeg",
-					"mask": "squircle",
-					"focus": "50% 32%",
-					"zoom": 1.3
-				},
-				"nameSub": "Speaker · AI Track",
-				"name": "가애KAAE",
-				"role": "Flutter Seoul",
-				"bio": "**10년 차 개발자**. Flutter Korea 2025, Flutter In Production Extended Seoul 등 Flutter Seoul 무대에서 서비스 운영 경험을 나눠 왔습니다.",
-				"tags": [
-					"Flutter",
-					"AI"
-				],
-				"session": {
-					"title": "10년 차 개발자의 Flutter × AI: 패키지의 한계를 넘어서",
-					"track": "AI Track",
-					"time": "16:20 – 16:50",
-					"room": "401호"
-				}
-			}
-		},
-		{
-			"template": "speaker",
 			"style": "poster",
-			"data": {
-				"photo": {
-					"src": "/assets/flutter-seoul/speaker/kaae.jpeg",
-					"mask": "squircle",
-					"focus": "50% 32%",
-					"zoom": 1.3
-				},
-				"nameSub": "Speaker · AI Track",
-				"name": "가애KAAE",
-				"role": "Flutter Seoul",
-				"bio": "**10년 차 개발자**. Flutter Korea 2025, Flutter In Production Extended Seoul 등 Flutter Seoul 무대에서 서비스 운영 경험을 나눠 왔습니다.",
-				"tags": [
-					"Flutter",
-					"AI"
-				],
-				"session": {
-					"title": "10년 차 개발자의 Flutter × AI: 패키지의 한계를 넘어서",
-					"track": "AI Track",
-					"time": "16:20 – 16:50",
-					"room": "401호"
-				}
-			}
-		},
-		{
-			"template": "speaker",
-			"style": "duotone",
 			"data": {
 				"photo": {
 					"src": "/assets/flutter-seoul/speaker/kaae.jpeg",
@@ -187,59 +135,111 @@
 		},
 		{
 			"template": "speaker",
-			"style": "magazine",
-			"data": {
-				"photo": {
-					"src": "/assets/flutter-seoul/speaker/kaae.jpeg",
-					"mask": "squircle",
-					"focus": "50% 32%",
-					"zoom": 1.3
-				},
-				"nameSub": "Speaker · AI Track",
-				"name": "가애KAAE",
-				"role": "Flutter Seoul",
-				"bio": "**10년 차 개발자**. Flutter Korea 2025, Flutter In Production Extended Seoul 등 Flutter Seoul 무대에서 서비스 운영 경험을 나눠 왔습니다.",
-				"tags": [
-					"Flutter",
-					"AI"
-				],
-				"session": {
-					"title": "10년 차 개발자의 Flutter × AI: 패키지의 한계를 넘어서",
-					"track": "AI Track",
-					"time": "16:20 – 16:50",
-					"room": "401호"
-				}
-			}
-		},
-		{
-			"template": "speaker",
-			"style": "facets",
-			"data": {
-				"photo": {
-					"src": "/assets/flutter-seoul/speaker/kaae.jpeg",
-					"mask": "squircle",
-					"focus": "50% 32%",
-					"zoom": 1.3
-				},
-				"nameSub": "Speaker · AI Track",
-				"name": "가애KAAE",
-				"role": "Flutter Seoul",
-				"bio": "**10년 차 개발자**. Flutter Korea 2025, Flutter In Production Extended Seoul 등 Flutter Seoul 무대에서 서비스 운영 경험을 나눠 왔습니다.",
-				"tags": [
-					"Flutter",
-					"AI"
-				],
-				"session": {
-					"title": "10년 차 개발자의 Flutter × AI: 패키지의 한계를 넘어서",
-					"track": "AI Track",
-					"time": "16:20 – 16:50",
-					"room": "401호"
-				}
-			}
-		},
-		{
-			"template": "speaker",
 			"style": "sticker",
+			"data": {
+				"photo": {
+					"src": "/assets/flutter-seoul/speaker/kaae.jpeg",
+					"mask": "squircle",
+					"focus": "50% 32%",
+					"zoom": 1.3
+				},
+				"nameSub": "Speaker · AI Track",
+				"name": "가애KAAE",
+				"role": "Flutter Seoul",
+				"bio": "**10년 차 개발자**. Flutter Korea 2025, Flutter In Production Extended Seoul 등 Flutter Seoul 무대에서 서비스 운영 경험을 나눠 왔습니다.",
+				"tags": [
+					"Flutter",
+					"AI"
+				],
+				"session": {
+					"title": "10년 차 개발자의 Flutter × AI: 패키지의 한계를 넘어서",
+					"track": "AI Track",
+					"time": "16:20 – 16:50",
+					"room": "401호"
+				}
+			}
+		},
+		{
+			"template": "speaker",
+			"style": "ticket",
+			"data": {
+				"photo": {
+					"src": "/assets/flutter-seoul/speaker/kaae.jpeg",
+					"mask": "squircle",
+					"focus": "50% 32%",
+					"zoom": 1.3
+				},
+				"nameSub": "Speaker · AI Track",
+				"name": "가애KAAE",
+				"role": "Flutter Seoul",
+				"bio": "**10년 차 개발자**. Flutter Korea 2025, Flutter In Production Extended Seoul 등 Flutter Seoul 무대에서 서비스 운영 경험을 나눠 왔습니다.",
+				"tags": [
+					"Flutter",
+					"AI"
+				],
+				"session": {
+					"title": "10년 차 개발자의 Flutter × AI: 패키지의 한계를 넘어서",
+					"track": "AI Track",
+					"time": "16:20 – 16:50",
+					"room": "401호"
+				}
+			}
+		},
+		{
+			"template": "speaker",
+			"style": "rail",
+			"data": {
+				"photo": {
+					"src": "/assets/flutter-seoul/speaker/kaae.jpeg",
+					"mask": "squircle",
+					"focus": "50% 32%",
+					"zoom": 1.3
+				},
+				"nameSub": "Speaker · AI Track",
+				"name": "가애KAAE",
+				"role": "Flutter Seoul",
+				"bio": "**10년 차 개발자**. Flutter Korea 2025, Flutter In Production Extended Seoul 등 Flutter Seoul 무대에서 서비스 운영 경험을 나눠 왔습니다.",
+				"tags": [
+					"Flutter",
+					"AI"
+				],
+				"session": {
+					"title": "10년 차 개발자의 Flutter × AI: 패키지의 한계를 넘어서",
+					"track": "AI Track",
+					"time": "16:20 – 16:50",
+					"room": "401호"
+				}
+			}
+		},
+		{
+			"template": "speaker",
+			"style": "app",
+			"data": {
+				"photo": {
+					"src": "/assets/flutter-seoul/speaker/kaae.jpeg",
+					"mask": "squircle",
+					"focus": "50% 32%",
+					"zoom": 1.3
+				},
+				"nameSub": "Speaker · AI Track",
+				"name": "가애KAAE",
+				"role": "Flutter Seoul",
+				"bio": "**10년 차 개발자**. Flutter Korea 2025, Flutter In Production Extended Seoul 등 Flutter Seoul 무대에서 서비스 운영 경험을 나눠 왔습니다.",
+				"tags": [
+					"Flutter",
+					"AI"
+				],
+				"session": {
+					"title": "10년 차 개발자의 Flutter × AI: 패키지의 한계를 넘어서",
+					"track": "AI Track",
+					"time": "16:20 – 16:50",
+					"room": "401호"
+				}
+			}
+		},
+		{
+			"template": "speaker",
+			"style": "hangul",
 			"data": {
 				"photo": {
 					"src": "/assets/flutter-seoul/speaker/kaae.jpeg",

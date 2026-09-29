@@ -38,7 +38,7 @@ node $CN render  <deck> [--scale 2] [--format jpg]
 [references/design.md](references/design.md)를 따른다. 핵심:
 - 카드 1장 = 정보 한 덩어리. 텍스트가 넘치면 글을 줄이거나 카드를 나눈다(폰트를 억지로 줄이지 않는다).
 - 사진은 `focus`(object-position)로 얼굴 위치를, `mask`로 형태를 정한다. 로고·누끼 이미지는 `fit: "contain"`.
-- 디자인 방향은 `style`로 고른다(speaker 템플릿 10종: facets, editorial, duotone, split, poster, badge, inspector, code, sticker, magazine).
+- 디자인 방향은 `style`로 고른다(speaker 템플릿 10종: app, ticket, poster, badge, rail, inspector, hangul, code, sticker, split).
   사용자가 지정하지 않으면 기본 디자인을 쓰고, 고르기 어려워하면 `examples/speaker-kaae-styles.json` 비교 덱을 보여 준다.
 
 ### 3. build → check (에이전트 자체 QA)

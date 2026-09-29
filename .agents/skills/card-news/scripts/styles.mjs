@@ -58,52 +58,10 @@ const photo = (d, opts = {}, name = 'photo') =>
 /* ----------------------------------------------------------------- styles */
 
 export const styles = {
-	editorial: {
-		label: 'Editorial Rules',
-		inspiration: 'Next.js Conf · Rails World · Swiss editorial posters',
-		description: '흰 지면, 가로 괘선이 정보를 나누는 에디토리얼 레이아웃. 초대형 이름과 표 형식 메타',
-		cards: {
-			speaker: (d, ctx) => {
-				const s = d.session ?? {};
-				const [ko, en] = nameParts(d.name);
-				const l = L[ctx.lang];
-				return article(
-					'editorial',
-					ctx,
-					`
-	<header class="ed-top">
-		<span class="ed-brand">${mark(ctx)}<span>${esc(ctx.brand)}</span></span>
-		<span class="ed-kind" ${slot('tag')}>${esc(d.tag ?? 'Speaker')}</span>
-	</header>
-	<div class="card-body">
-		<div class="ed-hero">
-			<div class="ed-side">
-				${when(s.track, () => `<span class="ed-track" ${slot('session.track')}>${esc(s.track)}</span>`)}
-				${when(d.role, () => `<span class="ed-role" ${slot('role')}>${rich(d.role)}</span>`)}
-			</div>
-			<div class="ed-photo">${photo(d, { mask: 'none' })}</div>
-		</div>
-		<h2 class="ed-name" ${slot('name')}><span>${esc(ko)}</span>${en ? `<span class="en">${esc(en)}</span>` : ''}</h2>
-		<div class="ed-talk" ${slot('session')}>
-			<span class="ed-label">${esc(l.talk)}</span>
-			<h3 ${slot('session.title')}>${titleHtml(s.title)}</h3>
-		</div>
-		<dl class="ed-meta" ${slot('meta')}>
-			<div><dt>${esc(l.date)}</dt><dd>${esc(shortDate(ctx.event.date, ctx.lang))}</dd></div>
-			<div><dt>${esc(l.time)}</dt><dd>${esc(s.time ?? ctx.event.time)}</dd></div>
-			<div><dt>${esc(l.room)}</dt><dd>${esc(s.room ?? '')}</dd></div>
-		</dl>
-	</div>
-	<footer class="ed-foot">${whereLines(ctx)}<span>${esc(ctx.handle)}</span></footer>`
-				);
-			}
-		}
-	},
-
 	poster: {
 		label: 'Bold Poster',
 		inspiration: 'Config (Figma) · Smashing Conference · 타이포 포스터',
-		description: '단색 브랜드 블루 위 초대형 라틴 이름 타이포와 아치 마스크 사진, 하단 흰 정보 슬랩',
+		description: '단색 브랜드 블루 위 초대형 라틴 이름 타이포와 원형 사진, 하단 흰 정보 슬랩',
 		cards: {
 			speaker: (d, ctx) => {
 				const s = d.session ?? {};
@@ -117,7 +75,7 @@ export const styles = {
 		<span class="po-kind" ${slot('tag')}>${esc(d.tag ?? 'Speaker')}</span>
 	</header>
 	<div class="po-type" aria-hidden="true">${esc(en || ko)}</div>
-	<div class="po-photo">${photo(d, { mask: 'arch' })}</div>
+	<div class="po-photo">${photo(d, { mask: 'circle' })}</div>
 	<div class="po-who">
 		<h2 class="po-name" ${slot('name')}>${esc(ko)}${en ? `<span class="en">${esc(en)}</span>` : ''}</h2>
 		${when(d.role, () => `<p class="po-role" ${slot('role')}>${rich(d.role)}</p>`)}
@@ -132,42 +90,6 @@ export const styles = {
 			<span>${esc(s.room ?? '')}</span>
 		</div>
 		<div class="po-foot">${whereLines(ctx)}<span>${esc(ctx.handle)}</span></div>
-	</div>`
-				);
-			}
-		}
-	},
-
-	duotone: {
-		label: 'Blue Duotone',
-		inspiration: 'Spotify/포스터 듀오톤 · droidcon 스피커 카드',
-		description: '사진을 Flutter Seoul 네이비↔스카이 듀오톤으로 처리해 풀블리드. 사진 톤이 달라도 덱 전체가 한 톤으로 묶임',
-		cards: {
-			speaker: (d, ctx) => {
-				const s = d.session ?? {};
-				const l = L[ctx.lang];
-				return article(
-					'duotone',
-					ctx,
-					`
-	<div class="dt-photo">${photo(d)}</div>
-	<header class="dt-top">
-		<span class="dt-brand">${mark(ctx, 'on-plate')}<span>${esc(ctx.brand)}</span></span>
-		<span class="dt-kind" ${slot('tag')}>${esc(d.tag ?? 'Speaker')}</span>
-	</header>
-	<div class="card-body dt-panel">
-		<h2 class="dt-name" ${slot('name')}>${esc(d.name)}</h2>
-		${when(d.role, () => `<p class="dt-role" ${slot('role')}>${rich(d.role)}</p>`)}
-		<div class="dt-talk" ${slot('session')}>
-			<h3 ${slot('session.title')}>${titleHtml(s.title)}</h3>
-			<div class="dt-meta" ${slot('meta')}>
-				${[s.track, s.time && `${shortDate(ctx.event.date, ctx.lang)} ${s.time}`, s.room]
-					.filter(Boolean)
-					.map((v) => `<span>${esc(v)}</span>`)
-					.join('')}
-			</div>
-		</div>
-		<footer class="dt-foot">${whereLines(ctx)}<span>${esc(ctx.handle)}</span></footer>
 	</div>`
 				);
 			}
@@ -330,93 +252,6 @@ export const styles = {
 		}
 	},
 
-	magazine: {
-		label: 'Magazine Cover',
-		inspiration: 'TIME · WIRED 표지 · Smashing Magazine',
-		description: '풀블리드 인물 사진 위 대형 마스트헤드와 커버 라인. 고해상도 사진이 있을 때 가장 강력',
-		cards: {
-			speaker: (d, ctx) => {
-				const s = d.session ?? {};
-				return article(
-					'magazine',
-					ctx,
-					`
-	<div class="mg-photo">${photo(d)}</div>
-	<header class="mg-top">
-		<div class="mg-mast" aria-label="${esc(ctx.brand)}">FLUTTER<br>KOREA</div>
-		<div class="mg-issue">
-			${mark(ctx, 'on-plate')}
-			<span>${esc(ctx.lang === 'ko' ? '2026 연사 시리즈' : '2026 SPEAKER SERIES')}</span>
-			<span ${slot('tag')}>${esc(s.track ?? 'Speaker')}</span>
-		</div>
-	</header>
-	<div class="card-body mg-lines">
-		<h2 class="mg-name" ${slot('name')}>${esc(d.name)}</h2>
-		${when(d.role, () => `<p class="mg-role" ${slot('role')}>${rich(d.role)}</p>`)}
-		<h3 class="mg-title" ${slot('session.title')}>${titleHtml(s.title)}</h3>
-		<p class="mg-meta" ${slot('meta')}>${esc([shortDate(ctx.event.date, ctx.lang), s.time, s.room].filter(Boolean).join('  ·  '))}</p>
-		<footer class="mg-foot">${whereLines(ctx)}<span>${esc(ctx.handle)}</span></footer>
-	</div>`
-				);
-			}
-		}
-	},
-
-	facets: {
-		label: 'Seoul Pavilion',
-		inspiration: 'Flutter Seoul 누각 마크 · Google I/O 도형 시스템(차용이 아닌 자체 마크 확장)',
-		description: 'Flutter Seoul 누각 마크의 면 분할을 확장해, 누각의 “문”에 연사 사진이 들어가는 브랜드 프레임',
-		cards: {
-			speaker: (d, ctx) => {
-				const s = d.session ?? {};
-				const l = L[ctx.lang];
-				// Pavilion frame: the mark's roof facets across the width, the dark door
-				// block replaced by the portrait, flanked by the mark's two side facets.
-				const W = 936;
-				const R = 176; // roof height
-				const D = 400; // door (portrait) size
-				const x0 = (W - D) / 2;
-				const rx = (x) => (W / 2 + ((x - 159.7) * W) / 260.2).toFixed(1);
-				const ry = (y) => ((y / 65.6) * R).toFixed(1);
-				const roof = [
-					['#285BAD', [[29.6, 65.6], [94.6, 0], [159.7, 0], [94.6, 65.6]]],
-					['#3381E1', [[94.6, 65.6], [159.7, 0], [159.7, 65.6]]],
-					['#5A9CEB', [[159.6, 0], [224.7, 0], [159.6, 65.6]]],
-					['#8FC3FF', [[224.7, 0], [289.8, 65.6], [159.6, 65.6]]]
-				]
-					.map(([c, pts]) => `<polygon fill="${c}" points="${pts.map(([x, y]) => `${rx(x)},${ry(y)}`).join(' ')}"/>`)
-					.join('');
-				const sides = `<polygon fill="#6DBAF5" points="${x0},${R} ${x0},${R + D} ${x0 - D * 0.9},${R + D}"/><polygon fill="#4DA4FF" points="${x0 + D},${R} ${x0 + D},${R + D} ${x0 + D + D * 0.9},${R + D}"/>`;
-				return article(
-					'facets',
-					ctx,
-					`
-	<header class="fc-top">
-		<span class="fc-brand">${mark(ctx)}<span>${esc(ctx.brand)}</span></span>
-		<span class="fc-kind" ${slot('tag')}>${esc(d.tag ?? 'Speaker')}</span>
-	</header>
-	<div class="fc-pavilion" style="--door:${D}px;--roof:${R}px">
-		<svg class="fc-art" viewBox="0 0 ${W} ${R + D}" aria-hidden="true">${roof}${sides}<rect x="${x0}" y="${R}" width="${D}" height="${D}" fill="#103E86"/></svg>
-		<div class="fc-door">${photo(d)}</div>
-	</div>
-	<div class="card-body fc-info">
-		<h2 class="fc-name" ${slot('name')}>${esc(d.name)}</h2>
-		${when(d.role, () => `<p class="fc-role" ${slot('role')}>${rich(d.role)}</p>`)}
-		<div class="fc-talk" ${slot('session')}>
-			<h3 ${slot('session.title')}>${titleHtml(s.title)}</h3>
-			<div class="fc-meta" ${slot('meta')}>
-				${when(s.track, () => `<span class="fc-chip">${esc(s.track)}</span>`)}
-				<span>${esc(shortDate(ctx.event.date, ctx.lang))} ${esc(s.time ?? '')}</span>
-				<span>${esc(s.room ?? '')}</span>
-			</div>
-		</div>
-	</div>
-	<footer class="fc-foot">${whereLines(ctx)}<span>${esc(ctx.handle)}</span></footer>`
-				);
-			}
-		}
-	},
-
 	sticker: {
 		label: 'Community Stickers',
 		inspiration: 'PyCon · Fluttercon 커뮤니티 굿즈 · 노트북 스티커',
@@ -446,6 +281,174 @@ export const styles = {
 		</div>
 	</div>
 	<footer class="sk-foot">${whereLines(ctx)}<span>${esc(ctx.handle)}</span></footer>`
+				);
+			}
+		}
+	},
+	ticket: {
+		label: 'Admission Ticket',
+		inspiration: 'PyCon “I’m a speaker” 공유 카드 · 공연 입장권',
+		description: '입장권 메타포. 본권에 연사와 발표, 절취선 아래 스텁에 날짜·시간·장소를 크게 배치',
+		cards: {
+			speaker: (d, ctx) => {
+				const s = d.session ?? {};
+				const l = L[ctx.lang];
+				return article(
+					'ticket',
+					ctx,
+					`
+	<header class="tk-top">
+		<span class="tk-brand">${mark(ctx, 'on-plate')}<span>${esc(ctx.brand)}</span></span>
+		<span class="tk-kind" ${slot('tag')}>${esc(d.tag ?? 'Speaker Pass')}</span>
+	</header>
+	<div class="card-body tk-ticket">
+		<div class="tk-main">
+			<div class="tk-who">
+				<div class="tk-photo">${photo(d, { mask: 'circle' })}</div>
+				<div>
+					${when(s.track, () => `<span class="tk-track" ${slot('session.track')}>${esc(s.track)}</span>`)}
+					<h2 class="tk-name" ${slot('name')}>${esc(d.name)}</h2>
+					${when(d.role, () => `<p class="tk-role" ${slot('role')}>${rich(d.role)}</p>`)}
+				</div>
+			</div>
+			<h3 class="tk-title" ${slot('session.title')}>${titleHtml(s.title)}</h3>
+		</div>
+		<div class="tk-perf" aria-hidden="true"></div>
+		<dl class="tk-stub" ${slot('meta')}>
+			<div><dt>${esc(l.date)}</dt><dd>${esc(shortDate(ctx.event.date, ctx.lang))}</dd></div>
+			<div><dt>${esc(l.time)}</dt><dd>${esc(String(s.time ?? '').split(/\s*[–-]\s*/)[0])}</dd></div>
+			<div><dt>${esc(l.room)}</dt><dd>${esc(s.room ?? '')}</dd></div>
+		</dl>
+	</div>
+	<footer class="tk-foot">${whereLines(ctx)}<span>${esc(ctx.handle)}</span></footer>`
+				);
+			}
+		}
+	},
+
+	rail: {
+		label: 'Side Rail',
+		inspiration: 'Smashing Conference 사이드 레일',
+		description: '왼쪽 네이비 레일에 날짜·시간·장소를 크게 세로로 쌓고, 오른쪽 넓은 면은 연사와 발표에 집중',
+		cards: {
+			speaker: (d, ctx) => {
+				const s = d.session ?? {};
+				const l = L[ctx.lang];
+				const [mm, dd] = (String(ctx.event.date).match(/\d{4}\D+(\d{1,2})\D+(\d{1,2})/) ?? []).slice(1);
+				const dow = shortDate(ctx.event.date, ctx.lang).split(' ')[1] ?? '';
+				return article(
+					'rail',
+					ctx,
+					`
+	<aside class="rl-rail" ${slot('meta')}>
+		${mark(ctx, 'on-plate')}
+		<div class="rl-date"><span>${esc(mm ?? '')}.${esc(dd ?? '')}</span><small>${esc(dow)}</small></div>
+		<div class="rl-item"><small>${esc(l.time)}</small><span>${esc(String(s.time ?? '').split(/\s*[–-]\s*/)[0])}</span></div>
+		<div class="rl-item"><small>${esc(l.room)}</small><span>${esc(s.room ?? '')}</span></div>
+		${when(s.track, () => `<div class="rl-item"><small>${esc(l.track)}</small><span>${esc(s.track.replace(/\s*track$/i, ''))}</span></div>`)}
+	</aside>
+	<div class="rl-main">
+		<header class="rl-top">
+			<span class="rl-brand">${esc(ctx.brand)}</span>
+			<span class="rl-kind" ${slot('tag')}>${esc(d.tag ?? 'Speaker')}</span>
+		</header>
+		<div class="card-body rl-body">
+			<div class="rl-photo">${photo(d, { mask: 'circle' })}</div>
+			<h2 class="rl-name" ${slot('name')}>${esc(d.name)}</h2>
+			${when(d.role, () => `<p class="rl-role" ${slot('role')}>${rich(d.role)}</p>`)}
+			<h3 class="rl-title" ${slot('session.title')}>${titleHtml(s.title)}</h3>
+		</div>
+		<footer class="rl-foot">${whereLines(ctx)}<span>${esc(ctx.handle)}</span></footer>
+	</div>`
+				);
+			}
+		}
+	},
+
+	app: {
+		label: 'Flutter App Screen',
+		inspiration: 'Material 3 · Flutter 앱 화면',
+		description: 'Material 3 앱의 연사 상세 화면처럼 앱 바, 프로필 헤더, 세션 정보 ListTile로 구성. Flutter로 만든 앱 같은 카드',
+		cards: {
+			speaker: (d, ctx) => {
+				const s = d.session ?? {};
+				const l = L[ctx.lang];
+				const icon = (path) => `<svg class="ap-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="${path}"/></svg>`;
+				const I = {
+					back: 'M20 11H7.8l5.6-5.6L12 4l-8 8 8 8 1.4-1.4L7.8 13H20z',
+					clock: 'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7z',
+					place: 'M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z',
+					track: 'M17.6 5.8A2 2 0 0 0 16 5H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h11a2 2 0 0 0 1.6-.8L22 12z',
+					event: 'M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V9h14z'
+				};
+				const tile = (ic, k, v) => `<li><span class="ap-lead">${icon(I[ic])}</span><span class="ap-text"><small>${esc(k)}</small><span>${esc(v)}</span></span></li>`;
+				return article(
+					'app',
+					ctx,
+					`
+	<div class="ap-status" aria-hidden="true"><span>${esc(String(s.time ?? '').split(/\s*[–-]\s*/)[0] || '11:00')}</span><span class="ap-sys"><i></i><i></i><i></i></span></div>
+	<header class="ap-bar">
+		${icon(I.back)}
+		<span class="ap-bar-title">${esc(ctx.brand)}</span>
+		${mark(ctx, 'on-plate')}
+	</header>
+	<div class="card-body ap-body">
+		<div class="ap-profile">
+			<div class="ap-photo">${photo(d, { mask: 'circle' })}</div>
+			<div class="ap-who">
+				<span class="ap-overline" ${slot('tag')}>${esc(d.tag ?? l.speaker)}</span>
+				<h2 class="ap-name" ${slot('name')}>${esc(d.name)}</h2>
+				${when(d.role, () => `<p class="ap-role" ${slot('role')}>${rich(d.role)}</p>`)}
+			</div>
+		</div>
+		<section class="ap-card" ${slot('session')}>
+			${when(s.track, () => `<span class="ap-chip">${esc(s.track)}</span>`)}
+			<h3 class="ap-title" ${slot('session.title')}>${titleHtml(s.title)}</h3>
+			<ul class="ap-tiles" ${slot('meta')}>
+				${tile('clock', l.time, `${shortDate(ctx.event.date, ctx.lang)} ${s.time ?? ''}`)}
+				${tile('place', l.room, `${s.room ?? ''} · ${ctx.event.venue}`)}
+			</ul>
+		</section>
+	</div>
+	<footer class="ap-nav">${whereLines(ctx)}<span>${esc(ctx.handle)}</span></footer>`
+				);
+			}
+		}
+	},
+
+	hangul: {
+		label: 'Hangul Column',
+		inspiration: 'Smashing “이름이 히어로” 포스터 · 한글 세로쓰기 타이포',
+		description: '한글 이름을 초대형으로 세로로 쌓아 한 기둥을 만든다. 옆 칸에 원형 사진·영문 이름·소속, 하단에 발표',
+		cards: {
+			speaker: (d, ctx) => {
+				const s = d.session ?? {};
+				const [ko, en] = nameParts(d.name);
+				const chars = [...ko].filter((c) => c.trim());
+				return article(
+					'hangul',
+					ctx,
+					`
+	<header class="hg-top">
+		<span class="hg-brand">${mark(ctx)}<span>${esc(ctx.brand)}</span></span>
+		<span class="hg-kind" ${slot('tag')}>${esc(d.tag ?? 'Speaker')}</span>
+	</header>
+	<div class="card-body hg-body">
+		<div class="hg-hero">
+			<h2 class="hg-column n-${Math.min(chars.length, 4)}" ${slot('name')} aria-label="${esc(d.name)}">${chars.slice(0, 4).map((c) => `<span>${esc(c)}</span>`).join('')}</h2>
+			<div class="hg-side">
+				<div class="hg-photo">${photo(d, { mask: 'circle' })}</div>
+				${en ? `<p class="hg-en">${esc(en)}</p>` : ''}
+				${when(d.role, () => `<p class="hg-role" ${slot('role')}>${rich(d.role)}</p>`)}
+				${when(s.track, () => `<span class="hg-track">${esc(s.track)}</span>`)}
+			</div>
+		</div>
+		<div class="hg-talk" ${slot('session')}>
+			<h3 ${slot('session.title')}>${titleHtml(s.title)}</h3>
+			<p class="hg-meta" ${slot('meta')}>${esc([shortDate(ctx.event.date, ctx.lang), s.time, s.room].filter(Boolean).join(' · '))}</p>
+		</div>
+	</div>
+	<footer class="hg-foot">${whereLines(ctx)}<span>${esc(ctx.handle)}</span></footer>`
 				);
 			}
 		}

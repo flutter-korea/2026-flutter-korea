@@ -19,16 +19,7 @@
 	border-radius: 12px;
 	background: var(--white);
 }
-.style-editorial .where,
-.style-poster .where,
-.style-duotone .where,
-.style-badge .where,
-.style-code .where,
-.style-inspector .where,
-.style-split .where,
-.style-magazine .where,
-.style-facets .where,
-.style-sticker .where {
+.card[data-style] .where {
 	display: flex;
 	flex-direction: column;
 	gap: 4px;
@@ -41,140 +32,7 @@
 }
 
 /* ==========================================================================
-   1. editorial — white page, horizontal rules, oversized name, table meta
-   ========================================================================== */
-.card.style-editorial {
-	padding: 64px 72px;
-	gap: 0;
-}
-.style-editorial .ed-top {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding-bottom: 26px;
-	border-bottom: 3px solid var(--ink);
-}
-.style-editorial .ed-brand {
-	display: inline-flex;
-	align-items: center;
-	gap: 16px;
-	font-size: 30px;
-	font-weight: 800;
-	letter-spacing: -0.02em;
-}
-.style-editorial .ed-kind {
-	font-family: var(--font-mono);
-	font-size: 26px;
-	font-weight: 700;
-	letter-spacing: 0.16em;
-	text-transform: uppercase;
-	color: var(--accent);
-}
-.style-editorial .card-body {
-	gap: 0;
-}
-.style-editorial .ed-hero {
-	display: grid;
-	grid-template-columns: 1fr 440px;
-	gap: 40px;
-	padding: 36px 0 0;
-}
-.style-editorial .ed-side {
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-end;
-	gap: 14px;
-	padding-bottom: 8px;
-}
-.style-editorial .ed-track {
-	align-self: flex-start;
-	padding: 8px 18px;
-	background: var(--ink);
-	color: var(--white);
-	font-family: var(--font-mono);
-	font-size: 26px;
-	font-weight: 700;
-	letter-spacing: 0.06em;
-}
-.style-editorial .ed-role {
-	font-size: 34px;
-	font-weight: 700;
-	color: var(--text-muted);
-}
-.style-editorial .ed-photo .frame {
-	width: 440px;
-	height: 440px;
-}
-.style-editorial .ed-name {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: baseline;
-	gap: 0;
-	font-size: 168px;
-	line-height: 1;
-	letter-spacing: -0.05em;
-	padding: 26px 0 30px;
-	border-bottom: 1.5px solid var(--ink);
-}
-.style-editorial .ed-name .en {
-	color: var(--accent);
-}
-.style-editorial .ed-talk {
-	display: grid;
-	grid-template-columns: 150px 1fr;
-	gap: 24px;
-	padding: 30px 0;
-	border-bottom: 1.5px solid var(--ink);
-}
-.style-editorial .ed-label,
-.style-editorial dt {
-	font-family: var(--font-mono);
-	font-size: 26px;
-	font-weight: 700;
-	letter-spacing: 0.14em;
-	text-transform: uppercase;
-	color: var(--text-dim);
-	padding-top: 10px;
-}
-.style-editorial .ed-talk h3 {
-	font-size: 50px;
-	line-height: 1.24;
-}
-.style-editorial .ed-meta {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-}
-.style-editorial .ed-meta > div {
-	padding: 22px 0 0 24px;
-	border-left: 1.5px solid var(--border-strong);
-}
-.style-editorial .ed-meta > div:first-child {
-	padding-left: 0;
-	border-left: 0;
-}
-.style-editorial dd {
-	margin-top: 4px;
-	font-size: 38px;
-	font-weight: 800;
-	letter-spacing: -0.02em;
-	font-variant-numeric: tabular-nums;
-}
-.style-editorial .ed-foot {
-	display: flex;
-	justify-content: space-between;
-	align-items: flex-end;
-	padding-top: 24px;
-	border-top: 3px solid var(--ink);
-	font-size: 25px;
-	color: var(--text-muted);
-}
-.style-editorial .ed-foot > span:last-child {
-	font-family: var(--font-mono);
-	font-size: 26px;
-}
-
-/* ==========================================================================
-   2. poster — solid brand blue, giant Latin name type, arch photo, white slab
+   2. poster — solid brand blue, giant Latin name type, circle photo, white slab
    ========================================================================== */
 .card.style-poster {
 	background: var(--blue-700);
@@ -218,12 +76,15 @@
 }
 .style-poster .po-photo {
 	position: absolute;
-	right: 72px;
+	right: 64px;
 	top: 250px;
 	z-index: 2;
-	width: 400px;
-	height: 500px;
-	filter: drop-shadow(0 30px 40px rgba(3, 25, 64, 0.45));
+	width: 440px;
+	height: 440px;
+	padding: 12px;
+	border-radius: 50%;
+	background: var(--sky);
+	box-shadow: 0 30px 50px -20px rgba(3, 25, 64, 0.55);
 }
 .style-poster .po-photo .frame {
 	width: 100%;
@@ -303,127 +164,6 @@
 	color: var(--text-muted);
 }
 .style-poster .po-foot > span:last-child {
-	font-family: var(--font-mono);
-	font-size: 26px;
-}
-
-/* ==========================================================================
-   3. duotone — full-bleed navy↔sky duotone photo into a navy panel
-   ========================================================================== */
-.card.style-duotone {
-	background: #06377a;
-	color: var(--white);
-	padding: 0;
-	gap: 0;
-}
-.style-duotone .dt-photo {
-	position: absolute;
-	inset: 0 0 auto;
-	height: 640px;
-	background: #9fd6fb; /* highlight tone */
-	isolation: isolate;
-}
-.style-duotone .dt-photo .frame {
-	width: 100%;
-	height: 100%;
-	background: transparent;
-	mix-blend-mode: multiply;
-}
-.style-duotone .dt-photo img {
-	filter: grayscale(1) contrast(1.15) brightness(1.08);
-}
-.style-duotone .dt-photo::after {
-	/* shadow tone: darks lift to the brand navy */
-	content: '';
-	position: absolute;
-	inset: 0;
-	background: #06377a;
-	mix-blend-mode: lighten;
-}
-.style-duotone .dt-top {
-	position: relative;
-	z-index: 2;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 64px 72px 0;
-}
-.style-duotone .dt-brand {
-	display: inline-flex;
-	align-items: center;
-	gap: 16px;
-	font-size: 30px;
-	font-weight: 800;
-	text-shadow: 0 2px 12px rgba(3, 25, 64, 0.5);
-}
-.style-duotone .dt-kind {
-	padding: 10px 22px;
-	border-radius: var(--r-full);
-	background: var(--white);
-	color: var(--blue-900);
-	font-family: var(--font-mono);
-	font-size: 26px;
-	font-weight: 700;
-	letter-spacing: 0.12em;
-	text-transform: uppercase;
-}
-.style-duotone .dt-panel {
-	position: absolute;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	top: 640px;
-	padding: 48px 72px 56px;
-	gap: 18px;
-	z-index: 2;
-}
-.style-duotone .dt-name {
-	font-size: 124px;
-	line-height: 0.95;
-	letter-spacing: -0.045em;
-	color: var(--white);
-}
-.style-duotone .dt-role {
-	font-size: 34px;
-	font-weight: 700;
-	color: var(--sky);
-}
-.style-duotone .dt-talk {
-	margin-top: 16px;
-	padding-top: 30px;
-	border-top: 1.5px solid rgba(255, 255, 255, 0.25);
-	display: flex;
-	flex-direction: column;
-	gap: 22px;
-}
-.style-duotone .dt-talk h3 {
-	font-size: 50px;
-	line-height: 1.24;
-	color: var(--white);
-}
-.style-duotone .dt-meta {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 12px;
-}
-.style-duotone .dt-meta span {
-	padding: 8px 20px;
-	border-radius: var(--r-full);
-	border: 1.5px solid rgba(143, 195, 255, 0.6);
-	font-family: var(--font-mono);
-	font-size: 26px;
-	font-weight: 700;
-	color: #cfe6ff;
-}
-.style-duotone .dt-foot {
-	margin-top: auto;
-	display: flex;
-	justify-content: space-between;
-	align-items: flex-end;
-	font-size: 25px;
-	color: rgba(255, 255, 255, 0.78);
-}
-.style-duotone .dt-foot > span:last-child {
 	font-family: var(--font-mono);
 	font-size: 26px;
 }
@@ -747,6 +487,11 @@
 }
 .style-inspector .card-body {
 	gap: 34px;
+	/* debug outlines sit 10px outside each box and labels 46px above it; pad the
+	   (overflow-clipped) body so they stay inside, and pull it back so the
+	   content edge still lines up with the header */
+	padding: 0 16px 16px;
+	margin-inline: -16px;
 }
 .style-inspector .in-box {
 	position: relative;
@@ -975,210 +720,6 @@ html.wire .style-inspector .in-box {
 }
 
 /* ==========================================================================
-   8. magazine — full-bleed portrait, masthead, cover lines on a navy base
-   ========================================================================== */
-.card.style-magazine {
-	background: #06377a;
-	color: var(--white);
-	padding: 0;
-	gap: 0;
-}
-.style-magazine .mg-photo {
-	position: absolute;
-	inset: 0 0 auto;
-	height: 760px;
-}
-.style-magazine .mg-photo .frame {
-	width: 100%;
-	height: 100%;
-}
-.style-magazine .mg-top {
-	position: relative;
-	z-index: 2;
-	padding: 52px 64px 0;
-}
-.style-magazine .mg-mast {
-	font-size: 168px;
-	font-weight: 900;
-	line-height: 0.84;
-	letter-spacing: -0.055em;
-	color: var(--white);
-	text-shadow: 0 4px 30px rgba(3, 25, 64, 0.35);
-}
-.style-magazine .mg-issue {
-	display: flex;
-	align-items: center;
-	gap: 18px;
-	margin-top: 26px;
-	font-family: var(--font-mono);
-	font-size: 26px;
-	font-weight: 700;
-	letter-spacing: 0.1em;
-	text-transform: uppercase;
-	text-shadow: 0 2px 10px rgba(3, 25, 64, 0.5);
-}
-.style-magazine .mg-issue .fs-mark svg {
-	width: 56px;
-}
-.style-magazine .mg-issue > span + span::before {
-	content: '/';
-	margin-right: 18px;
-	opacity: 0.6;
-}
-.style-magazine .mg-lines {
-	position: absolute;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	top: 760px;
-	padding: 48px 64px 52px;
-	gap: 12px;
-	background: #06377a;
-}
-.style-magazine .mg-name {
-	font-size: 118px;
-	line-height: 1;
-	letter-spacing: -0.045em;
-	color: var(--white);
-}
-.style-magazine .mg-role {
-	font-size: 32px;
-	font-weight: 700;
-	color: var(--sky);
-}
-.style-magazine .mg-title {
-	margin-top: 18px;
-	font-size: 46px;
-	line-height: 1.26;
-	color: var(--white);
-}
-.style-magazine .mg-meta {
-	font-family: var(--font-mono);
-	font-size: 27px;
-	font-weight: 700;
-	color: #cfe6ff;
-	white-space: pre;
-}
-.style-magazine .mg-foot {
-	margin-top: auto;
-	display: flex;
-	justify-content: space-between;
-	align-items: flex-end;
-	font-size: 25px;
-	color: rgba(255, 255, 255, 0.75);
-}
-.style-magazine .mg-foot > span:last-child {
-	font-family: var(--font-mono);
-	font-size: 26px;
-}
-
-/* ==========================================================================
-   9. facets — Flutter Seoul pavilion frame; the portrait is the door
-   ========================================================================== */
-.card.style-facets {
-	padding: 64px 72px 56px;
-	gap: 30px;
-}
-.style-facets .fc-top {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-.style-facets .fc-brand {
-	display: inline-flex;
-	align-items: center;
-	gap: 16px;
-	font-size: 30px;
-	font-weight: 800;
-}
-.style-facets .fc-kind {
-	font-family: var(--font-mono);
-	font-size: 26px;
-	font-weight: 700;
-	letter-spacing: 0.16em;
-	text-transform: uppercase;
-	color: var(--accent);
-}
-.style-facets .fc-pavilion {
-	position: relative;
-	flex: none;
-	width: 936px;
-	margin-top: 6px;
-}
-.style-facets .fc-art {
-	display: block;
-	width: 100%;
-	height: auto;
-}
-.style-facets .fc-door {
-	position: absolute;
-	left: calc(50% - var(--door) / 2);
-	top: var(--roof);
-	width: var(--door);
-	height: var(--door);
-}
-.style-facets .fc-door .frame {
-	width: 100%;
-	height: 100%;
-}
-.style-facets .fc-info {
-	gap: 14px;
-	align-items: center;
-	text-align: center;
-}
-.style-facets .fc-name {
-	font-size: 108px;
-	line-height: 1;
-	letter-spacing: -0.045em;
-}
-.style-facets .fc-role {
-	font-size: 32px;
-	font-weight: 700;
-	color: var(--text-muted);
-}
-.style-facets .fc-talk {
-	margin-top: 14px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 18px;
-}
-.style-facets .fc-talk h3 {
-	font-size: 46px;
-	line-height: 1.26;
-}
-.style-facets .fc-meta {
-	display: flex;
-	align-items: center;
-	gap: 22px;
-	font-size: 30px;
-	font-weight: 700;
-	color: var(--text-muted);
-	font-variant-numeric: tabular-nums;
-}
-.style-facets .fc-chip {
-	padding: 8px 20px;
-	border-radius: var(--r-full);
-	background: #103e86;
-	color: var(--white);
-	font-family: var(--font-mono);
-	font-size: 26px;
-}
-.style-facets .fc-foot {
-	display: flex;
-	justify-content: space-between;
-	align-items: flex-end;
-	padding-top: 22px;
-	border-top: 1.5px solid var(--border);
-	font-size: 25px;
-	color: var(--text-muted);
-}
-.style-facets .fc-foot > span:last-child {
-	font-family: var(--font-mono);
-	font-size: 26px;
-}
-
-/* ==========================================================================
    10. sticker — community stickers with the official Dash
    ========================================================================== */
 .card.style-sticker {
@@ -1306,6 +847,558 @@ html.wire .style-inspector .in-box {
 	color: var(--text-muted);
 }
 .style-sticker .sk-foot > span:last-child {
+	font-family: var(--font-mono);
+	font-size: 26px;
+}
+
+/* ==========================================================================
+   11. ticket — admission ticket with a tear-off stub
+   ========================================================================== */
+.card.style-ticket {
+	background: var(--blue-700);
+	color: var(--white);
+	padding: 64px 64px 56px;
+	gap: 34px;
+}
+.style-ticket .tk-top {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.style-ticket .tk-brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 16px;
+	font-size: 30px;
+	font-weight: 800;
+}
+.style-ticket .tk-kind {
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--sky);
+}
+.style-ticket .tk-ticket {
+	flex: none;
+	margin-block: auto;
+	position: relative;
+	background: var(--white);
+	color: var(--ink);
+	border-radius: 32px;
+	gap: 0;
+	box-shadow: 0 36px 60px -30px rgba(3, 25, 64, 0.6);
+	overflow: visible;
+}
+.style-ticket .tk-main {
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+	padding: 56px 52px 48px;
+}
+.style-ticket .tk-who {
+	display: flex;
+	align-items: center;
+	gap: 36px;
+}
+.style-ticket .tk-photo {
+	width: 300px;
+	height: 300px;
+	flex: none;
+	padding: 8px;
+	border-radius: 50%;
+	background: var(--paper-strong);
+}
+.style-ticket .tk-photo .frame {
+	width: 100%;
+	height: 100%;
+}
+.style-ticket .tk-track {
+	display: inline-block;
+	padding: 6px 18px;
+	border-radius: var(--r-full);
+	background: var(--paper-strong);
+	color: var(--accent);
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+}
+.style-ticket .tk-name {
+	margin-top: 14px;
+	font-size: 104px;
+	line-height: 1;
+	letter-spacing: -0.045em;
+}
+.style-ticket .tk-role {
+	margin-top: 12px;
+	font-size: 32px;
+	font-weight: 700;
+	color: var(--text-muted);
+}
+.style-ticket .tk-title {
+	font-size: 56px;
+	line-height: 1.24;
+}
+/* perforation with half-circle notches cut into the ticket edges */
+.style-ticket .tk-perf {
+	position: relative;
+	height: 0;
+	margin: 0 44px;
+	border-top: 4px dashed var(--border-strong);
+}
+.style-ticket .tk-perf::before,
+.style-ticket .tk-perf::after {
+	content: '';
+	position: absolute;
+	top: -30px;
+	width: 56px;
+	height: 56px;
+	border-radius: 50%;
+	background: var(--blue-700);
+}
+.style-ticket .tk-perf::before {
+	left: -72px;
+}
+.style-ticket .tk-perf::after {
+	right: -72px;
+}
+.style-ticket .tk-stub {
+	display: grid;
+	grid-template-columns: 1.1fr 1fr 1fr;
+	padding: 34px 52px 42px;
+}
+.style-ticket .tk-stub > div + div {
+	padding-left: 28px;
+	border-left: 1.5px solid var(--border);
+}
+.style-ticket dt {
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	color: var(--text-dim);
+}
+.style-ticket dd {
+	margin-top: 6px;
+	font-size: 54px;
+	font-weight: 800;
+	letter-spacing: -0.03em;
+	font-variant-numeric: tabular-nums;
+}
+.style-ticket .tk-foot {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	font-size: 25px;
+	color: rgba(255, 255, 255, 0.8);
+}
+.style-ticket .tk-foot > span:last-child {
+	font-family: var(--font-mono);
+	font-size: 26px;
+}
+
+/* ==========================================================================
+   12. rail — navy side rail for logistics, wide white field for the person
+   ========================================================================== */
+.card.style-rail {
+	flex-direction: row;
+	padding: 0;
+	gap: 0;
+}
+.style-rail .rl-rail {
+	flex: none;
+	width: 290px;
+	background: var(--blue-900);
+	color: var(--white);
+	padding: 64px 40px 56px;
+	display: flex;
+	flex-direction: column;
+	gap: 44px;
+}
+.style-rail .rl-rail .fs-mark {
+	align-self: flex-start;
+}
+.style-rail .rl-date span {
+	display: block;
+	font-size: 74px;
+	font-weight: 900;
+	line-height: 0.95;
+	letter-spacing: -0.05em;
+	font-variant-numeric: tabular-nums;
+}
+.style-rail .rl-date small,
+.style-rail .rl-item small {
+	display: block;
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	color: var(--sky);
+	margin-top: 10px;
+}
+.style-rail .rl-item {
+	padding-top: 26px;
+	border-top: 1.5px solid rgba(255, 255, 255, 0.22);
+}
+.style-rail .rl-item small {
+	margin: 0 0 6px;
+}
+.style-rail .rl-item span {
+	font-size: 48px;
+	font-weight: 800;
+	letter-spacing: -0.03em;
+	font-variant-numeric: tabular-nums;
+}
+.style-rail .rl-main {
+	flex: 1;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	padding: 64px 64px 56px 60px;
+	gap: 36px;
+}
+.style-rail .rl-top {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.style-rail .rl-brand {
+	font-size: 30px;
+	font-weight: 800;
+	letter-spacing: -0.02em;
+}
+.style-rail .rl-kind {
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+.style-rail .rl-body {
+	gap: 18px;
+}
+.style-rail .rl-photo {
+	width: 360px;
+	height: 360px;
+	margin-bottom: 18px;
+	filter: drop-shadow(0 24px 32px rgba(11, 18, 32, 0.2));
+}
+.style-rail .rl-photo .frame {
+	width: 100%;
+	height: 100%;
+}
+.style-rail .rl-name {
+	font-size: 112px;
+	line-height: 1;
+	letter-spacing: -0.045em;
+}
+.style-rail .rl-role {
+	font-size: 34px;
+	font-weight: 700;
+	color: var(--text-muted);
+}
+.style-rail .rl-title {
+	margin-top: auto;
+	padding-top: 30px;
+	border-top: 3px solid var(--ink);
+	font-size: 50px;
+	line-height: 1.26;
+}
+.style-rail .rl-foot {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	gap: 20px;
+	font-size: 25px;
+	color: var(--text-muted);
+}
+.style-rail .rl-foot > span:last-child {
+	font-family: var(--font-mono);
+	font-size: 26px;
+}
+
+/* ==========================================================================
+   13. app — a Material 3 speaker-detail screen, the way a Flutter app shows it
+   ========================================================================== */
+.card.style-app {
+	background: #f7f9ff;
+	padding: 0;
+	gap: 0;
+}
+.style-app .ap-status {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 30px 64px 0;
+	font-size: 26px;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+	color: var(--ink);
+}
+.style-app .ap-sys {
+	display: inline-flex;
+	gap: 10px;
+}
+.style-app .ap-sys i {
+	width: 22px;
+	height: 22px;
+	border-radius: 6px;
+	background: var(--ink);
+	opacity: 0.8;
+}
+.style-app .ap-bar {
+	display: flex;
+	align-items: center;
+	gap: 28px;
+	padding: 34px 56px 26px;
+}
+.style-app .ap-bar > .ap-ico {
+	width: 48px;
+	height: 48px;
+	fill: var(--ink);
+}
+.style-app .ap-bar-title {
+	flex: 1;
+	font-size: 36px;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+}
+.style-app .ap-body {
+	padding: 10px 56px 0;
+	gap: 36px;
+}
+.style-app .ap-profile {
+	display: flex;
+	align-items: center;
+	gap: 40px;
+	padding: 40px;
+	border-radius: 44px;
+	background: #dce7ff; /* primary container */
+}
+.style-app .ap-photo {
+	width: 280px;
+	height: 280px;
+	flex: none;
+}
+.style-app .ap-photo .frame {
+	width: 100%;
+	height: 100%;
+}
+.style-app .ap-overline {
+	font-size: 28px;
+	font-weight: 700;
+	color: var(--accent);
+}
+.style-app .ap-name {
+	margin-top: 8px;
+	font-size: 96px;
+	line-height: 1.02;
+	letter-spacing: -0.04em;
+	color: #041b3f;
+}
+.style-app .ap-role {
+	margin-top: 12px;
+	font-size: 32px;
+	font-weight: 600;
+	color: #2c4368;
+}
+.style-app .ap-card {
+	display: flex;
+	flex-direction: column;
+	gap: 22px;
+	padding: 40px 44px 20px;
+	border-radius: 36px;
+	background: var(--white);
+	box-shadow: 0 1px 3px rgba(11, 18, 32, 0.12), 0 16px 32px -24px rgba(11, 18, 32, 0.3);
+}
+.style-app .ap-chip {
+	align-self: flex-start;
+	padding: 10px 24px;
+	border-radius: 16px;
+	background: #dce7ff;
+	color: #0a2d6e;
+	font-size: 27px;
+	font-weight: 700;
+}
+.style-app .ap-title {
+	font-size: 50px;
+	line-height: 1.24;
+}
+.style-app .ap-tiles {
+	display: flex;
+	flex-direction: column;
+	border-top: 1.5px solid var(--border);
+}
+.style-app .ap-tiles li {
+	display: flex;
+	align-items: center;
+	gap: 28px;
+	padding: 22px 0;
+}
+.style-app .ap-tiles li + li {
+	border-top: 1.5px solid var(--border);
+}
+.style-app .ap-lead {
+	width: 72px;
+	height: 72px;
+	flex: none;
+	display: grid;
+	place-items: center;
+	border-radius: 50%;
+	background: #eef3ff;
+}
+.style-app .ap-lead .ap-ico {
+	width: 38px;
+	height: 38px;
+	fill: var(--accent);
+}
+.style-app .ap-text small {
+	display: block;
+	font-size: 26px;
+	font-weight: 600;
+	color: var(--text-dim);
+}
+.style-app .ap-text span {
+	font-size: 34px;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+}
+.style-app .ap-nav {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	margin: 0 56px;
+	padding: 26px 0 50px;
+	border-top: 1.5px solid var(--border);
+	font-size: 25px;
+	color: var(--text-muted);
+}
+.style-app .ap-nav > span:last-child {
+	font-family: var(--font-mono);
+	font-size: 26px;
+}
+
+/* ==========================================================================
+   14. hangul — the Korean name stacked into one giant column
+   ========================================================================== */
+.card.style-hangul {
+	padding: 64px 72px 56px;
+	gap: 30px;
+}
+.style-hangul .hg-top {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.style-hangul .hg-brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 16px;
+	font-size: 30px;
+	font-weight: 800;
+}
+.style-hangul .hg-kind {
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+.style-hangul .hg-body {
+	gap: 34px;
+}
+.style-hangul .hg-hero {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: 48px;
+	align-items: end;
+}
+.style-hangul .hg-column {
+	display: flex;
+	flex-direction: column;
+	font-size: 300px;
+	font-weight: 900;
+	line-height: 0.92;
+	letter-spacing: 0;
+	color: var(--ink);
+}
+.style-hangul .hg-column.n-3 {
+	font-size: 220px;
+}
+.style-hangul .hg-column.n-4 {
+	font-size: 168px;
+}
+.style-hangul .hg-side {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	padding-bottom: 22px;
+}
+.style-hangul .hg-photo {
+	width: 330px;
+	height: 330px;
+	margin-bottom: 16px;
+	padding: 10px;
+	border-radius: 50%;
+	background: var(--paper-strong);
+}
+.style-hangul .hg-photo .frame {
+	width: 100%;
+	height: 100%;
+}
+.style-hangul .hg-en {
+	font-size: 76px;
+	font-weight: 900;
+	line-height: 1;
+	letter-spacing: -0.04em;
+	color: var(--accent);
+}
+.style-hangul .hg-role {
+	font-size: 32px;
+	font-weight: 700;
+	color: var(--text-muted);
+}
+.style-hangul .hg-track {
+	align-self: flex-start;
+	padding: 8px 20px;
+	border-radius: var(--r-full);
+	background: var(--ink);
+	color: var(--white);
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+}
+.style-hangul .hg-talk {
+	margin-top: auto;
+	padding-top: 30px;
+	border-top: 3px solid var(--ink);
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+.style-hangul .hg-talk h3 {
+	font-size: 50px;
+	line-height: 1.24;
+}
+.style-hangul .hg-meta {
+	font-size: 32px;
+	font-weight: 700;
+	color: var(--text-muted);
+	font-variant-numeric: tabular-nums;
+}
+.style-hangul .hg-foot {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	padding-top: 22px;
+	border-top: 1.5px solid var(--border);
+	font-size: 25px;
+	color: var(--text-muted);
+}
+.style-hangul .hg-foot > span:last-child {
 	font-family: var(--font-mono);
 	font-size: 26px;
 }
