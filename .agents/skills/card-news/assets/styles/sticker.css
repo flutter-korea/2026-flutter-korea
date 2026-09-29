@@ -1,0 +1,131 @@
+/* ==========================================================================
+   sticker — community stickers with the official Dash
+   ========================================================================== */
+.card.style-sticker {
+	background: var(--paper-strong);
+	padding: 64px 72px 56px;
+	gap: 0;
+}
+.style-sticker .sk-top {
+	display: flex;
+	align-items: center;
+}
+.style-sticker .sk-brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 16px;
+	font-size: 30px;
+	font-weight: 800;
+}
+.style-sticker .sk-board {
+	position: relative;
+	overflow: visible;
+}
+.style-sticker .sk-photo {
+	position: absolute;
+	left: -6px;
+	top: 40px;
+	width: 420px;
+	height: 420px;
+	padding: 16px;
+	border-radius: 50%;
+	background: var(--white);
+	transform: rotate(-5deg);
+	box-shadow: 0 24px 40px -20px rgba(11, 18, 32, 0.35);
+}
+.style-sticker .sk-photo .frame {
+	width: 100%;
+	height: 100%;
+}
+.style-sticker .sk-dash {
+	position: absolute;
+	right: -10px;
+	top: 330px;
+	width: 250px;
+	height: auto;
+	transform: rotate(9deg);
+	filter: drop-shadow(0 18px 20px rgba(11, 18, 32, 0.25));
+	z-index: 3;
+}
+.style-sticker .sk-tag {
+	position: absolute;
+	right: 20px;
+	top: 60px;
+	width: 450px;
+	display: flex;
+	flex-direction: column;
+	border-radius: 28px;
+	overflow: hidden;
+	background: var(--white);
+	transform: rotate(3deg);
+	box-shadow: 0 24px 40px -22px rgba(11, 18, 32, 0.35);
+	z-index: 2;
+}
+.style-sticker .sk-hello {
+	padding: 20px 30px;
+	background: var(--blue-700);
+	color: var(--white);
+	font-size: 30px;
+	font-weight: 800;
+}
+.style-sticker .sk-tag strong {
+	padding: 26px 30px 6px;
+	font-size: 96px;
+	font-weight: 900;
+	line-height: 1;
+	letter-spacing: -0.045em;
+	word-break: keep-all;
+}
+.style-sticker .sk-role {
+	padding: 6px 30px 28px;
+	font-size: 30px;
+	font-weight: 700;
+	color: var(--text-muted);
+}
+.style-sticker .sk-talk {
+	position: absolute;
+	left: 0;
+	right: 40px;
+	bottom: 20px;
+	padding: 40px 44px;
+	border-radius: 32px;
+	background: var(--white);
+	transform: rotate(-1.5deg);
+	box-shadow: 0 26px 44px -24px rgba(11, 18, 32, 0.35);
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+.style-sticker .sk-track {
+	align-self: flex-start;
+	padding: 8px 20px;
+	border-radius: var(--r-full);
+	background: var(--sky);
+	color: var(--blue-900);
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 800;
+}
+.style-sticker .sk-talk h3 {
+	font-size: 48px;
+	line-height: 1.26;
+}
+.style-sticker .sk-meta {
+	font-size: 30px;
+	font-weight: 700;
+	color: var(--text-muted);
+	font-variant-numeric: tabular-nums;
+}
+.style-sticker .sk-foot {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	padding-top: 22px;
+	border-top: 1.5px solid var(--border-strong);
+	font-size: 25px;
+	color: var(--text-muted);
+}
+.style-sticker .sk-foot > span:last-child {
+	font-family: var(--font-mono);
+	font-size: 26px;
+}

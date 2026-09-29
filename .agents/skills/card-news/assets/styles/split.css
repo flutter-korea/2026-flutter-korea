@@ -1,0 +1,111 @@
+/* ==========================================================================
+   split — photo on top, navy information panel below
+   ========================================================================== */
+.card.style-split {
+	background: var(--blue-900);
+	color: var(--white);
+	padding: 0;
+	gap: 0;
+}
+.style-split .sp-photo {
+	position: absolute;
+	inset: 0 0 auto;
+	height: 600px;
+}
+.style-split .sp-photo .frame {
+	width: 100%;
+	height: 100%;
+}
+.style-split .sp-top {
+	position: relative;
+	z-index: 2;
+	padding: 56px 64px 0;
+}
+.style-split .sp-brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 16px;
+	padding: 10px 24px 10px 10px;
+	border-radius: var(--r-full);
+	background: var(--white);
+	color: var(--ink);
+	font-size: 28px;
+	font-weight: 800;
+	box-shadow: 0 10px 24px -12px rgba(0, 0, 0, 0.4);
+}
+.style-split .sp-brand .fs-mark.on-plate {
+	padding: 6px 8px;
+	background: var(--paper);
+	border-radius: var(--r-full);
+}
+.style-split .sp-brand .fs-mark svg {
+	width: 56px;
+}
+.style-split .sp-panel {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 600px;
+	bottom: 0;
+	padding: 70px 72px 56px;
+	gap: 16px;
+	overflow: visible;
+}
+.style-split .sp-track {
+	position: absolute;
+	top: -30px;
+	left: 72px;
+	padding: 12px 26px;
+	border-radius: var(--r-full);
+	background: var(--sky);
+	color: var(--blue-900);
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 800;
+	letter-spacing: 0.08em;
+}
+.style-split .sp-name {
+	font-size: 112px;
+	line-height: 1;
+	letter-spacing: -0.045em;
+	color: var(--white);
+}
+.style-split .sp-role {
+	font-size: 32px;
+	font-weight: 700;
+	color: #8fc3ff;
+}
+.style-split .sp-title {
+	margin-top: 22px;
+	font-size: 48px;
+	line-height: 1.26;
+	color: var(--white);
+}
+.style-split .sp-meta {
+	display: flex;
+	gap: 40px;
+	margin-top: 10px;
+	font-size: 30px;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+}
+.style-split .sp-meta b {
+	margin-right: 12px;
+	font-family: var(--font-mono);
+	font-size: 26px;
+	color: var(--sky);
+}
+.style-split .sp-foot {
+	margin-top: auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	padding-top: 22px;
+	border-top: 1.5px solid rgba(255, 255, 255, 0.2);
+	font-size: 25px;
+	color: rgba(255, 255, 255, 0.75);
+}
+.style-split .sp-foot > span:last-child {
+	font-family: var(--font-mono);
+	font-size: 26px;
+}

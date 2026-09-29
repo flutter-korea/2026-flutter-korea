@@ -553,7 +553,9 @@ async function cmdBuild(pos) {
 	await mkdir(P.cards, { recursive: true });
 	await mkdir(join(P.assets, 'img'), { recursive: true });
 	await copyFile(join(SKILL_DIR, 'assets/theme.css'), join(P.assets, 'theme.css'));
-	await copyFile(join(SKILL_DIR, 'assets/styles.css'), join(P.assets, 'styles.css'));
+	// One stylesheet per style in assets/styles/, concatenated in registry order.
+	const styleCss = ['_shared', ...Object.keys(styles)].map((n) => join(SKILL_DIR, 'assets/styles', `${n}.css`));
+	await writeFile(join(P.assets, 'styles.css'), (await Promise.all(styleCss.map((f) => readFile(f, 'utf8')))).join('\n'));
 	await mkdir(join(P.assets, 'brand'), { recursive: true });
 	for (const f of await readdir(join(SKILL_DIR, 'assets/brand')))
 		if (!f.endsWith('.md')) await copyFile(join(SKILL_DIR, 'assets/brand', f), join(P.assets, 'brand', f));

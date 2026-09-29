@@ -1,0 +1,146 @@
+/* ==========================================================================
+   ticket — admission ticket with a tear-off stub
+   ========================================================================== */
+.card.style-ticket {
+	background: var(--blue-700);
+	color: var(--white);
+	padding: 64px 64px 56px;
+	gap: 34px;
+}
+.style-ticket .tk-top {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.style-ticket .tk-brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 16px;
+	font-size: 30px;
+	font-weight: 800;
+}
+.style-ticket .tk-kind {
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--sky);
+}
+.style-ticket .tk-ticket {
+	flex: none;
+	margin-block: auto;
+	position: relative;
+	background: var(--white);
+	color: var(--ink);
+	border-radius: 32px;
+	gap: 0;
+	box-shadow: 0 36px 60px -30px rgba(3, 25, 64, 0.6);
+	overflow: visible;
+}
+.style-ticket .tk-main {
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+	padding: 56px 52px 48px;
+}
+.style-ticket .tk-who {
+	display: flex;
+	align-items: center;
+	gap: 36px;
+}
+.style-ticket .tk-photo {
+	width: 300px;
+	height: 300px;
+	flex: none;
+	padding: 8px;
+	border-radius: 50%;
+	background: var(--paper-strong);
+}
+.style-ticket .tk-photo .frame {
+	width: 100%;
+	height: 100%;
+}
+.style-ticket .tk-track {
+	display: inline-block;
+	padding: 6px 18px;
+	border-radius: var(--r-full);
+	background: var(--paper-strong);
+	color: var(--accent);
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+}
+.style-ticket .tk-name {
+	margin-top: 14px;
+	font-size: 104px;
+	line-height: 1;
+	letter-spacing: -0.045em;
+}
+.style-ticket .tk-role {
+	margin-top: 12px;
+	font-size: 32px;
+	font-weight: 700;
+	color: var(--text-muted);
+}
+.style-ticket .tk-title {
+	font-size: 56px;
+	line-height: 1.24;
+}
+/* perforation with half-circle notches cut into the ticket edges */
+.style-ticket .tk-perf {
+	position: relative;
+	height: 0;
+	margin: 0 44px;
+	border-top: 4px dashed var(--border-strong);
+}
+.style-ticket .tk-perf::before,
+.style-ticket .tk-perf::after {
+	content: '';
+	position: absolute;
+	top: -30px;
+	width: 56px;
+	height: 56px;
+	border-radius: 50%;
+	background: var(--blue-700);
+}
+.style-ticket .tk-perf::before {
+	left: -72px;
+}
+.style-ticket .tk-perf::after {
+	right: -72px;
+}
+.style-ticket .tk-stub {
+	display: grid;
+	grid-template-columns: 1.1fr 1fr 1fr;
+	padding: 34px 52px 42px;
+}
+.style-ticket .tk-stub > div + div {
+	padding-left: 28px;
+	border-left: 1.5px solid var(--border);
+}
+.style-ticket dt {
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	color: var(--text-dim);
+}
+.style-ticket dd {
+	margin-top: 6px;
+	font-size: 54px;
+	font-weight: 800;
+	letter-spacing: -0.03em;
+	font-variant-numeric: tabular-nums;
+}
+.style-ticket .tk-foot {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	font-size: 25px;
+	color: rgba(255, 255, 255, 0.8);
+}
+.style-ticket .tk-foot > span:last-child {
+	font-family: var(--font-mono);
+	font-size: 26px;
+}

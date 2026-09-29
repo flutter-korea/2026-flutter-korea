@@ -41,7 +41,7 @@ paper-blue 패널, 거의 검정인 헤딩, 절제된 blue-700 accent, mono 키�
 
 ## 디자인 스타일 (`style`)
 
-같은 spec을 다른 디자인 방향으로 렌더링하는 스타일 레이어가 있다(`scripts/styles.mjs`, `assets/styles.css`).
+같은 spec을 다른 디자인 방향으로 렌더링하는 스타일 레이어가 있다(`scripts/styles/<name>.mjs`, `assets/styles/<name>.css`, 레지스트리는 `scripts/styles.mjs`).
 `spec.style`(덱 전체) 또는 `card.style`(카드 한 장)로 지정하고, 현재는 **speaker** 템플릿에만 적용된다.
 스타일이 없는 템플릿은 기본 디자인으로 렌더링된다.
 

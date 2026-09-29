@@ -1,0 +1,120 @@
+/* ==========================================================================
+   rail — navy side rail for logistics, wide white field for the person
+   ========================================================================== */
+.card.style-rail {
+	flex-direction: row;
+	padding: 0;
+	gap: 0;
+}
+.style-rail .rl-rail {
+	flex: none;
+	width: 290px;
+	background: var(--blue-900);
+	color: var(--white);
+	padding: 64px 40px 56px;
+	display: flex;
+	flex-direction: column;
+	gap: 44px;
+}
+.style-rail .rl-rail .fs-mark {
+	align-self: flex-start;
+}
+.style-rail .rl-date span {
+	display: block;
+	font-size: 74px;
+	font-weight: 900;
+	line-height: 0.95;
+	letter-spacing: -0.05em;
+	font-variant-numeric: tabular-nums;
+}
+.style-rail .rl-date small,
+.style-rail .rl-item small {
+	display: block;
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	color: var(--sky);
+	margin-top: 10px;
+}
+.style-rail .rl-item {
+	padding-top: 26px;
+	border-top: 1.5px solid rgba(255, 255, 255, 0.22);
+}
+.style-rail .rl-item small {
+	margin: 0 0 6px;
+}
+.style-rail .rl-item span {
+	font-size: 48px;
+	font-weight: 800;
+	letter-spacing: -0.03em;
+	font-variant-numeric: tabular-nums;
+}
+.style-rail .rl-main {
+	flex: 1;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	padding: 64px 64px 56px 60px;
+	gap: 36px;
+}
+.style-rail .rl-top {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.style-rail .rl-brand {
+	font-size: 30px;
+	font-weight: 800;
+	letter-spacing: -0.02em;
+}
+.style-rail .rl-kind {
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+.style-rail .rl-body {
+	gap: 18px;
+}
+.style-rail .rl-photo {
+	width: 360px;
+	height: 360px;
+	margin-bottom: 18px;
+	filter: drop-shadow(0 24px 32px rgba(11, 18, 32, 0.2));
+}
+.style-rail .rl-photo .frame {
+	width: 100%;
+	height: 100%;
+}
+.style-rail .rl-name {
+	font-size: 112px;
+	line-height: 1;
+	letter-spacing: -0.045em;
+}
+.style-rail .rl-role {
+	font-size: 34px;
+	font-weight: 700;
+	color: var(--text-muted);
+}
+.style-rail .rl-title {
+	margin-top: auto;
+	padding-top: 30px;
+	border-top: 3px solid var(--ink);
+	font-size: 50px;
+	line-height: 1.26;
+}
+.style-rail .rl-foot {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	gap: 20px;
+	font-size: 25px;
+	color: var(--text-muted);
+}
+.style-rail .rl-foot > span:last-child {
+	font-family: var(--font-mono);
+	font-size: 26px;
+}
