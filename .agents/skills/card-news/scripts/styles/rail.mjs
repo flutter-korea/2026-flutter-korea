@@ -19,7 +19,7 @@ export default {
 	${mark(ctx, 'on-plate')}
 	<div class="rl-date"><span>${esc(mm ?? '')}.${esc(dd ?? '')}</span><small>${esc(dow)}</small></div>
 	<div class="rl-item"><small>${esc(l.time)}</small><span>${esc(String(s.time ?? '').split(/\s*[–-]\s*/)[0])}</span></div>
-	<div class="rl-item"><small>${esc(l.room)}</small><span>${esc(s.room ?? '')}</span></div>
+	<div class="rl-item"><small>${esc(l.room)}</small><span>${esc(s.room ?? '').replace(/\//g, '/<wbr>')}</span></div>
 	${when(s.track, () => `<div class="rl-item"><small>${esc(l.track)}</small><span>${esc(s.track.replace(/\s*track$/i, ''))}</span></div>`)}
 </aside>
 <div class="rl-main">

@@ -151,6 +151,20 @@ const idOf = (tk) => (tk.image ? basename(tk.image, extname(tk.image)) : tk.spea
 
 const TODO = (what) => `TODO: ${what}`;
 
+/**
+ * A type-correct placeholder from a field's doc string, so `scaffold blank`
+ * builds: "[string] …" → ["TODO"], "[{ a, b }] …" → [{ a, b }], "{ a, b } …" → { a, b }.
+ */
+function skeleton(key, doc) {
+	const keys = (list) => Object.fromEntries(list.split(',').map((x) => x.trim().replace(/\*$/, '')).filter(Boolean).map((x) => [x, TODO(x)]));
+	let m;
+	if ((m = doc.match(/^\[\{\s*([^}]*)\}\]/))) return [keys(m[1])];
+	if (/^\[string\]/.test(doc)) return [TODO(doc.replace(/^\[string\]\s*/, ''))];
+	if ((m = doc.match(/^\{\s*([^}]*)\}/))) return keys(m[1]);
+	if (/^"light"|여부|true|false/.test(doc)) return undefined; // enum / boolean switches keep their defaults
+	return TODO(doc);
+}
+
 function speakerCards(tk, lang) {
 	const ko = lang === 'ko';
 	return [
@@ -325,7 +339,7 @@ async function cmdScaffold(pos, opt) {
 			if (!templates[tpl]) fail(`--template 은 다음 중 하나: ${Object.keys(templates).join(', ')}`);
 			slug = `${tpl}-${Date.now().toString(36)}`;
 			title = tpl;
-			cards = [{ template: tpl, data: Object.fromEntries(Object.keys(templates[tpl].fields).map((k) => [k, TODO(templates[tpl].fields[k])])) }];
+			cards = [{ template: tpl, data: Object.fromEntries(Object.entries(templates[tpl].fields).map(([k, doc]) => [k, skeleton(k, doc)])) }];
 			break;
 		}
 		default:
@@ -717,12 +731,14 @@ function inspect(scale) {
 			if (!r.width || !r.height) continue;
 			const cs = getComputedStyle(el);
 			const out = cs.outlineStyle !== 'none' ? (parseFloat(cs.outlineOffset) || 0) + (parseFloat(cs.outlineWidth) || 0) : 0;
-			const cut = Math.max(bb.left - (r.left - out), r.right + out - bb.right);
-			if (cut > 1) {
+			const cutX = Math.max(bb.left - (r.left - out), r.right + out - bb.right);
+			const cutY = Math.max(bb.top - (r.top - out), r.bottom + out - bb.bottom);
+			if (cutX > 1 || cutY > 1) {
 				const name = el.closest('[data-slot]')?.dataset.slot ?? el.className ?? el.tagName;
 				if (seen.has(name)) continue;
 				seen.add(name);
-				issues.push({ level: 'error', msg: `"${name}" 이 본문 좌우 경계에서 ${Math.round(cut)}px 잘림` });
+				const where = cutX > 1 ? `좌우 경계에서 ${Math.round(cutX)}px` : `위아래 경계에서 ${Math.round(cutY)}px`;
+				issues.push({ level: 'error', msg: `"${name}" 이 본문 ${where} 잘림` });
 			}
 		}
 	}

@@ -7,6 +7,8 @@
 	gap: 0;
 	align-items: center;
 }
+
+/* Lanyard: solid webbing with stitched edges, clip over the badge's slot */
 .style-badge .bd-strap {
 	position: absolute;
 	left: 50%;
@@ -15,19 +17,13 @@
 	height: 150px;
 	transform: translateX(-50%);
 	background: var(--blue-700);
-	overflow: hidden;
-	display: flex;
-	justify-content: center;
 }
-.style-badge .bd-strap span {
-	writing-mode: vertical-rl;
-	font-family: var(--font-mono);
-	font-size: 26px;
-	font-weight: 700;
-	letter-spacing: 0.18em;
-	color: rgba(255, 255, 255, 0.85);
-	white-space: nowrap;
-	transform: translateY(-40px);
+.style-badge .bd-strap::before {
+	content: '';
+	position: absolute;
+	inset: 0 16px;
+	border-left: 3px dashed rgba(255, 255, 255, 0.4);
+	border-right: 3px dashed rgba(255, 255, 255, 0.4);
 }
 .style-badge .bd-clip {
 	position: absolute;
@@ -37,10 +33,12 @@
 	height: 58px;
 	transform: translateX(-50%);
 	border-radius: 14px;
-	background: #c8d3e3;
-	box-shadow: inset 0 -6px 0 rgba(11, 18, 32, 0.12);
+	background: var(--border-strong);
+	box-shadow: inset 0 -6px 0 rgba(11, 18, 32, 0.14), 0 6px 10px -4px rgba(11, 18, 32, 0.3);
 	z-index: 2;
 }
+
+/* The badge */
 .style-badge .bd-badge {
 	position: absolute;
 	left: 76px;
@@ -53,29 +51,45 @@
 	overflow: hidden;
 	align-items: center;
 	text-align: center;
-	gap: 18px;
-	padding-bottom: 36px;
+	gap: 0;
 }
 .style-badge .bd-band {
 	align-self: stretch;
+	flex: none;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 48px 48px 26px;
+	padding: 52px 52px 30px;
 	background: var(--blue-700);
 	color: var(--white);
+}
+.style-badge .bd-band .fs-mark.on-plate {
+	padding: 12px 16px;
+	border-radius: 16px;
+}
+.style-badge .bd-band .fs-mark svg {
+	width: 92px;
 }
 .style-badge .bd-kind {
 	font-family: var(--font-mono);
 	font-size: 40px;
 	font-weight: 800;
 	letter-spacing: 0.24em;
+	margin-right: -0.24em; /* trailing tracking would push the word off the right edge */
+}
+
+/* Identity */
+.style-badge .bd-id {
+	flex: none;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 44px 52px 40px;
 }
 .style-badge .bd-photo {
-	margin-top: -4px;
 	width: 290px;
 	height: 290px;
-	margin-top: 26px;
+	margin-bottom: 30px;
 	filter: drop-shadow(0 18px 24px rgba(11, 18, 32, 0.18));
 }
 .style-badge .bd-photo .frame {
@@ -85,37 +99,70 @@
 }
 .style-badge .bd-name {
 	font-size: 104px;
-	line-height: 1;
+	line-height: 1.02;
 	letter-spacing: -0.04em;
+	text-wrap: balance;
 }
 .style-badge .bd-role {
-	font-size: 32px;
+	margin-top: 16px;
+	font-size: 34px;
 	font-weight: 700;
 	color: var(--text-muted);
 }
+/* No photo: a badge without a portrait is normal — the name takes the room */
+.style-badge .no-photo .bd-photo {
+	display: none;
+}
+.style-badge .no-photo .bd-id {
+	flex: 1;
+	justify-content: center;
+}
+.style-badge .no-photo .bd-name {
+	font-size: 116px;
+}
+
+/* Perforation between the identity and the talk stub */
 .style-badge .bd-perf {
 	align-self: stretch;
-	margin: 8px 0;
+	flex: none;
 	border-top: 3px dashed var(--border-strong);
 }
+
+/* Talk: fills the stub, centered vertically */
 .style-badge .bd-talk {
-	padding: 0 56px;
+	flex: 1;
+	min-height: 0;
+	padding: 36px 64px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 12px;
+	justify-content: center;
+	gap: 18px;
 }
 .style-badge .bd-track {
 	font-family: var(--font-mono);
-	font-size: 26px;
+	font-size: 28px;
 	font-weight: 700;
 	letter-spacing: 0.1em;
 	text-transform: uppercase;
 	color: var(--accent);
 }
 .style-badge .bd-talk h3 {
-	font-size: 44px;
+	font-size: 54px;
+	line-height: 1.22;
+	letter-spacing: -0.025em;
+	word-break: keep-all;
+	text-wrap: balance;
+}
+.style-badge .bd-talk.is-long h3 {
+	font-size: 46px;
 	line-height: 1.26;
+}
+.style-badge .bd-talk h3 .line {
+	text-wrap: balance;
+}
+.style-badge .bd-nw {
+	white-space: nowrap;
 }
 .style-badge .bd-meta {
 	font-size: 30px;
@@ -123,11 +170,21 @@
 	color: var(--text-muted);
 	font-variant-numeric: tabular-nums;
 }
+
+/* Event strip: the badge's printed bottom edge */
 .style-badge .bd-event {
-	margin-top: auto;
-	font-size: 25px;
+	align-self: stretch;
+	flex: none;
+	padding: 28px 52px 32px;
+	background: var(--paper);
+	border-top: 1px solid var(--border);
+	font-size: 27px;
+	line-height: 1.3;
 	color: var(--text-muted);
 }
 .style-badge .bd-event .where {
 	align-items: center;
+}
+.style-badge .bd-event .where > :first-child {
+	color: var(--ink);
 }

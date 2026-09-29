@@ -12,16 +12,22 @@ export default {
 			const [hh, mm] = String(s.time ?? '').match(/\d{1,2}:\d{2}/)?.[0].split(':') ?? [];
 			const track = /flutter/i.test(s.track ?? '') ? 'flutter' : /ai/i.test(s.track ?? '') ? 'ai' : null;
 			const str = (v) => `<span class="c-str">'${esc(v)}'</span>`;
+			// Each line = [lead, value]. The lead never wraps; a long value wraps
+			// inside its own column so continuation text hangs under the opening quote.
+			const tl = titleLines(s.title);
 			const lines = [
-				`<span class="c-kw">final</span> talk = <span class="c-type">Talk</span>(`,
-				...titleLines(s.title).map((t, i) => `  ${i === 0 ? '<span class="c-key">title</span>: ' : '<span class="c-pad">title: </span>'}${str(t)}${i === titleLines(s.title).length - 1 ? ',' : ''}`),
-				`  <span class="c-key">speaker</span>: ${str(d.name)},`,
-				track ? `  <span class="c-key">track</span>: <span class="c-type">Track</span>.${track},` : '',
+				['', `<span class="c-kw">final</span> talk = <span class="c-type">Talk</span>(`],
+				...tl.map((t, i) => [
+					`  ${i === 0 ? '<span class="c-key">title</span>: ' : '<span class="c-pad">title: </span>'}`,
+					`${str(t)}${i === tl.length - 1 ? ',' : ''}`
+				]),
+				['  <span class="c-key">speaker</span>: ', `${str(d.name)},`],
+				track ? ['  <span class="c-key">track</span>: ', `<span class="c-type">Track</span>.${track},`] : null,
 				m[1] && hh
-					? `  <span class="c-key">at</span>: <span class="c-type">DateTime</span>(<span class="c-num">${+m[1]}</span>, <span class="c-num">${+m[2]}</span>, <span class="c-num">${+m[3]}</span>, <span class="c-num">${+hh}</span>, <span class="c-num">${+mm}</span>),`
-					: '',
-				s.room ? `  <span class="c-key">room</span>: ${str(s.room)},` : '',
-				`);`
+					? ['  <span class="c-key">at</span>: ', `<span class="c-type">DateTime</span>(<span class="c-num">${+m[1]}</span>, <span class="c-num">${+m[2]}</span>, <span class="c-num">${+m[3]}</span>, <span class="c-num">${+hh}</span>, <span class="c-num">${+mm}</span>),`]
+					: null,
+				s.room ? ['  <span class="c-key">room</span>: ', `${str(s.room)},`] : null,
+				['', ');']
 			].filter(Boolean);
 			return article(
 				'code',
@@ -41,7 +47,7 @@ export default {
 </div>
 <div class="card-body cd-editor" ${slot('session')}>
 	<div class="cd-tabs"><span class="cd-tab">talk.dart</span></div>
-	<ol class="cd-code" ${slot('session.title')}>${lines.map((l) => `<li><code>${l}</code></li>`).join('')}</ol>
+	<ol class="cd-code" ${slot('session.title')}>${lines.map(([lead, val]) => `<li><code>${lead ? `<span class="c-lead">${lead}</span>` : ''}<span class="c-val">${val}</span></code></li>`).join('')}</ol>
 </div>
 <footer class="cd-foot">${whereLines(ctx)}<span>${esc(ctx.handle)}</span></footer>`
 			);

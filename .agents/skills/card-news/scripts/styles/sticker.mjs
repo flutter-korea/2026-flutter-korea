@@ -16,12 +16,16 @@ export default {
 	<span class="sk-brand">${mark(ctx, 'on-plate')}<span>${esc(ctx.brand)}</span></span>
 </header>
 <div class="card-body sk-board">
-	<div class="sk-photo">${photo(d, { mask: 'circle' })}</div>
-	<img class="sk-dash" src="assets/brand/dash.png" alt="">
-	<div class="sk-tag" ${slot('name')}>
-		<span class="sk-hello">${esc(ctx.lang === 'ko' ? '안녕하세요, 연사' : 'HELLO, my name is')}</span>
-		<strong>${esc(d.name)}</strong>
-		${when(d.role, () => `<span class="sk-role" ${slot('role')}>${rich(d.role)}</span>`)}
+	<div class="sk-stage">
+		<div class="sk-photo">${photo(d, { mask: 'circle' })}</div>
+		<div class="sk-tagwrap">
+			<img class="sk-dash" src="assets/brand/dash.png" alt="">
+			<div class="sk-tag" ${slot('name')}>
+				<span class="sk-hello">${esc(ctx.lang === 'ko' ? '안녕하세요, 연사' : 'HELLO, my name is')}</span>
+				<strong>${esc(d.name)}</strong>
+				${when(d.role, () => `<span class="sk-role" ${slot('role')}>${rich(d.role)}</span>`)}
+			</div>
+		</div>
 	</div>
 	<div class="sk-talk" ${slot('session')}>
 		${when(s.track, () => `<span class="sk-track">${esc(s.track)}</span>`)}

@@ -82,7 +82,7 @@ bun run card-news render <slug>                   # PNGs in card-news/<slug>/out
 > `gemini skills list`.
 
 Rendering needs Chrome, or a Chromium installed via `bunx playwright-core install chromium`.
-`card-news/` is a gitignored workspace. See the skill's [SKILL.md](.agents/skills/card-news/SKILL.md).
+`card-news/` is a gitignored workspace. See the skill's [README](.agents/skills/card-news/README.md) for prompt examples per use case (speakers, sessions, event, sponsors, goods, notices) and [SKILL.md](.agents/skills/card-news/SKILL.md) for the rules agents follow.
 
 ---
 

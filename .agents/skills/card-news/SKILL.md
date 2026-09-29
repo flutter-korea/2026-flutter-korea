@@ -81,6 +81,7 @@ node $CN build <slug> && node $CN check <slug>
 - 템플릿이나 테마를 바꿨다면 `examples/showcase.json`으로 8종 전부 build/check 해서 회귀를 확인한다.
 
 ## 파일
+- `README.md`: 사람용 안내. 에이전트별 호출 방법과 유즈 케이스별 프롬프트 예시
 - `scripts/card-news.mjs`: CLI(scaffold/build/check/approve/render)
 - `scripts/templates.mjs`: 템플릿 8종 (구조별 HTML, `data-slot` 표기)
 - `scripts/styles.mjs`(레지스트리) + `scripts/styles/<name>.mjs` + `assets/styles/<name>.css`: 디자인 스타일 9종 (같은 데이터, 다른 레이아웃). 스타일 하나 = 파일 두 개

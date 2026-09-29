@@ -1,123 +1,183 @@
 /* ==========================================================================
    app — a Material 3 speaker-detail screen, the way a Flutter app shows it
+   M3 colour roles are mapped onto the site palette (seed #0553B1); spacing
+   sits on an 8px grid with a 48px screen margin.
    ========================================================================== */
 .card.style-app {
-	background: #f7f9ff;
+	--ap-surface: color-mix(in srgb, var(--paper) 45%, var(--white));
+	--ap-primary: var(--accent);
+	--ap-primary-container: var(--paper-strong);
+	--ap-on-primary-container: color-mix(in srgb, var(--blue-900) 55%, var(--ink));
+	--ap-surface-container: var(--paper);
+	--ap-outline-variant: var(--border);
+	--ap-margin: 48px;
+	background: var(--ap-surface);
 	padding: 0;
 	gap: 0;
 }
+
+/* Status bar (decorative) ------------------------------------------------ */
 .style-app .ap-status {
+	flex: none;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 30px 64px 0;
-	font-size: 26px;
-	font-weight: 700;
-	font-variant-numeric: tabular-nums;
+	height: 72px;
+	padding: 16px var(--ap-margin) 0;
+	font-size: 28px;
+	font-weight: 600;
+	letter-spacing: 0.01em;
 	color: var(--ink);
 }
 .style-app .ap-sys {
 	display: inline-flex;
-	gap: 10px;
+	align-items: center;
+	gap: 8px;
 }
-.style-app .ap-sys i {
-	width: 22px;
-	height: 22px;
-	border-radius: 6px;
-	background: var(--ink);
-	opacity: 0.8;
+.style-app .ap-sys-ico {
+	width: 32px;
+	height: 32px;
+	fill: var(--ink);
 }
+
+/* Top app bar: navigation icon + event lockup (mark leads) ---------------- */
 .style-app .ap-bar {
+	flex: none;
 	display: flex;
 	align-items: center;
-	gap: 28px;
-	padding: 34px 56px 26px;
+	gap: 24px;
+	height: 112px;
+	/* the arrow glyph sits 8px inside its 48px box → optically on the 48px margin */
+	padding: 0 var(--ap-margin) 0 40px;
 }
 .style-app .ap-bar > .ap-ico {
+	flex: none;
 	width: 48px;
 	height: 48px;
 	fill: var(--ink);
 }
+.style-app .ap-brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 16px;
+	min-width: 0;
+}
+.style-app .ap-brand .fs-mark svg {
+	width: 80px;
+}
 .style-app .ap-bar-title {
-	flex: 1;
-	font-size: 36px;
+	font-size: 40px;
 	font-weight: 700;
-	letter-spacing: -0.01em;
+	letter-spacing: -0.015em;
+	line-height: 1.2;
+	color: var(--ink);
 }
+
+/* Body ------------------------------------------------------------------- */
 .style-app .ap-body {
-	padding: 10px 56px 0;
-	gap: 36px;
+	padding: 8px var(--ap-margin) 24px;
+	gap: 24px;
 }
+
+/* Profile header: primary container ------------------------------------- */
 .style-app .ap-profile {
+	flex: none;
 	display: flex;
 	align-items: center;
 	gap: 40px;
 	padding: 40px;
-	border-radius: 44px;
-	background: #dce7ff; /* primary container */
+	border-radius: 48px;
+	background: var(--ap-primary-container);
 }
 .style-app .ap-photo {
-	width: 280px;
-	height: 280px;
+	width: 240px;
+	height: 240px;
 	flex: none;
 }
 .style-app .ap-photo .frame {
 	width: 100%;
 	height: 100%;
 }
+.style-app .ap-who {
+	flex: 1;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
 .style-app .ap-overline {
 	font-size: 28px;
 	font-weight: 700;
-	color: var(--accent);
+	line-height: 1.3;
+	letter-spacing: 0.01em;
+	color: var(--ap-primary);
 }
 .style-app .ap-name {
 	margin-top: 8px;
 	font-size: 96px;
-	line-height: 1.02;
-	letter-spacing: -0.04em;
-	color: #041b3f;
+	line-height: 1;
+	letter-spacing: -0.035em;
+	color: var(--ap-on-primary-container);
 }
 .style-app .ap-role {
-	margin-top: 12px;
+	margin-top: 16px;
 	font-size: 32px;
 	font-weight: 600;
-	color: #2c4368;
+	line-height: 1.3;
+	color: var(--blue-900);
 }
+
+/* Session: elevated card -------------------------------------------------- */
 .style-app .ap-card {
+	flex: none;
 	display: flex;
 	flex-direction: column;
-	gap: 22px;
-	padding: 40px 44px 20px;
-	border-radius: 36px;
+	gap: 24px;
+	padding: 40px 40px 16px;
+	border-radius: 40px;
 	background: var(--white);
-	box-shadow: 0 1px 3px rgba(11, 18, 32, 0.12), 0 16px 32px -24px rgba(11, 18, 32, 0.3);
+	box-shadow:
+		0 2px 4px rgba(11, 18, 32, 0.08),
+		0 12px 24px -16px rgba(11, 18, 32, 0.22);
 }
 .style-app .ap-chip {
 	align-self: flex-start;
-	padding: 10px 24px;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	height: 56px;
+	padding: 0 24px 0 16px;
 	border-radius: 16px;
-	background: #dce7ff;
-	color: #0a2d6e;
-	font-size: 27px;
-	font-weight: 700;
+	background: var(--ap-surface-container);
+	color: var(--ap-on-primary-container);
+	font-size: 28px;
+	font-weight: 600;
+	line-height: 1;
+}
+.style-app .ap-chip .ap-ico {
+	width: 32px;
+	height: 32px;
+	fill: var(--ap-primary);
 }
 .style-app .ap-title {
-	font-size: 50px;
-	line-height: 1.24;
+	font-size: 48px;
+	line-height: 1.22;
+	letter-spacing: -0.03em;
+	color: var(--ink);
 }
 .style-app .ap-tiles {
 	display: flex;
 	flex-direction: column;
-	border-top: 1.5px solid var(--border);
+	border-top: 2px solid var(--ap-outline-variant);
 }
 .style-app .ap-tiles li {
 	display: flex;
 	align-items: center;
-	gap: 28px;
-	padding: 22px 0;
+	gap: 32px;
+	padding: 20px 0;
 }
 .style-app .ap-tiles li + li {
-	border-top: 1.5px solid var(--border);
+	border-top: 2px solid var(--ap-outline-variant);
 }
 .style-app .ap-lead {
 	width: 72px;
@@ -126,35 +186,51 @@
 	display: grid;
 	place-items: center;
 	border-radius: 50%;
-	background: #eef3ff;
+	background: var(--ap-surface-container);
 }
 .style-app .ap-lead .ap-ico {
-	width: 38px;
-	height: 38px;
-	fill: var(--accent);
+	width: 40px;
+	height: 40px;
+	fill: var(--ap-primary);
+}
+.style-app .ap-text {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	min-width: 0;
 }
 .style-app .ap-text small {
-	display: block;
 	font-size: 26px;
 	font-weight: 600;
-	color: var(--text-dim);
+	line-height: 1.3;
+	color: var(--text-muted);
 }
 .style-app .ap-text span {
-	font-size: 34px;
+	font-size: 36px;
 	font-weight: 700;
-	font-variant-numeric: tabular-nums;
+	line-height: 1.25;
+	color: var(--ink);
 }
+
+/* Footer: event date · venue + handle ------------------------------------- */
 .style-app .ap-nav {
+	flex: none;
 	display: flex;
 	justify-content: space-between;
 	align-items: flex-end;
-	margin: 0 56px;
-	padding: 26px 0 50px;
-	border-top: 1.5px solid var(--border);
-	font-size: 25px;
+	gap: 24px;
+	margin: 0 var(--ap-margin);
+	padding: 24px 0 48px;
+	border-top: 2px solid var(--ap-outline-variant);
+	font-size: 26px;
+	line-height: 1.3;
 	color: var(--text-muted);
 }
-.style-app .ap-nav > span:last-child {
+.style-app .ap-nav .where > :first-child {
+	color: var(--ink);
+}
+.style-app .ap-handle {
 	font-family: var(--font-mono);
 	font-size: 26px;
+	color: var(--ap-primary);
 }

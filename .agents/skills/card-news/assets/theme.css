@@ -359,7 +359,7 @@ em.hl {
 	);
 	color: var(--text-dim);
 	font-family: var(--font-mono);
-	font-size: 22px;
+	font-size: 26px;
 	letter-spacing: 0.1em;
 	text-transform: uppercase;
 }

@@ -1,5 +1,8 @@
 import { L, article, esc, mark, photo, rich, shortDate, slot, titleHtml, when, whereLines } from './_shared.mjs';
 
+/** Avatar edge in px — drives both the box size and its debug size label. */
+const AVATAR = 380;
+
 export default {
 	label: 'Widget Inspector',
 	photoMin: 600, // px — smaller originals get upscaled (check warns)
@@ -19,8 +22,8 @@ export default {
 	<span class="in-brand">${mark(ctx, 'on-plate')}<span>${esc(ctx.brand)}</span></span>
 </header>
 <div class="card-body">
-	<div class="in-hero">
-		<div class="in-box in-photo">${tag('CircleAvatar · 360×360')}${photo(d, { mask: 'circle' })}</div>
+	<div class="in-hero" style="--in-avatar: ${AVATAR}px">
+		<div class="in-box in-photo">${tag(`CircleAvatar · ${AVATAR}×${AVATAR}`)}${photo(d, { mask: 'circle' })}</div>
 		<div class="in-box in-who">${tag('Column')}
 			<h2 class="in-name" ${slot('name')}>${esc(d.name)}</h2>
 			${when(d.role, () => `<p class="in-role" ${slot('role')}>${rich(d.role)}</p>`)}

@@ -2,8 +2,12 @@
    inspector — Flutter debug-paint outlines + debug banner
    ========================================================================== */
 .card.style-inspector {
+	/* Flutter's own debug colours: CheckedModeBanner red has no site-palette
+	   equivalent; the paint outline uses the brand sky */
+	--in-banner: #b71c1c;
+	--in-paint: var(--sky);
 	padding: 64px 72px 56px;
-	gap: 34px;
+	gap: 28px;
 }
 .style-inspector .in-banner {
 	position: absolute;
@@ -11,7 +15,7 @@
 	right: -92px;
 	width: 380px;
 	transform: rotate(45deg);
-	background: #b71c1c;
+	background: var(--in-banner);
 	color: var(--white);
 	text-align: center;
 	padding: 10px 0;
@@ -38,15 +42,18 @@
 }
 .style-inspector .card-body {
 	gap: 34px;
+	/* hero / talk / meta spread over the full body so short decks don't leave
+	   a dead band above the footer */
+	justify-content: space-between;
 	/* debug outlines sit 10px outside each box and labels 46px above it; pad the
 	   (overflow-clipped) body so they stay inside, and pull it back so the
 	   content edge still lines up with the header */
-	padding: 0 16px 16px;
+	padding: 16px;
 	margin-inline: -16px;
 }
 .style-inspector .in-box {
 	position: relative;
-	outline: 2.5px solid #29b6f6;
+	outline: 2.5px solid var(--in-paint);
 	outline-offset: 10px;
 }
 .style-inspector .in-tag {
@@ -54,8 +61,8 @@
 	top: -46px;
 	left: -12px;
 	padding: 2px 12px;
-	background: #29b6f6;
-	color: #04213f;
+	background: var(--in-paint);
+	color: var(--blue-900);
 	font-family: var(--font-mono);
 	font-size: 26px;
 	font-weight: 700;
@@ -64,14 +71,14 @@
 }
 .style-inspector .in-hero {
 	display: grid;
-	grid-template-columns: 360px 1fr;
+	grid-template-columns: var(--in-avatar) 1fr;
 	gap: 56px;
 	align-items: center;
-	margin-top: 40px;
+	margin-top: 36px;
 }
 .style-inspector .in-photo {
-	width: 360px;
-	height: 360px;
+	width: var(--in-avatar);
+	height: var(--in-avatar);
 	border-radius: 50%;
 	outline-offset: 8px;
 }
@@ -86,7 +93,7 @@
 	align-items: flex-start;
 }
 .style-inspector .in-name {
-	font-size: 104px;
+	font-size: 112px;
 	line-height: 1;
 	letter-spacing: -0.045em;
 }
@@ -105,7 +112,7 @@
 	font-weight: 700;
 }
 .style-inspector .in-talk {
-	margin-top: 50px;
+	margin-top: 60px;
 	padding: 36px 40px;
 	background: var(--paper);
 	border-radius: var(--r-lg);
@@ -117,15 +124,15 @@
 	font-family: var(--font-mono);
 	font-size: 26px;
 	font-weight: 700;
-	letter-spacing: 0.14em;
+	letter-spacing: 0.06em;
 	color: var(--text-dim);
 }
 .style-inspector .in-talk h3 {
-	font-size: 48px;
-	line-height: 1.26;
+	font-size: 52px;
+	line-height: 1.24;
 }
 .style-inspector .in-meta {
-	margin-top: 44px;
+	margin-top: 56px;
 	display: flex;
 	gap: 44px;
 	font-size: 34px;
@@ -137,9 +144,9 @@
 	font-family: var(--font-mono);
 	font-size: 26px;
 	font-weight: 700;
-	letter-spacing: 0.12em;
+	letter-spacing: 0.06em;
 	color: var(--text-dim);
-	margin-bottom: 4px;
+	margin-bottom: 6px;
 }
 .style-inspector .in-foot {
 	display: flex;

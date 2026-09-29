@@ -9,6 +9,11 @@ export default {
 		speaker: (d, ctx) => {
 			const s = d.session ?? {};
 			const l = L[ctx.lang];
+			const date = shortDate(ctx.event.date, ctx.lang);
+			const time = String(s.time ?? '').split(/\s*[–-]\s*/)[0];
+			const room = String(s.room ?? '');
+			// Multi-room values ("300/301/400호") step the whole stub row down so it stays on one line.
+			const long = date.length + time.length + room.length > 20;
 			return article(
 				'ticket',
 				ctx,
@@ -30,10 +35,10 @@ export default {
 		<h3 class="tk-title" ${slot('session.title')}>${titleHtml(s.title)}</h3>
 	</div>
 	<div class="tk-perf" aria-hidden="true"></div>
-	<dl class="tk-stub" ${slot('meta')}>
-		<div><dt>${esc(l.date)}</dt><dd>${esc(shortDate(ctx.event.date, ctx.lang))}</dd></div>
-		<div><dt>${esc(l.time)}</dt><dd>${esc(String(s.time ?? '').split(/\s*[–-]\s*/)[0])}</dd></div>
-		<div><dt>${esc(l.room)}</dt><dd>${esc(s.room ?? '')}</dd></div>
+	<dl class="tk-stub${long ? ' is-long' : ''}" ${slot('meta')}>
+		<div><dt>${esc(l.date)}</dt><dd>${esc(date)}</dd></div>
+		<div><dt>${esc(l.time)}</dt><dd>${esc(time)}</dd></div>
+		<div><dt>${esc(l.room)}</dt><dd>${esc(room)}</dd></div>
 	</dl>
 </div>
 <footer class="tk-foot">${whereLines(ctx)}<span>${esc(ctx.handle)}</span></footer>`

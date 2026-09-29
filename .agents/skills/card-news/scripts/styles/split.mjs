@@ -9,11 +9,14 @@ export default {
 		speaker: (d, ctx) => {
 			const s = d.session ?? {};
 			const l = L[ctx.lang];
+			const hasPhoto = Boolean(d.photo?.src);
+			// The frame is ~1080px wide, so the photo already reads large: drop the spec's
+			// portrait zoom (tuned for small masked portraits) to keep upscaling minimal.
 			return article(
 				'split',
 				ctx,
 				`
-<div class="sp-photo">${photo(d)}</div>
+<div class="sp-photo">${photo(d, { zoom: undefined })}${hasPhoto ? '' : mark(ctx, 'sp-stand')}</div>
 <header class="sp-top">
 	<span class="sp-brand">${mark(ctx, 'on-plate')}<span>${esc(ctx.brand)}</span></span>
 </header>
@@ -27,7 +30,8 @@ export default {
 		<span><b>${esc(l.room)}</b>${esc(s.room ?? '')}</span>
 	</div>
 	<footer class="sp-foot">${whereLines(ctx)}<span>${esc(ctx.handle)}</span></footer>
-</div>`
+</div>`,
+				hasPhoto ? '' : 'sp-nophoto'
 			);
 		}
 	}
