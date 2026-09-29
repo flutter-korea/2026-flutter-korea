@@ -13,6 +13,12 @@ paper-blue 패널, 거의 검정인 헤딩, 절제된 blue-700 accent, mono 키�
 - 색·반경·폰트는 `assets/theme.css`의 토큰만 쓴다. 사이트 테마를 바꾸면 `:root` 블록을 같이 갱신한다.
 - 폰트는 Pretendard Variable(jsDelivr)이고, 렌더링은 `document.fonts.ready`를 기다린다. 오프라인이면 시스템 폰트로 대체된다.
 
+## 브랜드 에셋 (출처 검증됨)
+- 브랜드 마크는 **Flutter Seoul 마크**(`assets/brand/flutter-seoul-mark.svg`)를 쓴다. 카드 헤더와 cover 워터마크에 들어간다.
+- Flutter 로고와 Dash는 `assets/brand/`에 있는 **공식 원본**만 쓴다. 출처와 사용 규칙은 [SOURCES.md](../assets/brand/SOURCES.md)에 있다.
+  Flutter 로고는 변형(재채색, 재작도)하지 않고, 가장 두드러지는 요소로 쓰지 않는다. 로고를 쓴 카드에는 Google 상표 고지를 넣는다.
+- 출처를 알 수 없는 Flutter/Dash 이미지(검색 결과, 팬아트 등)는 쓰지 않는다. spec에서는 `.agents/skills/card-news/assets/brand/dash.png`처럼 참조한다.
+
 ## 이미지 & 마스킹
 
 | 이미지 종류 | 권장 설정 | 이유 |

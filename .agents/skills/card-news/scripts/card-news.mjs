@@ -544,6 +544,9 @@ async function cmdBuild(pos) {
 	await mkdir(P.cards, { recursive: true });
 	await mkdir(join(P.assets, 'img'), { recursive: true });
 	await copyFile(join(SKILL_DIR, 'assets/theme.css'), join(P.assets, 'theme.css'));
+	const brandMark = (await readFile(join(SKILL_DIR, 'assets/brand/flutter-seoul-mark.svg'), 'utf8'))
+		.replace(/<svg[^>]*?width="\d+" height="\d+"/, (m) => m.replace(/ width="\d+" height="\d+"/, ''))
+		.replace('<svg', '<svg aria-hidden="true" focusable="false"');
 
 	// Footer defaults to the exact date/time and venue from the site's timetable frame
 	// (src/lib/content.js), so cards never drift from the published event facts.
@@ -575,7 +578,8 @@ async function cmdBuild(pos) {
 				total: spec.cards.length,
 				brand: spec.brand ?? 'Flutter Korea 2026',
 				footer: spec.footer ?? defaultFooter,
-				handle: spec.handle ?? '#FlutterKorea2026'
+				handle: spec.handle ?? '#FlutterKorea2026',
+				brandMark
 			}
 		);
 		const file = `${String(page).padStart(2, '0')}-${card.template}.html`;

@@ -72,5 +72,6 @@ node $CN build <slug> && node $CN check <slug>
 - `scripts/card-news.mjs`: CLI(scaffold/build/check/approve/render)
 - `scripts/templates.mjs`: 템플릿 8종 (구조별 HTML, `data-slot` 표기)
 - `assets/theme.css`: `src/app.css` 토큰 미러와 카드·마스크·와이어프레임 스타일 (사이트 테마가 바뀌면 `:root`를 동기화)
+- `assets/brand/`: 출처를 검증한 브랜드 에셋(Flutter Seoul 마크, 공식 Flutter 로고, 공식 Dash)과 `SOURCES.md`
 - `references/spec.md`: spec 형식과 템플릿별 필드 · `references/design.md`: 디자인·이미지 마스킹 가이드
 - `examples/showcase.json`: 8종 템플릿 예시 덱 (회귀 확인용) · `examples/speaker-kaae.json`: 실제 연사 소개 예시 (저장소 사실만 사용)

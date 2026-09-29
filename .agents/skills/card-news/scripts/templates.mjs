@@ -355,21 +355,19 @@ export const templates = {
 /** Keys whose values are treated as images and normalized by the builder. */
 export const IMAGE_KEYS = new Set(['photo', 'image', 'logo', 'banner']);
 
-const BRAND_MARK = `<svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="15" fill="#0553B1"/><path d="M37.1 8 17.1 28l6.4 6.4L49.9 8H37.1Z" fill="#fff"/><path d="M37.1 30.1 25.9 41.3l11.2 11.2h12.8l-11.2-11.2 11.2-11.2H37.1Z" fill="#bfe3fc"/></svg>`;
+// Brand mark = the Flutter Seoul community mark (assets/brand/flutter-seoul-mark.svg),
+// inlined by the builder as ctx.brandMark. Never substitute a redrawn Flutter logo.
 
 /** Full card <article>: shared frame around the template body. */
 export function renderCard(card, ctx) {
 	const tpl = templates[card.template];
 	const d = card.data ?? {};
 	const extra = tpl.cardClass?.(d) ?? '';
-	const coverArt =
-		card.template === 'cover'
-			? `<svg class="cover-art" viewBox="0 0 64 64" aria-hidden="true"><path d="M37.1 8 17.1 28l6.4 6.4L49.9 8H37.1Z" fill="#fff"/><path d="M37.1 30.1 25.9 41.3l11.2 11.2h12.8l-11.2-11.2 11.2-11.2H37.1Z" fill="#fff"/></svg>`
-			: '';
+	const coverArt = card.template === 'cover' ? `<span class="cover-art" aria-hidden="true">${ctx.brandMark}</span>` : '';
 	return `<article class="card t-${card.template} size-${ctx.size} ${extra}" data-template="${card.template}">
 	${coverArt}
 	<header class="card-top">
-		<span class="brand">${BRAND_MARK}${esc(ctx.brand)}</span>
+		<span class="brand"><span class="brand-mark">${ctx.brandMark}</span>${esc(ctx.brand)}</span>
 		${
 			// the cover carries its own badge; it only gets a chip when asked for
 			card.template === 'cover' && !d.tag ? '' : `<span class="chip${card.template === 'cover' ? '' : ' solid'}" ${slot('tag')}>${esc(d.tag ?? tpl.tag)}</span>`
