@@ -1,0 +1,830 @@
+#!/usr/bin/env node
+/**
+ * Flutter Korea card news CLI — HTML-first SNS card generator with a human
+ * approval gate before anything is rendered to an image.
+ *
+ *   scaffold <preset> [opts]   draft a spec.json from this repo's content (src/lib/content.js)
+ *   templates                  list templates and their fields
+ *   build <deck>               spec.json → cards/*.html + preview.html + structure.md
+ *   check <deck>               headless QA: overflow, broken / low-res images, proof PNGs
+ *   preview <deck>             open preview.html in the default browser
+ *   approve <deck> --by NAME   record human approval of the built cards (hash-locked)
+ *   render <deck> [--scale N]  approved cards → out/*.png (refuses without valid approval)
+ *
+ * <deck> is a slug under ./card-news/, a deck directory, or a spec.json path.
+ * Runs on Node ≥ 18 or Bun. Only `check` / `render` need playwright-core + a Chromium.
+ */
+import { createHash } from 'node:crypto';
+import { existsSync, statSync } from 'node:fs';
+import { copyFile, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { basename, dirname, extname, isAbsolute, join, relative, resolve } from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { spawn } from 'node:child_process';
+import { IMAGE_KEYS, esc, renderCard, templates } from './templates.mjs';
+
+const SKILL_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const REPO = findRepoRoot(SKILL_DIR);
+const WORK = join(REPO, 'card-news');
+
+const SIZES = {
+	portrait: { w: 1080, h: 1350, note: '4:5 — Instagram/LinkedIn feed (default)' },
+	square: { w: 1080, h: 1080, note: '1:1 — feed, X, Facebook' },
+	story: { w: 1080, h: 1920, note: '9:16 — Stories/Reels (safe areas padded)' }
+};
+const FONT_CSS =
+	'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css';
+
+function findRepoRoot(from) {
+	let dir = from;
+	while (dir !== dirname(dir)) {
+		if (existsSync(join(dir, 'package.json')) && existsSync(join(dir, 'src/lib/content.js'))) return dir;
+		dir = dirname(dir);
+	}
+	return process.cwd();
+}
+
+/* ------------------------------------------------------------------------ */
+/* CLI plumbing                                                             */
+/* ------------------------------------------------------------------------ */
+
+function parseArgs(argv) {
+	const pos = [];
+	const opt = {};
+	for (let i = 0; i < argv.length; i++) {
+		const a = argv[i];
+		if (a.startsWith('--')) {
+			const [k, v] = a.slice(2).split('=');
+			if (v !== undefined) opt[k] = v;
+			else if (argv[i + 1] && !argv[i + 1].startsWith('--')) opt[k] = argv[++i];
+			else opt[k] = true;
+		} else pos.push(a);
+	}
+	return { pos, opt };
+}
+
+const log = (...a) => console.log(...a);
+function fail(msg) {
+	console.error(`✖ ${msg}`);
+	process.exit(1);
+}
+const rel = (p) => relative(process.cwd(), p) || '.';
+
+function deckPaths(arg) {
+	if (!arg) fail('deck 인자가 필요합니다 (card-news/<slug>, 디렉터리, 또는 spec.json 경로).');
+	let dir;
+	if (arg.endsWith('.json') && existsSync(arg)) dir = dirname(resolve(arg));
+	else if (existsSync(join(resolve(arg), 'spec.json'))) dir = resolve(arg);
+	else if (existsSync(join(WORK, arg, 'spec.json'))) dir = join(WORK, arg);
+	else fail(`spec.json을 찾을 수 없습니다: ${arg}`);
+	const spec = arg.endsWith('.json') && existsSync(arg) ? resolve(arg) : join(dir, 'spec.json');
+	return {
+		dir,
+		spec,
+		cards: join(dir, 'cards'),
+		assets: join(dir, 'assets'),
+		preview: join(dir, 'preview.html'),
+		structure: join(dir, 'structure.md'),
+		build: join(dir, '.build.json'),
+		approval: join(dir, 'approval.json'),
+		out: join(dir, 'out'),
+		proof: join(dir, 'proof')
+	};
+}
+
+const sha = (buf) => createHash('sha256').update(buf).digest('hex');
+
+async function listFiles(dir) {
+	if (!existsSync(dir)) return [];
+	const out = [];
+	for (const e of await readdir(dir, { withFileTypes: true })) {
+		const p = join(dir, e.name);
+		if (e.isDirectory()) out.push(...(await listFiles(p)));
+		else out.push(p);
+	}
+	return out.sort();
+}
+
+/** Hash of exactly what the human reviewed: built card HTML + copied assets. */
+async function builtHash(P) {
+	const h = createHash('sha256');
+	for (const f of [...(await listFiles(P.cards)), ...(await listFiles(P.assets))]) {
+		h.update(relative(P.dir, f));
+		h.update(await readFile(f));
+	}
+	return h.digest('hex');
+}
+
+/* ------------------------------------------------------------------------ */
+/* scaffold — draft specs from the repo's content                           */
+/* ------------------------------------------------------------------------ */
+
+async function loadContent() {
+	const mod = await import(pathToFileURL(join(REPO, 'src/lib/content.js')).href);
+	return mod;
+}
+
+/** Talks from the timetable, flattened to one record per speaker session. */
+function talks(t) {
+	const out = [];
+	for (const row of t.timetable.tracks.rows) {
+		for (const track of ['ai', 'flutter']) {
+			const s = row[track];
+			if (!s?.speaker || /오거나이저|organizer/i.test(s.speaker)) continue;
+			out.push({
+				track: t.timetable.tracks[track],
+				time: `${row.start} – ${row.end}`,
+				room: s.room,
+				title: s.title,
+				speaker: s.speaker,
+				image: s.image
+			});
+		}
+	}
+	return out;
+}
+
+/** Stable ASCII id for a talk: the speaker photo's file name when present. */
+const idOf = (tk) => (tk.image ? basename(tk.image, extname(tk.image)) : tk.speaker);
+
+const TODO = (what) => `TODO: ${what}`;
+
+function speakerCards(tk, lang) {
+	const ko = lang === 'ko';
+	return [
+		{
+			template: 'speaker',
+			data: {
+				photo: tk.image ? { src: tk.image, focus: '50% 35%' } : TODO(ko ? '프로필 이미지 경로' : 'profile image path'),
+				name: tk.speaker,
+				role: TODO(ko ? '소속 · 직함' : 'affiliation · title'),
+				bio: TODO(ko ? '연사 소개 2~3문장' : '2–3 sentence bio'),
+				session: { title: tk.title, track: tk.track, time: tk.time, room: tk.room }
+			}
+		}
+	];
+}
+
+function sessionCard(tk, lang) {
+	const ko = lang === 'ko';
+	return {
+		template: 'session',
+		data: {
+			track: tk.track,
+			time: tk.time,
+			room: tk.room,
+			title: tk.title,
+			summary: TODO(ko ? '발표 요약 2~3문장' : '2–3 sentence abstract'),
+			points: [TODO(ko ? '핵심 포인트' : 'key point')],
+			speaker: {
+				name: tk.speaker,
+				role: TODO(ko ? '소속' : 'affiliation'),
+				...(tk.image ? { photo: tk.image } : {})
+			}
+		}
+	};
+}
+
+async function cmdScaffold(pos, opt) {
+	const preset = pos[0];
+	const lang = opt.lang === 'en' ? 'en' : 'ko';
+	const size = opt.size ?? 'portrait';
+	const { dict, links } = await loadContent();
+	const t = dict[lang];
+	const ko = lang === 'ko';
+	const all = talks(t);
+	const pick = () => {
+		if (!opt.name) {
+			log(`--name 이 필요합니다. 사용 가능한 연사:\n${all.map((x) => `  - ${x.speaker}  (${x.track} ${x.time}) ${x.title}`).join('\n')}`);
+			process.exit(1);
+		}
+		const hits = all.filter((x) => x.speaker.includes(opt.name));
+		if (!hits.length) fail(`"${opt.name}" 연사를 타임테이블에서 찾을 수 없습니다. --name 없이 실행하면 목록이 나옵니다.`);
+		return hits;
+	};
+	const cover = (series, title = `${t.hero.sloganTop}\n**${t.hero.sloganBottom}**`) => ({
+		template: 'cover',
+		data: { badge: t.hero.badge, title, subtitle: t.hero.subtitle, series }
+	});
+	const ticketCta = {
+		template: 'cta',
+		data: {
+			tone: 'brand',
+			kicker: 'Tickets',
+			title: t.tickets.title + (ko ? ' 예매 오픈' : ' on sale'),
+			lead: t.tickets.lead,
+			info: t.hero.facts.map((f) => ({ label: f.label, value: f.value })),
+			button: t.tickets.cta,
+			url: links.ticket
+		}
+	};
+
+	let slug;
+	let cards;
+	let title;
+	switch (preset) {
+		case 'event':
+			slug = `event-${lang}`;
+			title = ko ? '행사 소개' : 'Event overview';
+			cards = [
+				cover('Flutter Korea 2026'),
+				{
+					template: 'event',
+					data: {
+						kicker: t.overview.kicker,
+						title: t.about.title,
+						lead: t.hero.description,
+						facts: t.hero.facts.map((f) => ({ label: f.label, value: f.value }))
+					}
+				},
+				ticketCta
+			];
+			break;
+		case 'speaker': {
+			const hits = opt.all ? all : pick();
+			slug = opt.all ? `speakers-${lang}` : `speaker-${idOf(hits[0])}-${lang}`;
+			title = opt.all ? (ko ? '연사 라인업' : 'Speaker lineup') : `${ko ? '연사 소개' : 'Speaker'} — ${hits[0].speaker}`;
+			cards = [
+				...(opt.all ? [cover('Speaker Lineup', ko ? '**연사**를\n소개합니다' : 'Meet the\n**speakers**')] : []),
+				...hits.flatMap((x) => speakerCards(x, lang))
+			];
+			break;
+		}
+		case 'session': {
+			const hits = pick();
+			slug = `session-${idOf(hits[0])}-${lang}`;
+			title = `${ko ? '발표 소개' : 'Session'} — ${hits[0].title}`;
+			cards = hits.map((x) => sessionCard(x, lang));
+			break;
+		}
+		case 'timetable': {
+			slug = `timetable-${lang}`;
+			title = t.timetable.title;
+			const rowsFor = (track) =>
+				t.timetable.tracks.rows
+					.filter((r) => !r.empty && r.kind !== 'break' && r.start >= '11:00')
+					.map((r) =>
+						r.shared
+							? { time: r.start, title: r.shared, speaker: r.speaker || undefined }
+							: r[track]
+								? { time: r.start, title: r[track].title, speaker: r[track].speaker, highlight: !!r.highlight }
+								: null
+					)
+					.filter(Boolean);
+			// ≤ 6 rows per card keeps long session titles legible at 1080px
+			const per = Number(opt.rows) || 6;
+			cards = ['ai', 'flutter'].flatMap((track) => {
+				const rows = rowsFor(track);
+				const pages = Math.ceil(rows.length / per);
+				return Array.from({ length: pages }, (_, i) => ({
+					template: 'timetable',
+					data: {
+						kicker: t.timetable.kicker,
+						title: t.timetable.tracks[track] + (pages > 1 ? ` (${i + 1}/${pages})` : ''),
+						rows: rows.slice(i * per, (i + 1) * per)
+					}
+				}));
+			});
+			break;
+		}
+		case 'sponsors':
+			slug = `sponsors-${lang}`;
+			title = t.sponsors.title;
+			cards = [
+				{
+					template: 'sponsor',
+					data: {
+						kicker: t.sponsors.kicker,
+						title: t.sponsors.title,
+						items: t.sponsors.items.map((s) => ({ name: s.name, logo: s.logo, description: s.description }))
+					}
+				},
+				{
+					template: 'cta',
+					data: { kicker: 'Sponsorship', title: t.sponsors.ctaTitle, lead: t.sponsors.ctaBody, button: t.sponsors.cta, url: links.email.replace('mailto:', '') }
+				}
+			];
+			break;
+		case 'goods':
+			slug = `goods-${lang}`;
+			title = ko ? '굿즈 소개' : 'Goods';
+			cards = [
+				{
+					template: 'goods',
+					data: {
+						title: TODO(ko ? '굿즈 타이틀' : 'goods title'),
+						items: [{ name: TODO(ko ? '상품명' : 'item name'), image: TODO(ko ? '상품 이미지 경로' : 'image path'), price: '' }]
+					}
+				}
+			];
+			break;
+		case 'blank': {
+			const tpl = opt.template;
+			if (!templates[tpl]) fail(`--template 은 다음 중 하나: ${Object.keys(templates).join(', ')}`);
+			slug = `${tpl}-${Date.now().toString(36)}`;
+			title = tpl;
+			cards = [{ template: tpl, data: Object.fromEntries(Object.keys(templates[tpl].fields).map((k) => [k, TODO(templates[tpl].fields[k])])) }];
+			break;
+		}
+		default:
+			fail('preset: event | speaker [--name N | --all] | session --name N | timetable | sponsors | goods | blank --template T');
+	}
+	slug = (opt.slug ?? slug).replace(/[\s/\\]+/g, '-');
+	const dir = join(WORK, slug);
+	const specPath = join(dir, 'spec.json');
+	if (existsSync(specPath) && !opt.force) fail(`${rel(specPath)} 이미 존재합니다 (--force 로 덮어쓰기).`);
+	const spec = { title, lang, size, cards };
+	await mkdir(dir, { recursive: true });
+	await writeFile(specPath, JSON.stringify(spec, null, '\t') + '\n');
+	log(`✔ ${rel(specPath)} (${cards.length} cards)`);
+	const todos = JSON.stringify(spec).match(/TODO:[^"]*/g) ?? [];
+	if (todos.length) log(`  채워야 할 항목 ${todos.length}개:\n${[...new Set(todos)].map((x) => `   - ${x}`).join('\n')}`);
+}
+
+/* ------------------------------------------------------------------------ */
+/* build                                                                    */
+/* ------------------------------------------------------------------------ */
+
+function resolveImageFile(src, specDir) {
+	if (/^(https?:|data:)/.test(src)) return { remote: src };
+	const cands = [];
+	if (isAbsolute(src)) cands.push(src, join(REPO, 'static', src));
+	else cands.push(join(specDir, src), join(REPO, src), join(REPO, 'static', src), resolve(src));
+	const hit = cands.find((p) => existsSync(p) && statSync(p).isFile());
+	return hit ? { file: hit } : { missing: src };
+}
+
+/** Walk card data; normalize & copy every image-valued field. */
+async function normalizeImages(value, ctx, path = '') {
+	if (Array.isArray(value)) {
+		return Promise.all(value.map((v, i) => normalizeImages(v, ctx, `${path}[${i}]`)));
+	}
+	if (!value || typeof value !== 'object') return value;
+	const out = {};
+	for (const [k, v] of Object.entries(value)) {
+		const p = path ? `${path}.${k}` : k;
+		if (IMAGE_KEYS.has(k) && v) {
+			const img = typeof v === 'string' ? { src: v } : { ...v };
+			if (!img.src || /^TODO:/.test(img.src)) {
+				ctx.warnings.push(`${p}: 이미지 미지정 (placeholder로 표시됨)`);
+				out[k] = { ...img, src: undefined };
+				continue;
+			}
+			const r = resolveImageFile(img.src, ctx.specDir);
+			if (r.missing) {
+				ctx.errors.push(`${p}: 이미지 파일을 찾을 수 없음 → ${img.src}`);
+				out[k] = { ...img, src: undefined };
+			} else if (r.remote) {
+				ctx.warnings.push(`${p}: 원격 이미지 (${img.src}) — 가능하면 로컬 파일로 받아 두세요`);
+				out[k] = img;
+			} else {
+				const buf = await readFile(r.file);
+				const name = `${sha(buf).slice(0, 8)}-${basename(r.file).normalize('NFC').replace(/\s+/g, '-')}`;
+				await copyFile(r.file, join(ctx.assets, 'img', name));
+				ctx.images.push({ path: p, from: relative(REPO, r.file), ...img, src: undefined });
+				out[k] = { ...img, src: `assets/img/${name}` };
+			}
+		} else out[k] = await normalizeImages(v, ctx, p);
+	}
+	return out;
+}
+
+const clip = (s, n = 90) => {
+	const t = String(s).replace(/\s+/g, ' ');
+	return t.length > n ? `${t.slice(0, n)}…` : t;
+};
+
+/** Flatten card data to [path, value] rows for the structure outline. */
+function flatten(v, p = '') {
+	if (Array.isArray(v)) return v.flatMap((x, i) => flatten(x, `${p}[${i}]`));
+	if (v && typeof v === 'object') {
+		if ('src' in v && Object.keys(v).every((k) => ['src', 'fit', 'focus', 'zoom', 'mask', 'plate', 'inset', 'alt'].includes(k)))
+			return [[p, `🖼 ${v.src ?? '(비어 있음)'}${['fit', 'mask', 'focus', 'zoom'].filter((k) => v[k]).map((k) => ` · ${k}=${v[k]}`).join('')}`]];
+		return Object.entries(v).flatMap(([k, x]) => flatten(x, p ? `${p}.${k}` : k));
+	}
+	return [[p, v]];
+}
+
+function cardDoc(inner, { w, h, title }) {
+	return `<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=${w}">
+<base href="../">
+<title>${esc(title)}</title>
+<link rel="stylesheet" href="${FONT_CSS}">
+<link rel="stylesheet" href="assets/theme.css">
+<style>html,body{width:${w}px;height:${h}px;overflow:hidden}</style>
+<script>if(/[?&]mode=wire/.test(location.search))document.documentElement.classList.add('wire')</script>
+</head>
+<body>
+${inner}
+</body>
+</html>
+`;
+}
+
+function previewDoc(spec, built, size, { warnings, errors }) {
+	const { w, h } = SIZES[size];
+	const blocks = built
+		.map(
+			(b) => `
+<section class="pv-card" id="card-${b.page}">
+	<div class="pv-stage" style="--w:${w}px;--h:${h}px">${b.html}</div>
+	<div class="pv-meta">
+		<h2>${b.page} / ${built.length} · <code>${b.template}</code></h2>
+		<p class="pv-desc">${esc(templates[b.template].description)}</p>
+		<p class="pv-file"><a href="cards/${b.file}">cards/${b.file}</a></p>
+		<table>
+			<thead><tr><th>필드</th><th>값</th><th>길이</th></tr></thead>
+			<tbody>${b.rows
+				.map(
+					([k, v]) =>
+						`<tr${/^TODO:/.test(v) ? ' class="todo"' : ''}><td><code>${esc(k)}</code></td><td>${esc(clip(v, 140))}</td><td>${String(v).length}</td></tr>`
+				)
+				.join('')}</tbody>
+		</table>
+	</div>
+</section>`
+		)
+		.join('');
+	return `<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(spec.title ?? 'Card news')} · 구조 검토</title>
+<link rel="stylesheet" href="${FONT_CSS}">
+<link rel="stylesheet" href="assets/theme.css">
+<style>
+	html, body { background: #f4f6fa; }
+	body { font-family: var(--font-sans); }
+	.pv-bar { position: sticky; top: 0; z-index: 50; display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; padding: 14px 24px; background: var(--white); border-bottom: 1px solid var(--border); }
+	.pv-bar h1 { font-size: 18px; letter-spacing: -0.01em; margin-right: auto; }
+	.pv-bar .seg { display: inline-flex; border: 1px solid var(--border-strong); border-radius: 999px; overflow: hidden; }
+	.pv-bar button { border: 0; background: none; padding: 8px 16px; font: 600 14px var(--font-sans); cursor: pointer; color: var(--text-muted); }
+	.pv-bar button[aria-pressed='true'] { background: var(--blue-700); color: var(--white); }
+	.pv-bar label { font: 600 13px var(--font-mono); color: var(--text-muted); display: inline-flex; gap: 8px; align-items: center; }
+	.pv-note { margin: 20px 24px 0; padding: 16px 20px; border-radius: 12px; background: var(--white); border: 1px solid var(--border); font-size: 14px; line-height: 1.6; color: var(--text-muted); }
+	.pv-note strong { color: var(--ink); }
+	.pv-note ul { list-style: disc; padding-left: 20px; margin-top: 6px; }
+	.pv-note .err { color: #c62828; }
+	.pv-list { display: flex; flex-direction: column; gap: 28px; padding: 24px; }
+	.pv-card { display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start; background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 24px; }
+	.pv-stage { --s: 0.42; width: calc(var(--w) * var(--s)); height: calc(var(--h) * var(--s)); flex: none; border-radius: 10px; overflow: hidden; box-shadow: 0 0 0 1px var(--border), 0 12px 32px -18px rgba(11,18,32,.35); }
+	.pv-stage > .card { transform: scale(var(--s)); transform-origin: 0 0; }
+	.pv-meta { flex: 1; min-width: 300px; font-size: 14px; }
+	.pv-meta h2 { font-size: 18px; letter-spacing: -0.01em; }
+	.pv-desc { color: var(--text-muted); margin-top: 6px; }
+	.pv-file { margin-top: 4px; font: 12px var(--font-mono); } .pv-file a { color: var(--accent); }
+	.pv-meta table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 13px; }
+	.pv-meta th, .pv-meta td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--border); vertical-align: top; word-break: break-word; }
+	.pv-meta th { font: 700 11px var(--font-mono); letter-spacing: .08em; color: var(--text-dim); text-transform: uppercase; }
+	.pv-meta td:last-child { font-family: var(--font-mono); color: var(--text-dim); width: 48px; }
+	.pv-meta tr.todo td { background: #fff4e5; color: #8a4b00; }
+	html.pv-hide-meta .pv-meta { display: none; }
+</style>
+</head>
+<body>
+<div class="pv-bar">
+	<h1>${esc(spec.title ?? 'Card news')} <small style="font-weight:500;color:var(--text-dim)">· ${built.length}장 · ${size} ${w}×${h}</small></h1>
+	<div class="seg" role="group" aria-label="보기 모드">
+		<button type="button" data-mode="design">디자인</button>
+		<button type="button" data-mode="wire">구조</button>
+	</div>
+	<label>크기 <input type="range" min="0.25" max="1" step="0.01" value="0.42" id="pv-scale"></label>
+	<label><input type="checkbox" id="pv-meta" checked> 필드 표</label>
+</div>
+<div class="pv-note">
+	<strong>구조 검토 방법</strong> — "구조" 모드에서 각 카드의 슬롯(점선 라벨)이 의도한 정보 구조와 맞는지, 오른쪽 표에서 값이 정확한지 확인하세요.
+	확인이 끝나면 에이전트에게 <strong>승인(confirm)</strong>을 알려 주세요. 승인 후에만 PNG로 렌더링됩니다.
+	${errors.length ? `<ul class="err">${errors.map((e) => `<li>${esc(e)}</li>`).join('')}</ul>` : ''}
+	${warnings.length ? `<ul>${warnings.map((e) => `<li>${esc(e)}</li>`).join('')}</ul>` : ''}
+</div>
+<main class="pv-list">${blocks}</main>
+<script>
+	const root = document.documentElement;
+	const setMode = (m) => {
+		root.classList.toggle('wire', m === 'wire');
+		document.querySelectorAll('[data-mode]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === m)));
+	};
+	document.querySelectorAll('[data-mode]').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
+	setMode(new URLSearchParams(location.search).get('mode') === 'wire' ? 'wire' : 'design');
+	const scale = document.getElementById('pv-scale');
+	const q = new URLSearchParams(location.search).get('scale');
+	if (q) scale.value = q;
+	const apply = () => document.querySelectorAll('.pv-stage').forEach((s) => s.style.setProperty('--s', scale.value));
+	scale.addEventListener('input', apply); apply();
+	const meta = document.getElementById('pv-meta');
+	if (new URLSearchParams(location.search).has('nometa')) meta.checked = false;
+	const applyMeta = () => root.classList.toggle('pv-hide-meta', !meta.checked);
+	meta.addEventListener('change', applyMeta); applyMeta();
+</script>
+</body>
+</html>
+`;
+}
+
+async function cmdBuild(pos) {
+	const P = deckPaths(pos[0]);
+	const specRaw = await readFile(P.spec, 'utf8');
+	let spec;
+	try {
+		spec = JSON.parse(specRaw);
+	} catch (e) {
+		fail(`spec.json 파싱 실패: ${e.message}`);
+	}
+	const size = spec.size ?? 'portrait';
+	if (!SIZES[size]) fail(`size 는 ${Object.keys(SIZES).join(' | ')} 중 하나여야 합니다.`);
+	const lang = spec.lang === 'en' ? 'en' : 'ko';
+	if (!Array.isArray(spec.cards) || !spec.cards.length) fail('cards 배열이 비어 있습니다.');
+
+	await rm(P.cards, { recursive: true, force: true });
+	await rm(P.assets, { recursive: true, force: true });
+	await mkdir(P.cards, { recursive: true });
+	await mkdir(join(P.assets, 'img'), { recursive: true });
+	await copyFile(join(SKILL_DIR, 'assets/theme.css'), join(P.assets, 'theme.css'));
+
+	const ctx = { specDir: dirname(P.spec), assets: P.assets, warnings: [], errors: [], images: [] };
+	const built = [];
+	for (const [i, card] of spec.cards.entries()) {
+		const page = i + 1;
+		const tpl = templates[card.template];
+		if (!tpl) {
+			ctx.errors.push(`#${page}: 알 수 없는 template "${card.template}" (가능: ${Object.keys(templates).join(', ')})`);
+			continue;
+		}
+		const data = card.data ?? {};
+		for (const k of tpl.required) {
+			const v = data[k];
+			if (v === undefined || v === '' || (Array.isArray(v) && !v.length)) ctx.errors.push(`#${page} ${card.template}: 필수 필드 "${k}" 누락`);
+		}
+		for (const [k, v] of flatten(data)) if (typeof v === 'string' && /^TODO:/.test(v)) ctx.warnings.push(`#${page} ${k}: ${v}`);
+		const normalized = await normalizeImages(data, { ...ctx, warnings: ctx.warnings, errors: ctx.errors });
+		const html = renderCard(
+			{ template: card.template, data: normalized },
+			{
+				lang,
+				size,
+				page,
+				total: spec.cards.length,
+				brand: spec.brand ?? 'Flutter Korea 2026',
+				footer: spec.footer ?? (lang === 'ko' ? '2026.11.07 SAT · AWS Korea' : 'NOV 7, 2026 · AWS Korea, Seoul'),
+				handle: spec.handle ?? '#FlutterKorea2026'
+			}
+		);
+		const file = `${String(page).padStart(2, '0')}-${card.template}.html`;
+		await writeFile(join(P.cards, file), cardDoc(html, { ...SIZES[size], title: `${page} · ${card.template}` }));
+		built.push({ page, template: card.template, file, html, rows: flatten(normalized) });
+	}
+
+	await writeFile(P.preview, previewDoc(spec, built, size, ctx));
+
+	const md = [
+		`# ${spec.title ?? 'Card news'} — 구조 검토`,
+		'',
+		`- 크기: ${size} (${SIZES[size].w}×${SIZES[size].h}) · 언어: ${lang} · 카드 ${built.length}장`,
+		`- 미리보기: ${rel(P.preview)}`,
+		'',
+		...built.flatMap((b) => [
+			`## ${b.page}. ${b.template} — ${templates[b.template].description}`,
+			'',
+			...b.rows.map(([k, v]) => `- \`${k}\`: ${clip(v, 120)}`),
+			''
+		]),
+		...(ctx.errors.length ? ['## 오류', '', ...ctx.errors.map((e) => `- ${e}`), ''] : []),
+		...(ctx.warnings.length ? ['## 확인 필요', '', ...ctx.warnings.map((e) => `- ${e}`), ''] : [])
+	].join('\n');
+	await writeFile(P.structure, md);
+
+	const hash = await builtHash(P);
+	await writeFile(P.build, JSON.stringify({ specHash: sha(specRaw), builtHash: hash, builtAt: new Date().toISOString() }, null, 2));
+
+	log(md);
+	if (existsSync(P.approval)) {
+		const a = JSON.parse(await readFile(P.approval, 'utf8'));
+		if (a.builtHash !== hash) {
+			await rm(P.approval);
+			log(`\n⚠ 빌드 결과가 바뀌어 기존 승인(${a.approvedBy}, ${a.approvedAt})을 무효화했습니다. 다시 검토·승인이 필요합니다.`);
+		}
+	}
+	log(`\n✔ build → ${rel(P.preview)}`);
+	if (ctx.errors.length) fail(`오류 ${ctx.errors.length}건 — spec을 수정한 뒤 다시 build 하세요.`);
+}
+
+/* ------------------------------------------------------------------------ */
+/* browser: check / render                                                  */
+/* ------------------------------------------------------------------------ */
+
+async function launch() {
+	let chromium;
+	try {
+		({ chromium } = await import('playwright-core'));
+	} catch {
+		fail('playwright-core 가 필요합니다: 저장소 루트에서 `bun install` (devDependency) 후 다시 실행하세요.');
+	}
+	const tries = [
+		process.env.CARD_NEWS_BROWSER && { executablePath: process.env.CARD_NEWS_BROWSER },
+		{},
+		{ channel: 'chrome' },
+		{ channel: 'msedge' }
+	].filter(Boolean);
+	for (const o of tries) {
+		try {
+			return await chromium.launch(o);
+		} catch {
+			/* try next */
+		}
+	}
+	fail('Chromium 을 찾지 못했습니다. Chrome 설치, `bunx playwright-core install chromium`, 또는 CARD_NEWS_BROWSER=<실행파일 경로> 중 하나를 준비하세요.');
+}
+
+async function openCard(browser, P, file, size, scale, query = '') {
+	const { w, h } = SIZES[size];
+	const page = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: scale });
+	await page.goto(pathToFileURL(join(P.cards, file)).href + query, { waitUntil: 'load' });
+	await page.evaluate(async () => {
+		await document.fonts.ready;
+		await Promise.all([...document.images].map((i) => (i.complete ? null : new Promise((r) => (i.onload = i.onerror = r)))));
+	});
+	return page;
+}
+
+/** In-page QA: overflow of the body / slots, broken and upscaled images. */
+function inspect(scale) {
+	const card = document.querySelector('.card');
+	const body = card.querySelector('.card-body');
+	const cb = card.getBoundingClientRect();
+	const bb = body.getBoundingClientRect();
+	const issues = [];
+	if (body.scrollHeight > body.clientHeight + 1)
+		issues.push({ level: 'error', msg: `본문이 카드 높이를 ${body.scrollHeight - body.clientHeight}px 초과 (텍스트를 줄이거나 항목 수를 줄이세요)` });
+	for (const el of card.querySelectorAll('[data-slot]')) {
+		const r = el.getBoundingClientRect();
+		const inBody = body.contains(el);
+		const limit = inBody ? bb : cb;
+		const name = el.dataset.slot;
+		if (r.height > 0 && (r.bottom > limit.bottom + 1 || r.right > limit.right + 1)) {
+			el.dataset.overflow = '';
+			issues.push({ level: 'error', msg: `슬롯 "${name}" 이 영역 밖으로 넘침` });
+		} else if (el.scrollWidth > el.clientWidth + 2 && getComputedStyle(el).overflow !== 'visible') {
+			issues.push({ level: 'warn', msg: `슬롯 "${name}" 가로 넘침` });
+		}
+	}
+	for (const img of card.querySelectorAll('.frame img')) {
+		const frame = img.closest('.frame');
+		const name = frame.dataset.slot;
+		if (!img.naturalWidth) {
+			issues.push({ level: 'error', msg: `이미지 "${name}" 로드 실패 (${img.getAttribute('src')})` });
+			continue;
+		}
+		const f = frame.getBoundingClientRect();
+		const cs = getComputedStyle(img);
+		const zoom = Number(getComputedStyle(frame).getPropertyValue('--zoom')) || 1;
+		const pad = parseFloat(cs.paddingLeft) || 0;
+		const fw = f.width - pad * 2;
+		const fh = f.height - pad * 2;
+		const s =
+			cs.objectFit === 'contain'
+				? Math.min(fw / img.naturalWidth, fh / img.naturalHeight)
+				: Math.max(fw / img.naturalWidth, fh / img.naturalHeight) * zoom;
+		const up = s * scale;
+		if (up > 1.25)
+			issues.push({
+				level: 'warn',
+				msg: `이미지 "${name}" 해상도 부족: ${img.naturalWidth}×${img.naturalHeight}px 를 ${up.toFixed(1)}배 확대 (흐려질 수 있음 — 더 큰 원본 권장)`
+			});
+	}
+	return issues;
+}
+
+async function builtState(P) {
+	if (!existsSync(P.build)) fail('아직 build 되지 않았습니다. 먼저 build 를 실행하세요.');
+	const b = JSON.parse(await readFile(P.build, 'utf8'));
+	const specHash = sha(await readFile(P.spec, 'utf8'));
+	return { ...b, specChanged: specHash !== b.specHash, currentHash: await builtHash(P) };
+}
+
+async function cmdCheck(pos, opt) {
+	const P = deckPaths(pos[0]);
+	const st = await builtState(P);
+	if (st.specChanged) fail('spec.json 이 마지막 build 이후 변경되었습니다. build 를 다시 실행하세요.');
+	const spec = JSON.parse(await readFile(P.spec, 'utf8'));
+	const size = spec.size ?? 'portrait';
+	const scale = Number(opt.scale ?? 1);
+	const browser = await launch();
+	let errors = 0;
+	try {
+		for (const file of (await readdir(P.cards)).filter((f) => f.endsWith('.html')).sort()) {
+			const page = await openCard(browser, P, file, size, 1);
+			const issues = await page.evaluate(inspect, scale);
+			errors += issues.filter((i) => i.level === 'error').length;
+			log(`${issues.length ? (issues.some((i) => i.level === 'error') ? '✖' : '⚠') : '✔'} ${file}`);
+			for (const i of issues) log(`   ${i.level === 'error' ? '✖' : '⚠'} ${i.msg}`);
+			await page.close();
+		}
+		await mkdir(P.proof, { recursive: true });
+		const pv = await browser.newPage({ viewport: { width: 1400, height: 900 } });
+		for (const mode of ['design', 'wire']) {
+			await pv.goto(`${pathToFileURL(P.preview).href}?mode=${mode}&scale=0.36`, { waitUntil: 'load' });
+			await pv.evaluate(() => document.fonts.ready);
+			await pv.screenshot({ path: join(P.proof, `proof-${mode}.png`), fullPage: true });
+		}
+		await pv.close();
+		log(`\n  proof: ${rel(join(P.proof, 'proof-design.png'))}, ${rel(join(P.proof, 'proof-wire.png'))}`);
+	} finally {
+		await browser.close();
+	}
+	if (errors) fail(`레이아웃 오류 ${errors}건 — spec 수정 → build → check 를 반복하세요.`);
+	log('✔ check 통과');
+}
+
+async function cmdApprove(pos, opt) {
+	const P = deckPaths(pos[0]);
+	if (!opt.by || opt.by === true) fail('--by "<승인자 이름>" 이 필요합니다. 사람이 구조를 검토하고 명시적으로 승인한 경우에만 실행하세요.');
+	const st = await builtState(P);
+	if (st.specChanged) fail('spec.json 이 마지막 build 이후 변경되었습니다. build → 검토 후 다시 승인하세요.');
+	if (st.currentHash !== st.builtHash) fail('빌드 산출물(cards/, assets/)이 build 이후 수정되었습니다. build 를 다시 실행하세요.');
+	const approval = {
+		approvedBy: opt.by,
+		approvedAt: new Date().toISOString(),
+		builtHash: st.builtHash,
+		note: typeof opt.note === 'string' ? opt.note : undefined
+	};
+	await writeFile(P.approval, JSON.stringify(approval, null, 2) + '\n');
+	log(`✔ 승인 기록: ${rel(P.approval)} (${approval.approvedBy})`);
+}
+
+async function cmdRender(pos, opt) {
+	const P = deckPaths(pos[0]);
+	const st = await builtState(P);
+	if (!existsSync(P.approval))
+		fail('승인 기록이 없습니다. preview.html 로 사람이 구조를 검토하고 승인한 뒤 `approve --by <이름>` 을 먼저 실행하세요.');
+	const a = JSON.parse(await readFile(P.approval, 'utf8'));
+	if (st.specChanged) fail('spec.json 이 승인된 build 이후 변경되었습니다. build → 재검토 → approve 가 필요합니다.');
+	if (a.builtHash !== st.currentHash) fail('승인 이후 빌드 산출물이 바뀌었습니다. 재검토 → approve 가 필요합니다.');
+	const spec = JSON.parse(await readFile(P.spec, 'utf8'));
+	const size = spec.size ?? 'portrait';
+	const scale = Number(opt.scale ?? 1);
+	const fmt = opt.format === 'jpg' || opt.format === 'jpeg' ? 'jpeg' : 'png';
+	await rm(P.out, { recursive: true, force: true });
+	await mkdir(P.out, { recursive: true });
+	const browser = await launch();
+	const files = [];
+	try {
+		for (const file of (await readdir(P.cards)).filter((f) => f.endsWith('.html')).sort()) {
+			const page = await openCard(browser, P, file, size, scale);
+			const issues = (await page.evaluate(inspect, scale)).filter((i) => i.level === 'error');
+			for (const i of issues) log(`   ⚠ ${file}: ${i.msg}`);
+			const outFile = join(P.out, file.replace(/\.html$/, fmt === 'png' ? '.png' : '.jpg'));
+			await page.locator('.card').screenshot({ path: outFile, type: fmt, ...(fmt === 'jpeg' ? { quality: 92 } : {}) });
+			files.push(outFile);
+			await page.close();
+		}
+	} finally {
+		await browser.close();
+	}
+	const { w, h } = SIZES[size];
+	log(`✔ render (${w * scale}×${h * scale}, ${fmt}) — 승인: ${a.approvedBy} @ ${a.approvedAt}`);
+	for (const f of files) log(`   ${rel(f)}`);
+}
+
+async function cmdPreview(pos, opt) {
+	const P = deckPaths(pos[0]);
+	if (!existsSync(P.preview)) fail('preview.html 이 없습니다. 먼저 build 하세요.');
+	log(`미리보기: ${P.preview}\n          ${pathToFileURL(P.preview).href}`);
+	if (opt['no-open']) return;
+	const cmd = process.platform === 'darwin' ? 'open' : process.platform === 'win32' ? 'cmd' : 'xdg-open';
+	const args = process.platform === 'win32' ? ['/c', 'start', '', P.preview] : [P.preview];
+	spawn(cmd, args, { stdio: 'ignore', detached: true }).on('error', () => {}).unref();
+}
+
+function cmdTemplates() {
+	log('Templates (공통 프레임: 브랜드 헤더 → 본문 → 푸터, 공통 옵션: data.tag = 우상단 칩 라벨)\n');
+	for (const [name, t] of Object.entries(templates)) {
+		log(`■ ${name} — ${t.description}`);
+		for (const [k, v] of Object.entries(t.fields)) log(`    ${k.padEnd(10)} ${v}`);
+		log('');
+	}
+	log('Sizes:');
+	for (const [k, s] of Object.entries(SIZES)) log(`    ${k.padEnd(10)} ${s.w}×${s.h}  ${s.note}`);
+	log('\nImage options (photo/image/logo/banner 필드에 문자열 또는 객체):');
+	log('    { src, fit: cover|contain, mask: circle|squircle|rounded|arch|leaf|none, focus: "50% 30%", zoom: 1.2, plate: white|paper|none, inset: "12%" }');
+}
+
+const [cmd, ...rest] = process.argv.slice(2);
+const { pos, opt } = parseArgs(rest);
+const commands = {
+	scaffold: cmdScaffold,
+	templates: cmdTemplates,
+	build: cmdBuild,
+	check: cmdCheck,
+	preview: cmdPreview,
+	approve: cmdApprove,
+	render: cmdRender
+};
+if (!commands[cmd]) {
+	log(`usage: card-news <${Object.keys(commands).join('|')}> ...\n(see .agents/skills/card-news/SKILL.md)`);
+	process.exit(cmd ? 1 : 0);
+}
+await commands[cmd](pos, opt);
