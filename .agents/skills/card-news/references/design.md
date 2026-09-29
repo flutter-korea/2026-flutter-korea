@@ -53,7 +53,7 @@ paper-blue 패널, 거의 검정인 헤딩, 절제된 blue-700 accent, mono 키�
 | `badge` | 랜야드 명찰 메타포 | 600px 이상 |
 | `rail` | 좌측 네이비 레일에 일정, 우측에 연사 | 600px 이상 |
 | `inspector` | Flutter 디버그 페인트 라벨과 디버그 배너 | 600px 이상 |
-| `hangul` | 세로로 쌓은 초대형 한글 이름 | 600px 이상 |
+| `slide` | 발표 표지 슬라이드에 제목을 크게 (제목 우선형) | 600px 이상 |
 | `code` | Dart 생성자 코드 에디터 | 600px 이상 |
 | `sticker` | 커뮤니티 스티커와 공식 Dash | 600px 이상 |
 | `split` | 사진 / 네이비 패널 2분할 | 1100px 이상 |

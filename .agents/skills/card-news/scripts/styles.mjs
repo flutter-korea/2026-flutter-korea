@@ -416,39 +416,45 @@ export const styles = {
 		}
 	},
 
-	hangul: {
-		label: 'Hangul Column',
-		inspiration: 'Smashing “이름이 히어로” 포스터 · 한글 세로쓰기 타이포',
-		description: '한글 이름을 초대형으로 세로로 쌓아 한 기둥을 만든다. 옆 칸에 원형 사진·영문 이름·소속, 하단에 발표',
+	slide: {
+		label: 'Title Slide',
+		inspiration: 'Fluttercon EU · droidcon 제목 우선 세션 카드 · 발표 표지 슬라이드',
+		description: '발표 표지 슬라이드(16:9)에 제목을 크게 싣고, 아래에 발표자 한 줄과 일정. 사람보다 “무엇을 듣는가”를 먼저 전하는 제목 우선형',
 		cards: {
 			speaker: (d, ctx) => {
 				const s = d.session ?? {};
-				const [ko, en] = nameParts(d.name);
-				const chars = [...ko].filter((c) => c.trim());
+				const l = L[ctx.lang];
 				return article(
-					'hangul',
+					'slide',
 					ctx,
 					`
-	<header class="hg-top">
-		<span class="hg-brand">${mark(ctx)}<span>${esc(ctx.brand)}</span></span>
-		<span class="hg-kind" ${slot('tag')}>${esc(d.tag ?? 'Speaker')}</span>
+	<header class="sl-top">
+		<span class="sl-brand">${mark(ctx, 'on-plate')}<span>${esc(ctx.brand)}</span></span>
+		<span class="sl-kind" ${slot('tag')}>${esc(d.tag ?? 'Session')}</span>
 	</header>
-	<div class="card-body hg-body">
-		<div class="hg-hero">
-			<h2 class="hg-column n-${Math.min(chars.length, 4)}" ${slot('name')} aria-label="${esc(d.name)}">${chars.slice(0, 4).map((c) => `<span>${esc(c)}</span>`).join('')}</h2>
-			<div class="hg-side">
-				<div class="hg-photo">${photo(d, { mask: 'circle' })}</div>
-				${en ? `<p class="hg-en">${esc(en)}</p>` : ''}
-				${when(d.role, () => `<p class="hg-role" ${slot('role')}>${rich(d.role)}</p>`)}
-				${when(s.track, () => `<span class="hg-track">${esc(s.track)}</span>`)}
+	<div class="card-body sl-body">
+		<div class="sl-screen" ${slot('session')}>
+			<div class="sl-slide">
+				${when(s.track, () => `<span class="sl-track">${esc(s.track)}</span>`)}
+				<h3 class="sl-title" ${slot('session.title')}>${titleHtml(s.title)}</h3>
+				<div class="sl-slide-foot" aria-hidden="true">${mark(ctx, 'on-plate')}<span>${esc(ctx.brand)}</span></div>
 			</div>
 		</div>
-		<div class="hg-talk" ${slot('session')}>
-			<h3 ${slot('session.title')}>${titleHtml(s.title)}</h3>
-			<p class="hg-meta" ${slot('meta')}>${esc([shortDate(ctx.event.date, ctx.lang), s.time, s.room].filter(Boolean).join(' · '))}</p>
+		<div class="sl-presenter">
+			<div class="sl-photo">${photo(d, { mask: 'circle' })}</div>
+			<div>
+				<span class="sl-by">${esc(l.speaker)}</span>
+				<h2 class="sl-name" ${slot('name')}>${esc(d.name)}</h2>
+				${when(d.role, () => `<p class="sl-role" ${slot('role')}>${rich(d.role)}</p>`)}
+			</div>
 		</div>
+		<dl class="sl-meta" ${slot('meta')}>
+			<div><dt>${esc(l.date)}</dt><dd>${esc(shortDate(ctx.event.date, ctx.lang))}</dd></div>
+			<div><dt>${esc(l.time)}</dt><dd>${esc(s.time ?? '')}</dd></div>
+			<div><dt>${esc(l.room)}</dt><dd>${esc(s.room ?? '')}</dd></div>
+		</dl>
 	</div>
-	<footer class="hg-foot">${whereLines(ctx)}<span>${esc(ctx.handle)}</span></footer>`
+	<footer class="sl-foot">${whereLines(ctx)}<span>${esc(ctx.handle)}</span></footer>`
 				);
 			}
 		}

@@ -239,7 +239,7 @@
 		},
 		{
 			"template": "speaker",
-			"style": "hangul",
+			"style": "slide",
 			"data": {
 				"photo": {
 					"src": "/assets/flutter-seoul/speaker/kaae.jpeg",
