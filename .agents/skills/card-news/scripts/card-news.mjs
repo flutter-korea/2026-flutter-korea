@@ -545,6 +545,11 @@ async function cmdBuild(pos) {
 	await mkdir(join(P.assets, 'img'), { recursive: true });
 	await copyFile(join(SKILL_DIR, 'assets/theme.css'), join(P.assets, 'theme.css'));
 
+	// Footer defaults to the exact date/time and venue from the site's timetable frame
+	// (src/lib/content.js), so cards never drift from the published event facts.
+	const frame = Object.fromEntries((await loadContent()).dict[lang].timetable.frame.map((f) => [f.label, f.value]));
+	const defaultFooter = [`${frame.DATE} ${frame.PROGRAM}`, frame.VENUE];
+
 	const ctx = { specDir: dirname(P.spec), assets: P.assets, warnings: [], errors: [], images: [] };
 	const built = [];
 	for (const [i, card] of spec.cards.entries()) {
@@ -569,7 +574,7 @@ async function cmdBuild(pos) {
 				page,
 				total: spec.cards.length,
 				brand: spec.brand ?? 'Flutter Korea 2026',
-				footer: spec.footer ?? (lang === 'ko' ? '2026.11.07 SAT · AWS Korea' : 'NOV 7, 2026 · AWS Korea, Seoul'),
+				footer: spec.footer ?? defaultFooter,
 				handle: spec.handle ?? '#FlutterKorea2026'
 			}
 		);

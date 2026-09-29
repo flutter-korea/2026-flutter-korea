@@ -377,7 +377,11 @@ export function renderCard(card, ctx) {
 	</header>
 	<div class="card-body">${tpl.body(d, ctx)}</div>
 	<footer class="card-foot">
-		<span ${slot('footer')}>${esc(ctx.footer)}</span>
+		<span class="where" ${slot('footer')}>${[ctx.footer]
+			.flat()
+			.filter(Boolean)
+			.map((line) => `<span>${esc(line)}</span>`)
+			.join('')}</span>
 		<span>${esc(ctx.handle)}${ctx.total > 1 ? ` · <span class="page">${ctx.page} / ${ctx.total}</span>` : ''}</span>
 	</footer>
 </article>`;

@@ -6,7 +6,7 @@
 	"lang": "ko", // ko | en — 라벨(시간/장소 등)과 기본 푸터 언어
 	"size": "portrait", // portrait 1080×1350 (기본) | square 1080×1080 | story 1080×1920
 	"brand": "Flutter Korea 2026", // (선택) 헤더 브랜드 텍스트
-	"footer": "2026.11.07 SAT · AWS Korea", // (선택) 푸터 왼쪽
+	"footer": ["2026.11.07 (토) 11:00 – 18:00", "AWS 코리아 (센터필드 EAST 12층)"], // (선택) 푸터 왼쪽. 문자열 또는 줄 배열. 생략 시 content.js 타임테이블의 DATE·PROGRAM / VENUE
 	"handle": "#FlutterKorea2026", // (선택) 푸터 오른쪽. 2장 이상이면 "n / N" 페이지가 붙음
 	"cards": [{ "template": "speaker", "data": { /* 템플릿별 필드 */ } }]
 }
