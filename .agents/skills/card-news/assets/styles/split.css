@@ -1,0 +1,165 @@
+/* ==========================================================================
+   split — photo on top, navy information panel below
+   The panel sizes to its content and the photo takes the rest, so the seam
+   sits wherever the copy ends: no dead navy between the meta row and footer.
+   ========================================================================== */
+.card.style-split {
+	background: var(--blue-900);
+	color: var(--white);
+	padding: 0;
+	gap: 0;
+}
+
+/* ---------------------------------------------------------------- photo */
+.style-split .sp-photo {
+	position: relative;
+	flex: 1 1 auto;
+	min-height: 500px;
+	background: var(--paper);
+}
+.style-split .sp-photo .frame {
+	position: absolute;
+	inset: 0;
+}
+/* No-photo state: a paper field with the Flutter Seoul mark standing on the
+   seam. The mark's flat base meets the navy panel like a skyline. */
+.style-split.sp-nophoto .sp-photo .frame.is-empty {
+	background: var(--paper);
+	color: transparent;
+}
+.style-split .sp-stand {
+	position: absolute;
+	right: 72px;
+	bottom: 0;
+	z-index: 1;
+	line-height: 0;
+}
+.style-split .sp-stand svg {
+	display: block;
+	width: 560px;
+	height: auto;
+}
+
+/* ---------------------------------------------------------------- brand */
+.style-split .sp-top {
+	position: absolute;
+	top: 56px;
+	left: 64px;
+	z-index: 2;
+}
+.style-split .sp-brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 16px;
+	padding: 10px 26px 10px 10px;
+	border-radius: var(--r-full);
+	background: var(--white);
+	color: var(--ink);
+	font-size: 28px;
+	font-weight: 800;
+	letter-spacing: -0.01em;
+	box-shadow: 0 10px 24px -12px rgba(11, 18, 32, 0.45);
+}
+.style-split .sp-brand .fs-mark.on-plate {
+	display: inline-flex;
+	padding: 8px 10px;
+	background: var(--paper);
+	border-radius: var(--r-full);
+}
+.style-split .sp-brand .fs-mark svg {
+	display: block;
+	width: 56px;
+	height: auto;
+}
+.style-split.sp-nophoto .sp-brand {
+	box-shadow: inset 0 0 0 1.5px var(--border);
+}
+
+/* ---------------------------------------------------------------- panel */
+.style-split .sp-panel {
+	position: relative;
+	flex: none;
+	display: flex;
+	flex-direction: column;
+	padding: 78px 72px 52px;
+	gap: 0;
+	overflow: visible;
+}
+.style-split .sp-track {
+	position: absolute;
+	top: -31px;
+	left: 72px;
+	padding: 12px 28px;
+	border-radius: var(--r-full);
+	background: var(--sky);
+	color: var(--blue-900);
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 800;
+	letter-spacing: 0.04em;
+	line-height: 1.4;
+}
+.style-split .sp-name {
+	font-size: 120px;
+	line-height: 1;
+	letter-spacing: -0.04em;
+	color: var(--white);
+	overflow-wrap: anywhere;
+}
+.style-split .sp-role {
+	margin-top: 18px;
+	font-size: 34px;
+	font-weight: 700;
+	line-height: 1.3;
+	color: var(--sky);
+}
+.style-split .sp-title {
+	margin-top: 36px;
+	font-size: 50px;
+	line-height: 1.24;
+	letter-spacing: -0.03em;
+	color: var(--white);
+}
+.style-split .sp-title .line {
+	display: block;
+}
+.style-split .sp-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px 44px;
+	margin-top: 32px;
+	font-size: 32px;
+	font-weight: 700;
+	line-height: 1.3;
+	font-variant-numeric: tabular-nums;
+}
+.style-split .sp-meta b {
+	margin-right: 14px;
+	font-size: 28px;
+	font-weight: 700;
+	color: var(--sky);
+}
+.style-split .sp-foot {
+	margin-top: 44px;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	gap: 24px;
+	padding-top: 26px;
+	border-top: 1.5px solid rgba(255, 255, 255, 0.22);
+	font-size: 26px;
+	line-height: 1.35;
+	color: rgba(255, 255, 255, 0.8);
+}
+.style-split .sp-foot .where {
+	display: flex;
+	flex-direction: column;
+}
+.style-split .sp-foot .where > span:first-child {
+	font-weight: 700;
+	color: var(--white);
+}
+.style-split .sp-foot > span:last-child {
+	font-family: var(--font-mono);
+	font-size: 26px;
+}

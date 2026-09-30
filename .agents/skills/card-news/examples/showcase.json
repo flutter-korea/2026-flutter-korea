@@ -1,0 +1,106 @@
+{
+	"title": "템플릿 쇼케이스 (예시 데이터)",
+	"lang": "ko",
+	"size": "portrait",
+	"cards": [
+		{
+			"template": "cover",
+			"data": {
+				"badge": "2026.11.07 SAT · SEOUL",
+				"title": "Back to Basics,\n**Move Forward**",
+				"subtitle": "기술의 본질로 돌아가, 두려움 없이 미래를 정의하다",
+				"series": "Card News Showcase"
+			}
+		},
+		{
+			"template": "event",
+			"data": {
+				"kicker": "Event Overview",
+				"title": "‘전환’을 넘어, 본질과 미래로",
+				"lead": "단단한 기본기를 바탕으로 AI와 함께 미래를 정의하는 하루. Flutter와 AI를 둘러싼 깊이 있는 세션과 교류를 만나보세요.",
+				"banner": { "src": "/assets/previous-events/flutter-korea-2025-thumbnail.png", "focus": "50% 40%" },
+				"facts": [
+					{ "label": "일시", "value": "2026.11.07 (토)" },
+					{ "label": "시간", "value": "11:00 – 18:00" },
+					{ "label": "장소", "value": "12층 AWS 코리아" },
+					{ "label": "주최", "value": "Flutter Seoul" }
+				]
+			}
+		},
+		{
+			"template": "speaker",
+			"data": {
+				"photo": { "src": ".agents/skills/card-news/assets/brand/dash.png", "fit": "contain", "plate": "paper", "inset": "14%" },
+				"nameSub": "Example Speaker",
+				"name": "Dash",
+				"role": "Flutter 마스코트 · 예시 데이터",
+				"bio": "연사자 템플릿 예시입니다. 실제 카드에서는 프로필 사진을 squircle 마스크로 채우고, **focus** 값으로 얼굴 위치를 맞춥니다.",
+				"tags": ["Flutter", "Dart"],
+				"session": { "title": "위젯 트리에서 길을 잃지 않는 법", "track": "Flutter Track", "time": "13:00 – 13:30", "room": "300/301/400호" }
+			}
+		},
+		{
+			"template": "session",
+			"data": {
+				"track": "Flutter Track",
+				"level": "Intermediate",
+				"time": "13:00 – 13:30",
+				"room": "300/301/400호",
+				"title": "위젯 트리에서 길을 잃지 않는 법",
+				"summary": "발표 주제 템플릿 예시입니다. 제목이 길어지면 자동으로 한 단계 작은 크기로 조정됩니다.",
+				"points": ["BuildContext가 가리키는 위치 이해하기", "리빌드 범위를 좁히는 구조 설계", "DevTools로 위젯 트리 추적하기"],
+				"speaker": { "name": "Dash", "role": "Flutter 마스코트 · 예시", "photo": { "src": ".agents/skills/card-news/assets/brand/dash.png", "fit": "contain", "plate": "paper", "inset": "12%" } }
+			}
+		},
+		{
+			"template": "timetable",
+			"data": {
+				"kicker": "Timetable",
+				"title": "AI Track",
+				"rows": [
+					{ "time": "11:00", "title": "오프닝", "speaker": "Flutter Seoul" },
+					{ "time": "11:10", "title": "Keynote: Flutter is Everywhere (ENG)", "speaker": "Google" },
+					{ "time": "11:50", "title": "예시 세션 A", "speaker": "연사 A" },
+					{ "time": "12:20", "title": "네트워킹 런치" },
+					{ "time": "13:00", "title": "예시 세션 B", "speaker": "연사 B", "highlight": true },
+					{ "time": "13:40", "title": "예시 세션 C", "speaker": "연사 C" }
+				]
+			}
+		},
+		{
+			"template": "sponsor",
+			"data": {
+				"kicker": "Sponsors",
+				"title": "함께 만드는 사람들",
+				"items": [{ "name": "Flutter", "logo": "/assets/sponsors/flutter.png", "description": "Build apps for any screen" }]
+			}
+		},
+		{
+			"template": "goods",
+			"data": {
+				"kicker": "Goods",
+				"title": "현장 굿즈 (예시)",
+				"lead": "투명 배경 이미지는 contain + paper 플레이트로 여백을 두고 배치합니다.",
+				"items": [
+					{ "name": "Dash 스티커", "price": "현장 배포", "image": { "src": ".agents/skills/card-news/assets/brand/dash.png", "fit": "contain" } },
+					{ "name": "Dash 키링", "price": "후원 리워드", "image": { "src": ".agents/skills/card-news/assets/brand/dash.png", "fit": "contain" } }
+				]
+			}
+		},
+		{
+			"template": "cta",
+			"data": {
+				"tone": "brand",
+				"kicker": "Tickets",
+				"title": "티켓 예매 오픈",
+				"lead": "티켓타코(Ticketaco)에서 지금 바로 예매하세요.",
+				"info": [
+					{ "label": "일시", "value": "2026.11.07 (토) 11:00" },
+					{ "label": "장소", "value": "AWS 코리아 (센터필드 EAST 12층)" }
+				],
+				"button": "티켓 예매하기",
+				"url": "ticketa.co/event/c9xsstcs"
+			}
+		}
+	]
+}

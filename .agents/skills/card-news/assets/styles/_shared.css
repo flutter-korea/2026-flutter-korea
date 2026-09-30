@@ -1,0 +1,32 @@
+/* ============================================================================
+   Card news — design styles (see scripts/styles.mjs)
+   Each style is scoped by `.style-<name>` and reuses the tokens in theme.css.
+   Portrait (1080×1350) is the reference canvas for every style.
+   ========================================================================== */
+
+/* Shared: Flutter Seoul mark */
+.fs-mark {
+	display: inline-flex;
+	flex: none;
+}
+.fs-mark svg {
+	width: 70px;
+	height: auto;
+	display: block;
+}
+.fs-mark.on-plate {
+	padding: 9px 11px;
+	border-radius: 12px;
+	background: var(--white);
+}
+.card[data-style] .where {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+.card[data-style] .where > :first-child {
+	font-weight: 700;
+}
+.card[data-style] .line {
+	display: block;
+}

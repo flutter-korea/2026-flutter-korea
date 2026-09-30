@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "sync:flutter": "node scripts/sync-flutter-schedule.mjs",
+    "card-news": "node .agents/skills/card-news/scripts/card-news.mjs",
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
