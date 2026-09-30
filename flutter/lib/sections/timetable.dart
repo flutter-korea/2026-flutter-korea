@@ -297,6 +297,7 @@ class _Session extends StatelessWidget {
       return const SizedBox(height: 40);
     }
     final speaker = (session['speaker'] as String?) ?? '';
+    final org = (session['org'] as String?) ?? '';
     final room = session['room'] as String?;
     final isGoogle = speaker.contains('Google');
     final image = session['image'] as String?;
@@ -387,7 +388,7 @@ class _Session extends StatelessWidget {
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   Text(
-                    speaker.isEmpty ? 'Flutter Korea 2026' : speaker,
+                    speaker.isEmpty ? 'Flutter Korea 2026' : (org.isEmpty ? speaker : '$speaker / $org'),
                     style: sans(
                       color: const Color(0xFF1681E8),
                       size: 14.5,

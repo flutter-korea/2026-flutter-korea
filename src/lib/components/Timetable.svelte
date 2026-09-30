@@ -3,10 +3,10 @@
 	import { reveal } from '$lib/actions.js';
 	import { base } from '$app/paths';
 
-	/** @param {{ room?: string; title?: string; speaker?: string }} session */
+	/** @param {{ room?: string; title?: string; speaker?: string; org?: string }} session */
 	function speakerMeta(session) {
 		if (!session?.speaker) return '';
-		return session.speaker;
+		return session.org ? `${session.speaker} / ${session.org}` : session.speaker;
 	}
 
 	/** @param {string | undefined} speaker */
