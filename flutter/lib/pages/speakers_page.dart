@@ -13,7 +13,6 @@ import '../widgets/hover.dart';
 import '../widgets/layout.dart';
 import '../widgets/reveal.dart';
 import '../widgets/rows.dart';
-import '../widgets/section_header.dart';
 import '../widgets/stroke_icon.dart';
 
 /// `/speakers` — Call-for-Speakers overview: levels, categories, submission
@@ -56,22 +55,31 @@ class _SpeakersPageState extends State<SpeakersPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _BackLink(label: t.back),
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 24),
 
                   // Page header (`.sp-head` max-width: 60ch at the BODY font).
                   Reveal(
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
-                          maxWidth: chWidth(FKType.body(vw), 60)),
+                        maxWidth: chWidth(FKType.body(vw), 60),
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Kicker(t.kicker),
-                          const SizedBox(height: 14.4),
+                          Text(
+                            'Flutter Korea 2026',
+                            style: sans(
+                              size: 15.2,
+                              weight: 700,
+                              color: FKColors.ink,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
                           Text(
                             t.title,
-                            style: heading(size: FKType.h2(vw))
-                                .copyWith(color: FKColors.blue700),
+                            style: heading(
+                              size: FKType.display(vw),
+                            ).copyWith(color: FKColors.blue500, height: 1.08),
                           ),
                           const SizedBox(height: 20),
                           Text(
@@ -82,7 +90,7 @@ class _SpeakersPageState extends State<SpeakersPage> {
                               height: 1.55,
                             ),
                           ),
-                          const SizedBox(height: 32),
+                          const SizedBox(height: 22),
                           Wrap(
                             spacing: 16,
                             runSpacing: 16,
@@ -92,7 +100,9 @@ class _SpeakersPageState extends State<SpeakersPage> {
                               FkButton(
                                 label: t.applyCta,
                                 disabled: t.closed,
-                                onTap: t.closed ? null : () => openExternal(Links.cfp),
+                                onTap: t.closed
+                                    ? null
+                                    : () => openExternal(Links.cfp),
                                 icon: t.closed ? null : FkIcons.upRightBoxed,
                                 iconSize: 17.6,
                               ),
@@ -109,7 +119,7 @@ class _SpeakersPageState extends State<SpeakersPage> {
                   ),
 
                   // Levels
-                  SizedBox(height: blockGap),
+                  SizedBox(height: blockGap * 0.72),
                   Reveal(
                     delayMs: 80,
                     child: _Block(
@@ -119,13 +129,13 @@ class _SpeakersPageState extends State<SpeakersPage> {
                         minCellWidth: 240,
                         gap: 16,
                         itemBuilder: (context, i, _) =>
-                            _LevelCard(index: i, level: t.levels[i]),
+                            _LevelCard(level: t.levels[i]),
                       ),
                     ),
                   ),
 
                   // Categories
-                  SizedBox(height: blockGap),
+                  SizedBox(height: blockGap * 0.72),
                   Reveal(
                     delayMs: 80,
                     child: _Block(
@@ -141,7 +151,7 @@ class _SpeakersPageState extends State<SpeakersPage> {
                   ),
 
                   // Submit checklist + perks
-                  SizedBox(height: blockGap),
+                  SizedBox(height: blockGap * 0.72),
                   TwoCol(
                     twoCol: vw >= Bp.twoCol,
                     gap: 16,
@@ -168,10 +178,7 @@ class _SpeakersPageState extends State<SpeakersPage> {
 
                   // Final CTA
                   SizedBox(height: (vw * 0.08).clamp(56.0, 88.0)),
-                  Reveal(
-                    delayMs: 80,
-                    child: _FinalCta(hub: _hub),
-                  ),
+                  Reveal(delayMs: 80, child: _FinalCta(hub: _hub)),
                 ],
               ),
             ),
@@ -199,8 +206,12 @@ class _BackLink extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              StrokeIcon(FkIcons.arrowLeftBack,
-                  size: 12.8, color: color, strokeWidth: 1.9),
+              StrokeIcon(
+                FkIcons.arrowLeftBack,
+                size: 12.8,
+                color: color,
+                strokeWidth: 1.9,
+              ),
               AnimatedContainer(
                 duration: FKMotion.quick,
                 curve: FKMotion.ease,
@@ -226,11 +237,11 @@ class _DateChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 17.6, vertical: 9.6),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: FKColors.paper,
+        color: FKColors.white,
         border: Border.all(color: FKColors.border),
-        borderRadius: BorderRadius.circular(FKRadii.md),
+        borderRadius: BorderRadius.circular(FKRadii.full),
       ),
       child: LabeledValue(
         label: label,
@@ -249,13 +260,8 @@ class _DateChip extends StatelessWidget {
 
 /// Mono accent sub-title shared by `_Block` and `_CardBlock`.
 Widget _blockTitle(String title) => Text(
-      title.toUpperCase(),
-      style: mono(
-        size: 12.8,
-        weight: 500,
-        color: FKColors.accent,
-        letterSpacing: 12.8 * 0.1,
-      ),
+      title,
+      style: sans(size: 19.2, weight: 700, color: FKColors.blue700),
     );
 
 class _Block extends StatelessWidget {
@@ -267,19 +273,14 @@ class _Block extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _blockTitle(title),
-        const SizedBox(height: 22.4),
-        child,
-      ],
+      children: [_blockTitle(title), const SizedBox(height: 22.4), child],
     );
   }
 }
 
 class _LevelCard extends StatelessWidget {
-  final int index;
   final SpeakerLevel level;
-  const _LevelCard({required this.index, required this.level});
+  const _LevelCard({required this.level});
 
   @override
   Widget build(BuildContext context) {
@@ -290,21 +291,22 @@ class _LevelCard extends StatelessWidget {
         transform: Matrix4.translationValues(0, hovered ? -3 : 0, 0),
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
-          color: FKColors.paper,
+          color: FKColors.white,
           border: Border.all(
-              color: hovered ? FKColors.borderStrong : FKColors.border),
-          borderRadius: BorderRadius.circular(FKRadii.lg),
+            color: hovered ? FKColors.borderStrong : FKColors.border,
+          ),
+          borderRadius: BorderRadius.circular(FKRadii.sm),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '0${index + 1}',
-              style: mono(size: 13.6, color: FKColors.textDim),
+              level.name,
+              style: heading(
+                size: 19.2,
+                height: 1.25,
+              ).copyWith(color: FKColors.blue700),
             ),
-            const SizedBox(height: 8),
-            Text(level.name,
-                style: heading(size: 19.2, height: 1.25)),
             const SizedBox(height: 8),
             Text(
               level.desc,
@@ -330,20 +332,20 @@ class _CategoryRow extends StatelessWidget {
         curve: FKMotion.ease,
         padding: const EdgeInsets.symmetric(horizontal: 17.6, vertical: 13.6),
         decoration: BoxDecoration(
-          color: hovered ? FKColors.paperStrong : FKColors.paper,
+          color: hovered ? FKColors.paper : FKColors.white,
           border: Border.all(
-              color: hovered ? FKColors.borderStrong : FKColors.border),
-          borderRadius: BorderRadius.circular(FKRadii.md),
+            color: hovered ? FKColors.borderStrong : FKColors.border,
+          ),
+          borderRadius: BorderRadius.circular(FKRadii.sm),
         ),
         child: Row(
           children: [
             Container(
               width: 27.2,
               height: 27.2,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                color: FKColors.paperStrong,
-                border: Border.all(color: FKColors.borderStrong),
+                color: FKColors.white,
               ),
               alignment: Alignment.center,
               child: Text(
@@ -382,7 +384,7 @@ class _CardBlock extends StatelessWidget {
   Widget build(BuildContext context) {
     return PanelSurface(
       padding: EdgeInsets.all((vw * 0.03).clamp(24.0, 36.0)),
-      color: accent ? FKColors.paperStrong : FKColors.paper,
+      color: FKColors.white,
       borderColor: accent ? FKColors.borderStrong : FKColors.border,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -395,9 +397,10 @@ class _CardBlock extends StatelessWidget {
               child: CheckRow(
                 items[i],
                 style: sans(
-                    size: FKType.body(vw),
-                    color: FKColors.textMuted,
-                    height: 1.5),
+                  size: FKType.body(vw),
+                  color: FKColors.textMuted,
+                  height: 1.5,
+                ),
               ),
             ),
         ],
@@ -424,7 +427,8 @@ class _FinalCta extends StatelessWidget {
         children: [
           ConstrainedBox(
             constraints: BoxConstraints(
-                maxWidth: chWidth(FKType.h3(vw), 22, weight: 800)),
+              maxWidth: chWidth(FKType.h3(vw), 22, weight: 800),
+            ),
             child: Text(
               t.cfp.title,
               textAlign: TextAlign.center,
