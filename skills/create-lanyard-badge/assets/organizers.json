@@ -1,0 +1,11 @@
+[
+  {"slug":"kaae","role":"ORGANIZER","korean_name":"가애KAAE","english_name":"Serim Jeon"},
+  {"slug":"hdd","role":"ORGANIZER","korean_name":"HDD","english_name":"Jongpyo Hong"},
+  {"slug":"song_seunghyun","role":"ORGANIZER","korean_name":"송 승 현","english_name":"Seunghyun Song"},
+  {"slug":"park_jaichang","role":"ORGANIZER","korean_name":"박 제 창","english_name":"Jaichang Park"},
+  {"slug":"aiden","role":"ORGANIZER","korean_name":"에 이 든","english_name":"Aiden"},
+  {"slug":"yang_useok","role":"ORGANIZER","korean_name":"양 우 석","english_name":"Useok Yang"},
+  {"slug":"note","role":"ORGANIZER","korean_name":"김 노 트","english_name":"Note Kim"},
+  {"slug":"ryu_jiyoung","role":"ORGANIZER","korean_name":"류 지 영","english_name":"Jiyoung Ryu"},
+  {"slug":"nine","role":"ORGANIZER","korean_name":"nine","english_name":"Chaehwan Leem","name_offset_y":-17}
+]

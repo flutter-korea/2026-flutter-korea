@@ -1,0 +1,39 @@
+{
+  "skill_name": "create-lanyard-badge",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "첨부한 이름 목록으로 오거나이저 랜야드 명찰을 전부 PNG로 만들어줘. 54×86mm 인쇄용과 전체 도련 버전, 한눈에 보는 샘플도 필요해.",
+      "expected_output": "Batch organizer badges with trim/full-artwork PNGs and a contact sheet.",
+      "files": ["assets/organizers.json"],
+      "expectations": [
+        "Creates one trim PNG and one full-artwork PNG per record",
+        "Trim PNGs are 2551×4063 pixels with 1200 dpi metadata",
+        "Full-artwork PNGs are 2749×4260 pixels with 1200 dpi metadata",
+        "Creates a contact sheet covering every record"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "STAFF 한 명 샘플을 만들어줘. 한글명은 김 코 덱 스, 영문명은 Codex Kim이고 상단 펀칭 영역은 비워둬.",
+      "expected_output": "A STAFF badge preserving the punch-clear region and fitting both name lines.",
+      "files": ["evals/files/staff_sample.json"],
+      "expectations": [
+        "Role text reads STAFF",
+        "Both supplied name lines are present",
+        "The punch clearance area is not covered by identity text"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "스피커 명찰 3장을 만들 건데 긴 영문 이름도 노란 안전영역 안에 들어가게 맞추고 인쇄소 전달용 PDF도 같이 생성해줘.",
+      "expected_output": "Three fitted SPEAKER badges plus a compiled print PDF when ReportLab is available.",
+      "files": ["evals/files/speaker_sample.json"],
+      "expectations": [
+        "Long names are fitted within the safe name width",
+        "Cards use the SPEAKER role treatment consistently",
+        "A multi-page PDF is produced when the optional dependency is available"
+      ]
+    }
+  ]
+}

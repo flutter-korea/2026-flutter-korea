@@ -1,0 +1,9 @@
+interface:
+  display_name: "Create Lanyard Badge"
+  short_description: "54×86mm 랜야드 네임카드와 인쇄용 PNG/PDF 생성"
+  brand_color: "#087BF3"
+  icon_small: "./assets/ai_track_icon.png"
+  icon_large: "./assets/flutter_dash.png"
+  default_prompt: "Use $create-lanyard-badge to generate print-ready lanyard name badges from a role and name list."
+policy:
+  allow_implicit_invocation: true
