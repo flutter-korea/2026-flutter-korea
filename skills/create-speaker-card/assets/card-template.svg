@@ -16,8 +16,8 @@
   <circle cx="920" cy="111" r="110" fill="none" stroke="#6d89b8" stroke-width="2"/>
   <text x="78" y="105" class="heading">Flutter Korea 2026</text>
   <defs>
-    <g id="ai-chip"><rect x="78" y="184" width="190" height="58" rx="29" fill="#eff6ff"/><circle cx="110" cy="213" r="15" fill="#2a7de1"/><path d="M104 207h12M104 213h12M104 219h12M110 201v24" stroke="#fff" stroke-width="2"/><text x="137" y="221" class="chip">AI Track</text></g>
-    <g id="flutter-chip"><rect x="78" y="184" width="236" height="58" rx="29" fill="#eff6ff"/><path d="M103 213l25-25h26l-25 25 25 25h-26z" fill="#27b7f6"/><path d="M128 213l13-13 13 13-13 13z" fill="#166dcc"/><text x="170" y="221" class="chip">Flutter Track</text></g>
+    <g id="ai-chip"><rect x="78" y="184" width="216" height="58" rx="29" fill="#eff6ff"/><image href="{{AI_TRACK_ICON}}" x="95" y="198" width="30" height="30"/><text x="137" y="221" class="chip">AI Track</text></g>
+    <g id="flutter-chip"><rect x="78" y="184" width="266" height="58" rx="29" fill="#eff6ff"/><svg x="103" y="199" width="28" height="28" viewBox="0 0 28 28" overflow="hidden"><image href="{{FLUTTER_LOGO}}" width="99" height="28" preserveAspectRatio="xMinYMid slice"/></svg><text x="141" y="221" class="chip">Flutter Track</text></g>
   </defs>
   <use href="#{{ACTIVE_CHIP}}"/>
   {{TITLE_LINES}}

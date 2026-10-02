@@ -33,6 +33,8 @@ const wrapTitle = (title) => {
 const mime = args.photo && { '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp' }[extname(args.photo).toLowerCase()];
 if (args.photo && !mime) throw new Error('Photo must be a JPG, PNG, or WebP file');
 let svg = await readFile(new URL('../assets/card-template.svg', import.meta.url), 'utf8');
+const flutterLogo = await readFile(new URL('../assets/flutter-logo.png', import.meta.url));
+const aiTrackIcon = await readFile(new URL('../assets/ai-track-icon.svg', import.meta.url));
 const photo = args.photo && await readFile(args.photo);
 const titleLines = wrapTitle(args.title).map((line, index) => `<text x="78" y="${372 + index * 74}" class="talk">${escapeXml(line)}</text>`).join('\n  ');
 const portraitContent = photo
@@ -45,6 +47,8 @@ const replacement = {
   '{{TIME}}': escapeXml(args.time),
   '{{PORTRAIT_CONTENT}}': portraitContent,
   '{{ACTIVE_CHIP}}': activeChip,
+  '{{FLUTTER_LOGO}}': `data:image/png;base64,${flutterLogo.toString('base64')}`,
+  '{{AI_TRACK_ICON}}': `data:image/svg+xml;base64,${aiTrackIcon.toString('base64')}`,
 };
 for (const [token, value] of Object.entries(replacement)) svg = svg.replaceAll(token, value);
 const outputPath = resolve(args.out);
