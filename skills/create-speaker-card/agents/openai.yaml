@@ -1,0 +1,9 @@
+interface:
+  display_name: "Create Speaker Card"
+  short_description: "Render a Flutter Korea 2026 speaker card"
+  icon_small: "./assets/preview.png"
+  icon_large: "./assets/preview.png"
+  brand_color: "#2460AE"
+  default_prompt: "Use $create-speaker-card to render a Flutter Korea speaker card as a PNG."
+policy:
+  allow_implicit_invocation: true

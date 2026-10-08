@@ -123,6 +123,7 @@ export const dict = {
 			kicker: 'Timetable',
 			title: '타임테이블',
 			lead: 'AI Track과 Flutter Track으로 나뉘어 진행되는 11:00부터 18:00까지의 프로그램입니다.',
+			dateLine: '2026. 11. 07 SAT · AWS 코리아',
 			frame: [
 				{ label: 'DATE', value: '2026.11.07 (토)' },
 				{ label: 'DOORS', value: '10:30 접수' },
@@ -135,25 +136,25 @@ export const dict = {
 				columns: ['시작', '종료', '룸', '세션', '발표자'],
 				rows: [
 					{ start: '10:00', end: '11:00', ai: { room: '401호', title: '장비 체크', speaker: '오거나이저 1' }, flutter: { room: '300/301/400호', title: '장비 체크', speaker: '오거나이저 1' } },
-					{ start: '11:00', end: '11:10', shared: '오프닝', speaker: 'Flutter Seoul' },
-					{ start: '11:10', end: '11:40', shared: 'Keynote: Flutter is Everywhere (ENG)', speaker: 'Google / Craig Labenz & Khanh Nguyen' },
+					{ start: '11:00', end: '11:10', shared: '오프닝', speaker: '송승현', image: '/assets/flutter-seoul/flutter-seoul-logo-large.svg' },
+					{ start: '11:10', end: '11:40', shared: '키노트: 어디서나 만나는 Flutter (ENG)', speaker: 'Craig Labenz & Khanh Nguyen', org: 'Google' },
 					{ start: '11:40', end: '11:50', kind: 'break', label: '휴식' },
-					{ start: '11:50', end: '12:20', ai: { room: '401호', title: '천재 개발자와 그 이후', speaker: '박성수', org: 'COSMAX', image: '/assets/flutter-seoul/speaker/park-seongsu.jpg' }, flutter: { room: '300/301/400호', title: '첫 프로젝트가 글로벌 앱 런칭이라구요?', speaker: '이웅재', image: '/assets/flutter-seoul/speaker/lee-woongjae.jpg' } },
+					{ start: '11:50', end: '12:20', ai: { room: '401호', title: '천재 개발자와 그 이후', speaker: '박성수', org: 'COSMAX', image: '/assets/flutter-seoul/speaker/sungsoo-park.jpg' }, flutter: { room: '300/301/400호', title: '첫 프로젝트가 글로벌 앱 런칭이라구요?', speaker: '이웅재', org: 'KM Park', image: '/assets/flutter-seoul/speaker/woongjae-lee.jpg' } },
 					{ start: '12:20', end: '13:00', shared: '네트워킹 런치', speaker: '' },
-					{ start: '13:00', end: '13:30', ai: { room: '401호', title: 'llamadart로 시작하는 플러터 온디바이스 에이전트(feat: tool call parser)', speaker: '권태형', image: '/assets/flutter-seoul/speaker/kwon-taehyeong.jpg' }, flutter: { room: '300/301/400호', title: '안 되는 건 안 된다고 말하는 플러그인: 알람 플러그인으로 본 capability-first federated plugin 설계', speaker: '유동민', image: '/assets/flutter-seoul/speaker/yoo-dongmin.png' } },
+					{ start: '13:00', end: '13:30', ai: { room: '401호', title: 'llamadart로 시작하는 플러터 온디바이스 에이전트(feat: tool call parser)', speaker: '권태형', org: '고려대학교', image: '/assets/flutter-seoul/speaker/taehyung-kwon.jpg' }, flutter: { room: '300/301/400호', title: '안 되는 건 안 된다고 말하는 플러그인: 알람 플러그인으로 본 capability-first federated plugin 설계', speaker: '유동민', image: '/assets/flutter-seoul/speaker/dongmin-yu.png' } },
 					{ start: '13:30', end: '13:40', kind: 'break', label: '휴식' },
-					{ start: '13:40', end: '14:10', ai: { room: '401호', title: 'AI와 함께 스타트업에서 생존하기', speaker: '한상욱', image: '/assets/flutter-seoul/speaker/han-sangwook.jpeg' }, flutter: { room: '300/301/400호', title: 'Technical Session: A2UI: Build dynamic Flutter apps with Generative UI (ENG)', speaker: 'Google / Khanh Nguyen' } },
+					{ start: '13:40', end: '14:10', ai: { room: '401호', title: 'AI와 함께 스타트업에서 생존하기', speaker: '한상욱', org: '넛지헬스케어(주)', image: '/assets/flutter-seoul/speaker/sangwook-han.jpeg' }, flutter: { room: '300/301/400호', title: '기술 세션: A2UI로 생성형 UI 기반의 동적인 Flutter 앱 만들기 (ENG)', speaker: 'Khanh Nguyen', org: 'Google', image: '/assets/flutter-seoul/speaker/khanh-nguyen.jpg' } },
 					{ start: '14:10', end: '14:20', kind: 'break', label: '휴식' },
-					{ start: '14:20', end: '14:50', ai: { room: '401호', title: 'AI가 개발자를 대체할까 걱정했는데, 1년 동안 같이 일해보니 일단 재밌습니다', speaker: '김준호', image: '/assets/flutter-seoul/speaker/kim-junho.jpeg' }, flutter: { room: '300/301/400호', title: 'Technical Session: Building the harness: How we grade and optimize AI for Dart & Flutter (ENG)', speaker: 'Google / Mariam Hasnany' } },
+					{ start: '14:20', end: '14:50', ai: { room: '401호', title: 'AI가 개발자를 대체할까 걱정했는데, 1년 동안 같이 일해보니 일단 재밌습니다', speaker: '김준호', image: '/assets/flutter-seoul/speaker/junho-kim.jpeg' }, flutter: { room: '300/301/400호', title: '기술 세션: Dart & Flutter AI 평가와 최적화를 위한 하네스 구축 (ENG)', speaker: 'Mariam Hasnany', org: 'Google', image: '/assets/flutter-seoul/speaker/mariam-hasnany.jpg' } },
 					{ start: '14:50', end: '15:00', kind: 'break', label: '휴식' },
-					{ start: '15:00', end: '15:30', highlight: true, ai: { room: '401호', title: 'Agent와 함께 Flutter 운영 프로젝트 일대기', speaker: '박준우', image: '/assets/flutter-seoul/speaker/park-junwoo.jpg' }, flutter: { room: '300/301/400호', title: 'Flutter Desktop 멀티윈도우 개발기', speaker: '추세일' } },
+					{ start: '15:00', end: '15:30', highlight: true, ai: { room: '401호', title: 'Agent와 함께 Flutter 운영 프로젝트 일대기', speaker: '박준우', org: '벳칭', image: '/assets/flutter-seoul/speaker/junewoo-park.jpg' }, flutter: { room: '300/301/400호', title: 'Flutter Desktop 멀티윈도우 개발기', speaker: '추세일', org: 'SK Telecom', image: '/assets/flutter-seoul/speaker/chu-seil.png' } },
 					{ start: '15:30', end: '15:40', kind: 'break', label: '휴식' },
-					{ start: '15:40', end: '16:10', highlight: true, ai: { room: '401호', title: '비전공 기계설계자가 AI를 활용해 SW를 개발해 온 과정과 경험', speaker: '유진식', image: '/assets/flutter-seoul/speaker/yoo-jinsik.jpg' }, flutter: { room: '300/301/400호', title: 'Navigating Flutter: AI 시대, 우리는 왜 Engine을 이해해야 하는가', speaker: '박예승', image: '/assets/flutter-seoul/speaker/park-yeseung.jpg' } },
+					{ start: '15:40', end: '16:10', highlight: true, ai: { room: '401호', title: '비전공 기계설계자가 AI를 활용해 SW를 개발해 온 과정과 경험', speaker: '유진식', image: '/assets/flutter-seoul/speaker/jinshik-yu.jpg' }, flutter: { room: '300/301/400호', title: 'Navigating Flutter: AI 시대, 우리는 왜 Engine을 이해해야 하는가', speaker: '박예승', image: '/assets/flutter-seoul/speaker/yeseung-park.jpg' } },
 					{ start: '16:10', end: '16:20', kind: 'break', label: '휴식' },
-					{ start: '16:20', end: '16:50', ai: { room: '401호', title: '10년 차 개발자의 Flutter × AI: 패키지의 한계를 넘어서', speaker: '가애KAAE', image: '/assets/flutter-seoul/speaker/kaae.jpeg' }, flutter: { room: '300/301/400호', title: 'dart:ffi 네이티브 다루기', speaker: '최선효', image: '/assets/flutter-seoul/speaker/choi-sunhyo.jpg' } },
+					{ start: '16:20', end: '16:50', ai: { room: '401호', title: '10년 차 개발자의 Flutter × AI: 패키지의 한계를 넘어서', speaker: '가애KAAE', org: '(주)위밋모빌리티', image: '/assets/flutter-seoul/speaker/serim-jeon.jpeg' }, flutter: { room: '300/301/400호', title: 'dart:ffi 네이티브 다루기', speaker: '최선효', org: '헬스클라우드(주)', image: '/assets/flutter-seoul/speaker/seonhyo-choi.jpg' } },
 					{ start: '16:50', end: '17:00', kind: 'break', label: '휴식' },
-					{ start: '17:00', end: '17:30', shared: 'Q&A Panel: Ask the Flutter Core Team & Fireside Chat (ENG)', speaker: 'Google / Craig Labenz, Khanh Nguyen, & Mariam Hasnany' },
-					{ start: '17:30', end: '18:00', shared: '단체 사진', speaker: '' },
+					{ start: '17:00', end: '17:50', shared: 'Q&A 패널: Flutter 코어 팀과의 대화 (ENG)', speaker: 'Craig Labenz, Khanh Nguyen & Mariam Hasnany', org: 'Google' },
+					{ start: '17:50', end: '18:00', shared: '단체 사진', speaker: '' },
 					{ start: '18:00', end: '19:00', empty: true }
 				]
 			}
@@ -214,6 +215,30 @@ export const dict = {
 			ctaTitle: '후원사로 함께하시겠어요?',
 			ctaBody: '국내 최대 규모의 Flutter 커뮤니티와 만나고, 브랜드를 개발자에게 각인시킬 기회입니다.',
 			cta: '후원 문의하기'
+		},
+
+		speakerPage: {
+			metaTitle: '연사 모집 마감 · Flutter Korea 2026',
+			metaDesc: 'Flutter Korea 2026 연사 모집 안내와 세션 분야, 발표자 혜택을 확인하세요.',
+			back: '홈으로 돌아가기',
+			title: '연사 모집이 마감되었습니다',
+			intro: 'Flutter 생태계에 보내주신 많은 관심과 지원에 감사드립니다. Flutter Korea 2026 연사 모집이 마감되었습니다. 확정된 세션은 타임테이블에서 확인하실 수 있습니다.',
+			dateLabel: '행사일',
+			date: '2026년 11월 7일 (토) · AWS 코리아',
+			closedLabel: '연사 모집 마감',
+			levelsTitle: '발표 난이도',
+			levels: [
+				{ name: 'Beginner', desc: '입문 · 기초 (Introduction / Fundamentals)' },
+				{ name: 'Intermediate', desc: '응용 · 일반 패턴 (Applied skills / Common patterns)' },
+				{ name: 'Advanced', desc: '아키텍처 · 심화 · 내부 구조 (Architecture / Deep Dive / Internals)' }
+			],
+			categoriesTitle: '세션 주제 분야',
+			categories: ['State Management', 'Performance Optimization', 'UI/UX & Design', 'Backend / Firebase Integration', 'Testing & CI/CD', 'Platform Specific (Web/Desktop/Mobile)', 'Dart Language Features', 'Case Studies / Real-world Apps', 'Package Development', 'AI, GenAI, Agents', 'Other'],
+			submitTitle: '지원 시 작성 항목',
+			submitItems: ['성함 · 이메일', '세션 제목', '난이도 및 주제 분야', '세션 간략 소개 (Abstract)', '발표 경험', '라이브 데모 포함 여부', 'SNS · GitHub (선택)'],
+			perksTitle: '연사 혜택',
+			perks: ['연사 티켓 무료 제공', '공식 발표 슬라이드 템플릿 제공', '세션 주제 자유 제안'],
+			timetableCta: '타임테이블 보기'
 		},
 
 		previousEventsPage: {
@@ -650,6 +675,7 @@ export const dict = {
 			kicker: 'Timetable',
 			title: 'Timetable',
 			lead: 'A full day from 11:00 to 18:00, split across the AI Track and Flutter Track.',
+			dateLine: 'NOV 07, 2026 SAT · AWS Korea',
 			frame: [
 				{ label: 'DATE', value: 'Sat, Nov 7, 2026' },
 				{ label: 'DOORS', value: '10:30 check-in' },
@@ -662,25 +688,25 @@ export const dict = {
 				columns: ['Start', 'End', 'Room', 'Session', 'Speaker'],
 				rows: [
 					{ start: '10:00', end: '11:00', ai: { room: 'Room 401', title: 'Equipment check', speaker: 'Organizer 1' }, flutter: { room: 'Rooms 300/301/400', title: 'Equipment check', speaker: 'Organizer 1' } },
-					{ start: '11:00', end: '11:10', shared: 'Opening', speaker: 'Flutter Seoul' },
-					{ start: '11:10', end: '11:40', shared: 'Keynote: Flutter is Everywhere (ENG)', speaker: 'Google / Craig Labenz & Khanh Nguyen' },
+					{ start: '11:00', end: '11:10', shared: 'Opening', speaker: 'Song SeungHyeon', image: '/assets/flutter-seoul/flutter-seoul-logo-large.svg' },
+					{ start: '11:10', end: '11:40', shared: 'Keynote: Flutter is Everywhere (ENG)', speaker: 'Craig Labenz & Khanh Nguyen', org: 'Google' },
 					{ start: '11:40', end: '11:50', kind: 'break', label: 'Break' },
-					{ start: '11:50', end: '12:20', ai: { room: 'Room 401', title: 'After becoming a genius developer', speaker: 'Park Seongsu', org: 'COSMAX', image: '/assets/flutter-seoul/speaker/park-seongsu.jpg' }, flutter: { room: 'Rooms 300/301/400', title: 'Your first project is a global app launch?', speaker: 'Lee Woongjae', image: '/assets/flutter-seoul/speaker/lee-woongjae.jpg' } },
+					{ start: '11:50', end: '12:20', ai: { room: 'Room 401', title: 'After becoming a genius developer', speaker: 'Sungsoo Park', org: 'COSMAX', image: '/assets/flutter-seoul/speaker/sungsoo-park.jpg' }, flutter: { room: 'Rooms 300/301/400', title: 'Your first project is a global app launch?', speaker: 'Woongjae Lee', org: 'KM Park', image: '/assets/flutter-seoul/speaker/woongjae-lee.jpg' } },
 					{ start: '12:20', end: '13:00', shared: 'Networking lunch', speaker: '' },
-					{ start: '13:00', end: '13:30', ai: { room: 'Room 401', title: 'Starting with llamadart: a Flutter on-device agent (feat. tool call parser)', speaker: 'Kwon Taehyeong', image: '/assets/flutter-seoul/speaker/kwon-taehyeong.jpg' }, flutter: { room: 'Rooms 300/301/400', title: 'A capability-first federated plugin design through an alarm plugin', speaker: 'Yoo Dongmin', image: '/assets/flutter-seoul/speaker/yoo-dongmin.png' } },
+					{ start: '13:00', end: '13:30', ai: { room: 'Room 401', title: 'Starting with llamadart: a Flutter on-device agent (feat. tool call parser)', speaker: 'Kwon Taehyeong', image: '/assets/flutter-seoul/speaker/taehyung-kwon.jpg' }, flutter: { room: 'Rooms 300/301/400', title: 'A capability-first federated plugin design through an alarm plugin', speaker: 'Yoo Dongmin', image: '/assets/flutter-seoul/speaker/dongmin-yu.png' } },
 					{ start: '13:30', end: '13:40', kind: 'break', label: 'Break' },
-					{ start: '13:40', end: '14:10', ai: { room: 'Room 401', title: 'Surviving at a startup with AI', speaker: 'Han Sangwook', image: '/assets/flutter-seoul/speaker/han-sangwook.jpeg' }, flutter: { room: 'Rooms 300/301/400', title: 'Technical Session: A2UI: Build dynamic Flutter apps with Generative UI (ENG)', speaker: 'Google / Khanh Nguyen' } },
+					{ start: '13:40', end: '14:10', ai: { room: 'Room 401', title: 'Surviving at a startup with AI', speaker: 'Sangwook Han', org: 'Nudge Healthcare, Inc.', image: '/assets/flutter-seoul/speaker/sangwook-han.jpeg' }, flutter: { room: 'Rooms 300/301/400', title: 'Technical Session: A2UI: Build dynamic Flutter apps with Generative UI (ENG)', speaker: 'Khanh Nguyen', org: 'Google', image: '/assets/flutter-seoul/speaker/khanh-nguyen.jpg' } },
 					{ start: '14:10', end: '14:20', kind: 'break', label: 'Break' },
-					{ start: '14:20', end: '14:50', ai: { room: 'Room 401', title: 'I worried AI would replace developers, but working together for a year was fun', speaker: 'Kim Junho', image: '/assets/flutter-seoul/speaker/kim-junho.jpeg' }, flutter: { room: 'Rooms 300/301/400', title: 'Technical Session: Building the harness: How we grade and optimize AI for Dart & Flutter (ENG)', speaker: 'Google / Mariam Hasnany' } },
+					{ start: '14:20', end: '14:50', ai: { room: 'Room 401', title: 'I worried AI would replace developers, but working together for a year was fun', speaker: 'Kim Junho', image: '/assets/flutter-seoul/speaker/junho-kim.jpeg' }, flutter: { room: 'Rooms 300/301/400', title: 'Technical Session: Building the harness: How we grade and optimize AI for Dart & Flutter (ENG)', speaker: 'Mariam Hasnany', org: 'Google', image: '/assets/flutter-seoul/speaker/mariam-hasnany.jpg' } },
 					{ start: '14:50', end: '15:00', kind: 'break', label: 'Break' },
-					{ start: '15:00', end: '15:30', highlight: true, ai: { room: 'Room 401', title: 'A Flutter operations project with an Agent', speaker: 'Park Junwoo', image: '/assets/flutter-seoul/speaker/park-junwoo.jpg' }, flutter: { room: 'Rooms 300/301/400', title: 'Flutter Desktop multi-window development', speaker: 'Chuseil' } },
+					{ start: '15:00', end: '15:30', highlight: true, ai: { room: 'Room 401', title: 'A Flutter operations project with an Agent', speaker: 'Junewoo Park', org: 'Vetching', image: '/assets/flutter-seoul/speaker/junewoo-park.jpg' }, flutter: { room: 'Rooms 300/301/400', title: 'Flutter Desktop multi-window development', speaker: 'Seil Chu', org: 'SK Telecom', image: '/assets/flutter-seoul/speaker/chu-seil.png' } },
 					{ start: '15:30', end: '15:40', kind: 'break', label: 'Break' },
-					{ start: '15:40', end: '16:10', highlight: true, ai: { room: 'Room 401', title: 'A mechanical designer without a software background: the journey and experience of developing software with AI', speaker: 'Yoo Jinsik', image: '/assets/flutter-seoul/speaker/yoo-jinsik.jpg' }, flutter: { room: 'Rooms 300/301/400', title: 'Navigating Flutter: Why understand the Engine in the AI era', speaker: 'Park Yeseung', image: '/assets/flutter-seoul/speaker/park-yeseung.jpg' } },
+					{ start: '15:40', end: '16:10', highlight: true, ai: { room: 'Room 401', title: 'A mechanical designer without a software background: the journey and experience of developing software with AI', speaker: 'Yoo Jinsik', image: '/assets/flutter-seoul/speaker/jinshik-yu.jpg' }, flutter: { room: 'Rooms 300/301/400', title: 'Navigating Flutter: Why understand the Engine in the AI era', speaker: 'Park Yeseung', image: '/assets/flutter-seoul/speaker/yeseung-park.jpg' } },
 					{ start: '16:10', end: '16:20', kind: 'break', label: 'Break' },
-					{ start: '16:20', end: '16:50', ai: { room: 'Room 401', title: 'A decade-long developer’s Flutter × AI: beyond package limits', speaker: 'KAAE', image: '/assets/flutter-seoul/speaker/kaae.jpeg' }, flutter: { room: 'Rooms 300/301/400', title: 'Working with dart:ffi and native code', speaker: 'Choi Sunhyo', image: '/assets/flutter-seoul/speaker/choi-sunhyo.jpg' } },
+					{ start: '16:20', end: '16:50', ai: { room: 'Room 401', title: 'A decade-long developer’s Flutter × AI: beyond package limits', speaker: 'KAAE', image: '/assets/flutter-seoul/speaker/serim-jeon.jpeg' }, flutter: { room: 'Rooms 300/301/400', title: 'Working with dart:ffi and native code', speaker: 'Choi Sunhyo', image: '/assets/flutter-seoul/speaker/seonhyo-choi.jpg' } },
 					{ start: '16:50', end: '17:00', kind: 'break', label: 'Break' },
-					{ start: '17:00', end: '17:30', shared: 'Q&A Panel: Ask the Flutter Core Team & Fireside Chat (ENG)', speaker: 'Google / Craig Labenz, Khanh Nguyen, & Mariam Hasnany' },
-					{ start: '17:30', end: '18:00', shared: 'Group photo', speaker: '' },
+					{ start: '17:00', end: '17:50', shared: 'Q&A Panel: Ask the Flutter Core Team & Fireside Chat (ENG)', speaker: 'Craig Labenz, Khanh Nguyen & Mariam Hasnany', org: 'Google' },
+					{ start: '17:50', end: '18:00', shared: 'Group photo', speaker: '' },
 					{ start: '18:00', end: '19:00', empty: true }
 				]
 			}
@@ -741,6 +767,30 @@ export const dict = {
 			ctaTitle: 'Become a sponsor',
 			ctaBody: 'Meet Korea’s largest Flutter community and put your brand in front of developers who build.',
 			cta: 'Sponsor Inquiry'
+		},
+
+		speakerPage: {
+			metaTitle: 'Call for Speakers Closed · Flutter Korea 2026',
+			metaDesc: 'Learn about the Flutter Korea 2026 speaker program, session categories, and speaker benefits.',
+			back: 'Back to home',
+			title: 'Call for Speakers is Closed',
+			intro: 'Thank you for your interest and support for the Flutter ecosystem. Applications to speak at Flutter Korea 2026 are now closed. Explore the confirmed sessions in the timetable.',
+			dateLabel: 'Event date',
+			date: 'Saturday, November 7, 2026 · AWS Korea',
+			closedLabel: 'Applications closed',
+			levelsTitle: 'Talk level',
+			levels: [
+				{ name: 'Beginner', desc: 'Introduction / Fundamentals' },
+				{ name: 'Intermediate', desc: 'Applied skills / Common patterns' },
+				{ name: 'Advanced', desc: 'Architecture / Deep Dive / Internals' }
+			],
+			categoriesTitle: 'Session categories',
+			categories: ['State Management', 'Performance Optimization', 'UI/UX & Design', 'Backend / Firebase Integration', 'Testing & CI/CD', 'Platform Specific (Web/Desktop/Mobile)', 'Dart Language Features', 'Case Studies / Real-world Apps', 'Package Development', 'AI, GenAI, Agents', 'Other'],
+			submitTitle: 'Application details',
+			submitItems: ['Name · Email', 'Session title', 'Talk level and category', 'Session abstract', 'Previous speaking experience', 'Whether you’ll include a live demo', 'Social · GitHub (optional)'],
+			perksTitle: 'Speaker benefits',
+			perks: ['Free speaker ticket', 'Official slide template provided', 'Propose any session topic'],
+			timetableCta: 'View timetable'
 		},
 
 		previousEventsPage: {

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
+  <defs>
+    <clipPath id="portrait"><circle cx="836" cy="1025" r="146"/></clipPath>
+    <style>
+      .heading,.talk,.name,.footer,.chip { font-family: Arial, sans-serif; fill: #102f70; }
+      .heading { font-size: 31px; font-weight: 800; }
+      .talk { font-size: 58px; font-weight: 800; }
+      .name { font-size: 39px; font-weight: 800; }
+      .footer { font-size: 28px; font-weight: 800; }
+      .chip { font-size: 23px; font-weight: 800; }
+    </style>
+  </defs>
+  <rect width="1080" height="1350" fill="#fff"/>
+  <path d="M0 0H270L69 211 0 180Z" fill="#e1eeff"/>
+  <circle cx="920" cy="111" r="181" fill="#dceaff"/>
+  <circle cx="920" cy="111" r="110" fill="none" stroke="#6d89b8" stroke-width="2"/>
+  <text x="78" y="105" class="heading">Flutter Korea 2026</text>
+  <defs>
+    <g id="ai-chip"><rect x="78" y="184" width="216" height="58" rx="29" fill="#eff6ff"/><image href="{{AI_TRACK_ICON}}" x="95" y="198" width="30" height="30"/><text x="137" y="221" class="chip">AI Track</text></g>
+    <g id="flutter-chip"><rect x="78" y="184" width="266" height="58" rx="29" fill="#eff6ff"/><svg x="103" y="199" width="28" height="28" viewBox="0 0 28 28" overflow="hidden"><image href="{{FLUTTER_LOGO}}" width="99" height="28" preserveAspectRatio="xMinYMid slice"/></svg><text x="141" y="221" class="chip">Flutter Track</text></g>
+  </defs>
+  <use href="#{{ACTIVE_CHIP}}"/>
+  {{TITLE_LINES}}
+  <circle cx="995" cy="531" r="13" fill="#2f73c9"/><g fill="#102f70"><circle cx="1004" cy="600" r="5"/><circle cx="1030" cy="600" r="5"/><circle cx="1004" cy="626" r="5"/><circle cx="1030" cy="626" r="5"/></g>
+  <path d="M78 819h104" stroke="#102f70" stroke-width="8" stroke-linecap="round"/>
+  <text x="78" y="884" class="name">{{SPEAKER_NAME}}</text>
+  <rect x="78" y="933" width="385" height="86" rx="43" fill="#eff6ff"/><circle cx="122" cy="976" r="25" fill="none" stroke="#102f70" stroke-width="6"/><path d="M122 959v20l14 9" stroke="#102f70" stroke-width="6" stroke-linecap="round"/><text x="174" y="987" class="name" font-size="31">{{TIME}}</text>
+  <circle cx="836" cy="1025" r="158" fill="#fff" stroke="#2460ae" stroke-width="8"/>{{PORTRAIT_CONTENT}}
+  <path d="M0 1191c144-85 292-20 491 159H0Z" fill="#c7dbf5"/>
+  <text x="78" y="1260" class="footer">2026.11.07 (Sat)</text><path d="M338 1226v52" stroke="#102f70" stroke-width="3"/><text x="374" y="1260" class="footer">AWS Korea · Seoul</text>
+</svg>
