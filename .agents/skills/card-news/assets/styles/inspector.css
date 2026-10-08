@@ -1,0 +1,166 @@
+/* ==========================================================================
+   inspector — Flutter debug-paint outlines + debug banner
+   ========================================================================== */
+.card.style-inspector {
+	/* Flutter's own debug colours: CheckedModeBanner red has no site-palette
+	   equivalent; the paint outline uses the brand sky */
+	--in-banner: #b71c1c;
+	--in-paint: var(--sky);
+	padding: 64px 72px 56px;
+	gap: 28px;
+}
+.style-inspector .in-banner {
+	position: absolute;
+	top: 46px;
+	right: -92px;
+	width: 380px;
+	transform: rotate(45deg);
+	background: var(--in-banner);
+	color: var(--white);
+	text-align: center;
+	padding: 10px 0;
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 800;
+	letter-spacing: 0.14em;
+	box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+	z-index: 5;
+}
+.style-inspector .in-top {
+	display: flex;
+	align-items: center;
+}
+.style-inspector .in-brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 16px;
+	font-size: 30px;
+	font-weight: 800;
+}
+.style-inspector .in-brand .fs-mark.on-plate {
+	box-shadow: inset 0 0 0 1.5px var(--border);
+}
+.style-inspector .card-body {
+	gap: 34px;
+	/* hero / talk / meta spread over the full body so short decks don't leave
+	   a dead band above the footer */
+	justify-content: space-between;
+	/* debug outlines sit 10px outside each box and labels 46px above it; pad the
+	   (overflow-clipped) body so they stay inside, and pull it back so the
+	   content edge still lines up with the header */
+	padding: 16px;
+	margin-inline: -16px;
+}
+.style-inspector .in-box {
+	position: relative;
+	outline: 2.5px solid var(--in-paint);
+	outline-offset: 10px;
+}
+.style-inspector .in-tag {
+	position: absolute;
+	top: -46px;
+	left: -12px;
+	padding: 2px 12px;
+	background: var(--in-paint);
+	color: var(--blue-900);
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	white-space: nowrap;
+	border-radius: 6px 6px 6px 0;
+}
+.style-inspector .in-hero {
+	display: grid;
+	grid-template-columns: var(--in-avatar) 1fr;
+	gap: 56px;
+	align-items: center;
+	margin-top: 36px;
+}
+.style-inspector .in-photo {
+	width: var(--in-avatar);
+	height: var(--in-avatar);
+	border-radius: 50%;
+	outline-offset: 8px;
+}
+.style-inspector .in-photo .frame {
+	width: 100%;
+	height: 100%;
+}
+.style-inspector .in-who {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	align-items: flex-start;
+}
+.style-inspector .in-name {
+	font-size: 112px;
+	line-height: 1;
+	letter-spacing: -0.045em;
+}
+.style-inspector .in-role {
+	font-size: 32px;
+	font-weight: 700;
+	color: var(--text-muted);
+}
+.style-inspector .in-chip {
+	padding: 8px 20px;
+	border-radius: var(--r-full);
+	background: var(--accent);
+	color: var(--white);
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+}
+.style-inspector .in-talk {
+	margin-top: 60px;
+	padding: 36px 40px;
+	background: var(--paper);
+	border-radius: var(--r-lg);
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+.style-inspector .in-label {
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	color: var(--text-dim);
+}
+.style-inspector .in-talk h3 {
+	font-size: 52px;
+	line-height: 1.24;
+}
+.style-inspector .in-meta {
+	margin-top: 56px;
+	display: flex;
+	gap: 44px;
+	font-size: 34px;
+	font-weight: 800;
+	font-variant-numeric: tabular-nums;
+}
+.style-inspector .in-meta b {
+	display: block;
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	color: var(--text-dim);
+	margin-bottom: 6px;
+}
+.style-inspector .in-foot {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	padding-top: 24px;
+	border-top: 1.5px solid var(--border);
+	font-size: 25px;
+	color: var(--text-muted);
+}
+.style-inspector .in-foot > span:last-child {
+	font-family: var(--font-mono);
+	font-size: 26px;
+}
+html.wire .style-inspector .in-box {
+	outline: none;
+}

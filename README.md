@@ -58,6 +58,34 @@ Shared URLs (Call for Speakers form, ticket platform, contact) live in the `link
 
 ---
 
+## SNS card news (AI agent skill)
+
+`.agents/skills/card-news/` is an [Agent Skills](https://agentskills.io) skill that turns event info
+(speakers, sessions, overview, timetable, sponsors, goods, ticket notices) into SNS card images in
+this site's design theme. It works in **Claude Code**, **Codex**, and **Gemini CLI**: Codex and Gemini
+read `.agents/skills/` directly, and `.claude/skills/card-news` is a symlink to the same folder.
+
+Ask your agent for a card, e.g. *"가애KAAE 연사 소개 카드뉴스 만들어줘"*, or drive the CLI yourself:
+
+```bash
+bun run card-news scaffold speaker --name 가애KAAE # draft card-news/<slug>/spec.json from content.js
+bun run card-news styles                          # design styles; pick one with --style or spec.style
+bun run card-news compare <slug>                  # your own card rendered in every style, side by side
+bun run card-news build <slug>                    # HTML cards + preview.html (structure review)
+bun run card-news check <slug>                    # headless overflow / image-resolution QA
+bun run card-news approve <slug> --by "<name>"    # human sign-off (hash-locked)
+bun run card-news render <slug>                   # PNGs in card-news/<slug>/out/
+```
+
+> **Gemini CLI** only loads project skills in a *trusted* folder. Trust this repo once (answer the trust
+> prompt when you first run `gemini` here, or use `/permissions`); otherwise `card-news` won't show up in
+> `gemini skills list`.
+
+Rendering needs Chrome, or a Chromium installed via `bunx playwright-core install chromium`.
+`card-news/` is a gitignored workspace. See the skill's [README](.agents/skills/card-news/README.md) for prompt examples per use case (speakers, sessions, event, sponsors, goods, notices) and [SKILL.md](.agents/skills/card-news/SKILL.md) for the rules agents follow.
+
+---
+
 ## Deploying to GitHub Pages
 
 Deployment is automated by [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml).

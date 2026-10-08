@@ -119,6 +119,16 @@ Flutter app's `#/speakers` hash route and back. The redirect only exists in comp
 `bun run dev` there is no `/flutter/` to serve. The Flutter toolchain version is pinned in the workflow
 (keep in sync with `fvm`).
 
+## SNS card news skill
+
+`.agents/skills/card-news/` (the canonical location, read by Codex and Gemini CLI; `.claude/skills/card-news`
+is a **symlink** to it) generates SNS card images in this site's theme. Its `assets/theme.css` **mirrors the
+`:root` tokens of `src/app.css`**, so if you change the site palette, radii, or fonts, update that block too. It
+follows the same gradient rule, with the gradient used only on the `cover` template. Workspaces go to the
+gitignored `card-news/`. Edit the skill's templates or theme, then regression-check all 8 templates with
+`bun run card-news build|check` on a copy of `examples/showcase.json`. Never run `approve` or `render` without an
+explicit human sign-off; that gate is the point of the skill.
+
 ## Gotchas
 
 - `svelte-check` needs **TypeScript pinned to v5** (`typescript@5`). TypeScript 7 (the native compiler) has a

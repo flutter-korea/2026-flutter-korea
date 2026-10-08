@@ -1,0 +1,949 @@
+/* ============================================================================
+   Flutter Korea 2026 — Card news theme
+   Mirrors the design tokens in src/app.css (official-Flutter-brand look:
+   white canvas, hairline paper-blue cards, near-black headings, restrained
+   blue accents). Keep the :root block in sync with src/app.css when the site
+   theme changes.
+
+   Cards are fixed-size canvases (1080 wide), so sizes here are px, not fluid.
+   The ONE gradient (--gradient-hero) is reserved for the `cover` template,
+   exactly like the site reserves it for the hero band. Everything else is flat.
+   ========================================================================== */
+
+:root {
+	/* --- Brand palette (src/app.css) --------------------------------------- */
+	--blue-900: #06377a;
+	--blue-700: #0553b1;
+	--blue-500: #0a6df2;
+	--sky: #54c5f8;
+	--violet: #7c4dff;
+
+	/* --- Surfaces ------------------------------------------------------------ */
+	--white: #ffffff;
+	--paper: #eef4fd;
+	--paper-strong: #e2ecfc;
+	--border: #dfe6f2;
+	--border-strong: #b7cdef;
+
+	/* --- Text ------------------------------------------------------------------ */
+	--ink: #0b1220;
+	--text-muted: #51606f;
+	--text-dim: #6b7b8c;
+
+	/* --- Accents --------------------------------------------------------------- */
+	--accent: var(--blue-700);
+	--accent-strong: var(--blue-900);
+	--gradient-hero: linear-gradient(115deg, #0a3f96 0%, #0a6df2 48%, #7c4dff 100%);
+
+	/* --- Typography -------------------------------------------------------------- */
+	--font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
+		'Segoe UI', Roboto, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+	--font-mono: 'SFMono-Regular', ui-monospace, 'JetBrains Mono', 'Menlo', 'Consolas', monospace;
+
+	/* --- Radii / shadow ------------------------------------------------------- */
+	--r-sm: 12px;
+	--r-md: 22px;
+	--r-lg: 32px;
+	--r-full: 999px;
+	--shadow-card: 0 18px 40px -24px rgba(11, 18, 32, 0.28);
+
+	/* --- Card canvas -------------------------------------------------------- */
+	--card-w: 1080px;
+	--card-h: 1350px;
+	--pad: 76px;
+
+	/* Drawn check for bullet points (used as a mask, tinted by background) */
+	--check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.5 4.5 4.5L19 7.5'/%3E%3C/svg%3E");
+
+	/* Superellipse mask shape (used by .mask-squircle) */
+	--squircle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath d='M100 0C170 0 200 30 200 100S170 200 100 200 0 170 0 100 30 0 100 0Z'/%3E%3C/svg%3E");
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+* {
+	margin: 0;
+	padding: 0;
+}
+html,
+body {
+	background: var(--white);
+}
+body {
+	font-family: var(--font-sans);
+	color: var(--ink);
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	font-feature-settings: 'ss01', 'cv01';
+}
+img {
+	display: block;
+	max-width: 100%;
+}
+ul {
+	list-style: none;
+}
+h1,
+h2,
+h3 {
+	font-weight: 800;
+	letter-spacing: -0.03em;
+	line-height: 1.12;
+	text-wrap: balance;
+	word-break: keep-all;
+}
+p,
+li {
+	text-wrap: pretty;
+	word-break: keep-all;
+}
+em.hl {
+	font-style: normal;
+	color: var(--accent);
+}
+
+/* ==========================================================================
+   Card frame
+   ========================================================================== */
+.card {
+	position: relative;
+	width: var(--card-w);
+	height: var(--card-h);
+	overflow: hidden;
+	background: var(--white);
+	display: flex;
+	flex-direction: column;
+	padding: var(--pad);
+	gap: 36px;
+}
+.card.size-square {
+	--card-h: 1080px;
+	--pad: 64px;
+	gap: 32px;
+}
+.card.size-story {
+	--card-h: 1920px;
+	--pad: 96px;
+	/* keep text clear of the Stories UI (~14% top/bottom safe area) */
+	padding-top: 250px;
+	padding-bottom: 250px;
+}
+
+.card-top {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+	flex: none;
+}
+.brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 16px;
+	font-weight: 800;
+	font-size: 30px;
+	letter-spacing: -0.02em;
+}
+.brand-mark {
+	flex: none;
+	display: inline-flex;
+	padding: 8px 10px;
+	border-radius: 12px;
+	background: var(--white);
+	box-shadow: inset 0 0 0 1.5px var(--border);
+}
+.brand-mark svg {
+	width: 64px;
+	height: auto;
+	display: block;
+}
+.card-body {
+	flex: 1;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 36px;
+	overflow: hidden;
+}
+.card-foot {
+	flex: none;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+	padding-top: 24px;
+	border-top: 1px solid var(--border);
+	font-family: var(--font-mono);
+	font-size: 24px;
+	letter-spacing: 0.02em;
+	font-variant-numeric: tabular-nums;
+	color: var(--text-dim);
+}
+.card-foot .where {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	min-width: 0;
+	font-family: var(--font-sans);
+	font-size: 25px;
+	letter-spacing: -0.005em;
+	line-height: 1.3;
+}
+.card-foot .where > :first-child {
+	font-weight: 700;
+	color: var(--text-muted);
+}
+.t-cover .card-foot .where > :first-child,
+.t-cta.tone-brand .card-foot .where > :first-child {
+	color: inherit;
+}
+.card-foot > :last-child {
+	flex: none;
+	align-self: flex-end;
+}
+.card-foot .page {
+	font-weight: 700;
+	color: var(--accent);
+}
+
+/* --- Shared heading pattern: kicker → title → lead ------------------------ */
+.kicker {
+	display: inline-flex;
+	align-items: center;
+	gap: 16px;
+	font-family: var(--font-mono);
+	font-size: 24px;
+	font-weight: 700;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+.kicker::before {
+	content: '';
+	width: 48px;
+	height: 3px;
+	border-radius: 2px;
+	background: currentColor;
+}
+.title {
+	font-size: 84px;
+	margin-top: 20px;
+}
+.title.is-long {
+	font-size: 68px;
+}
+.lead {
+	font-size: 34px;
+	line-height: 1.55;
+	color: var(--text-muted);
+	margin-top: 24px;
+}
+
+.chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	padding: 10px 22px;
+	border-radius: var(--r-full);
+	font-family: var(--font-mono);
+	font-size: 24px;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	border: 1.5px solid var(--border-strong);
+	background: var(--white);
+	color: var(--accent);
+	white-space: nowrap;
+}
+.chip.solid {
+	background: var(--accent);
+	border-color: var(--accent);
+	color: var(--white);
+}
+.chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+}
+
+.panel {
+	background: var(--paper);
+	border: 1.5px solid var(--border);
+	border-radius: var(--r-lg);
+	padding: 40px 44px;
+}
+
+.label {
+	font-family: var(--font-mono);
+	font-size: 24px;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--text-dim);
+}
+
+/* ==========================================================================
+   Media frames — masking so photos / logos / goods read clearly
+   `.frame` clips; the <img> inside is positioned by --focus and --zoom.
+   ========================================================================== */
+.frame {
+	position: relative;
+	overflow: hidden;
+	background: var(--paper-strong);
+	isolation: isolate;
+}
+.frame > img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: var(--focus, 50% 50%);
+	transform: scale(var(--zoom, 1));
+	transform-origin: var(--focus, 50% 50%);
+}
+.frame.fit-contain {
+	background: var(--white);
+}
+.frame.fit-contain > img {
+	object-fit: contain;
+	padding: var(--inset, 10%);
+}
+.frame.plate-paper {
+	background: var(--paper);
+}
+.frame.plate-white {
+	background: var(--white);
+}
+.frame.plate-none {
+	background: transparent;
+}
+.frame.bordered {
+	box-shadow: inset 0 0 0 1.5px var(--border);
+}
+.frame.bordered > img {
+	position: relative;
+	z-index: -1;
+}
+
+/* Mask shapes */
+.mask-circle {
+	border-radius: 50%;
+}
+.mask-rounded {
+	border-radius: var(--r-lg);
+}
+.mask-arch {
+	border-radius: 999px 999px var(--r-lg) var(--r-lg);
+}
+.mask-leaf {
+	border-radius: 46% 12% 46% 12%;
+}
+.mask-squircle,
+.portrait.shape-squircle::before {
+	-webkit-mask: var(--squircle) center / 100% 100% no-repeat;
+	mask: var(--squircle) center / 100% 100% no-repeat;
+}
+.mask-none {
+	border-radius: 0;
+}
+
+/* Placeholder when an image slot is empty (visible in review, never shipped) */
+.frame.is-empty {
+	display: grid;
+	place-items: center;
+	background: repeating-linear-gradient(
+		135deg,
+		var(--paper) 0 18px,
+		var(--paper-strong) 18px 36px
+	);
+	color: var(--text-dim);
+	font-family: var(--font-mono);
+	font-size: 26px;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+/* Portrait: masked photo lifted by a soft drop shadow. drop-shadow (not
+   box-shadow) follows the mask, so squircle / leaf / arch all get a true edge. */
+.portrait {
+	position: relative;
+	flex: none;
+	filter: drop-shadow(0 28px 36px rgba(11, 18, 32, 0.2)) drop-shadow(0 2px 3px rgba(11, 18, 32, 0.12));
+}
+.portrait > .frame {
+	width: 100%;
+	height: 100%;
+}
+
+/* Small avatar */
+.avatar {
+	width: 128px;
+	height: 128px;
+	flex: none;
+	border-radius: 50%;
+	box-shadow: 0 0 0 4px var(--white), 0 0 0 6px var(--border-strong);
+}
+
+/* Bullet list (not numbered — points are not a sequence) */
+.points {
+	display: flex;
+	flex-direction: column;
+	gap: 22px;
+}
+.points li {
+	position: relative;
+	padding-left: 50px;
+	font-size: 32px;
+	line-height: 1.5;
+	color: var(--ink);
+}
+.points li::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0.28em;
+	width: 32px;
+	height: 32px;
+	background: var(--accent);
+	-webkit-mask: var(--check) center / contain no-repeat;
+	mask: var(--check) center / contain no-repeat;
+}
+
+.meta-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 14px 32px;
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+	color: var(--text-muted);
+}
+.meta-row b {
+	color: var(--accent);
+	font-weight: 700;
+	margin-right: 10px;
+}
+
+/* ==========================================================================
+   Templates
+   ========================================================================== */
+
+/* --- cover (the only gradient surface) ------------------------------------ */
+.t-cover {
+	background: var(--gradient-hero);
+	color: var(--white);
+}
+.t-cover .brand {
+	color: var(--white);
+}
+.t-cover .card-foot {
+	border-color: rgba(255, 255, 255, 0.28);
+	color: rgba(255, 255, 255, 0.8);
+}
+.t-cover .card-foot .page {
+	color: var(--white);
+}
+.t-cover .card-body {
+	justify-content: flex-end; /* text anchors low; the mark art fills the top */
+	gap: 40px;
+}
+.t-cover .brand-mark {
+	box-shadow: none;
+}
+.t-cover .badge {
+	align-self: flex-start;
+	padding: 14px 28px;
+	border-radius: var(--r-full);
+	background: rgba(255, 255, 255, 0.14);
+	border: 1.5px solid rgba(255, 255, 255, 0.4);
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+}
+.t-cover h1 {
+	font-size: 120px;
+	line-height: 1.02;
+	color: var(--white);
+	letter-spacing: -0.04em;
+}
+.t-cover em.hl {
+	color: #bfe3fc;
+}
+.t-cover h1.is-long {
+	font-size: 92px;
+}
+.t-cover .subtitle {
+	font-size: 38px;
+	line-height: 1.5;
+	color: rgba(255, 255, 255, 0.88);
+	max-width: 22em;
+}
+.t-cover .series {
+	margin-top: 36px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+}
+.t-cover .series-label {
+	font-family: var(--font-mono);
+	font-size: 28px;
+	font-weight: 700;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+}
+.t-cover .swipe {
+	width: 88px;
+	height: 88px;
+	border-radius: 50%;
+	background: var(--white);
+	color: var(--blue-700);
+	display: grid;
+	place-items: center;
+}
+.icon-arrow {
+	width: 40px;
+	height: 40px;
+	flex: none;
+}
+.t-cover .cover-art {
+	/* the Flutter Seoul mark as a white watermark */
+	position: absolute;
+	right: -80px;
+	top: 200px;
+	width: 760px;
+	opacity: 0.16;
+	filter: brightness(0) invert(1);
+	pointer-events: none;
+}
+.t-cover .cover-art svg {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+.size-square.t-cover h1 {
+	font-size: 100px;
+}
+.size-square.t-cover .cover-art {
+	width: 560px;
+	top: 150px;
+}
+
+/* --- event ---------------------------------------------------------------- */
+.t-event .facts {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 20px;
+}
+.t-event .fact {
+	background: var(--paper);
+	border: 1.5px solid var(--border);
+	border-radius: var(--r-md);
+	padding: 30px 34px;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+.t-event .fact .value {
+	font-size: 36px;
+	font-weight: 800;
+	letter-spacing: -0.02em;
+	line-height: 1.3;
+	word-break: keep-all;
+}
+.t-event .banner {
+	/* absorbs the space left by heading + facts; hidden if it gets too short */
+	flex: 1 1 0;
+	min-height: 200px;
+	max-height: 460px;
+	width: 100%;
+}
+.size-square.t-event .banner {
+	display: none;
+}
+
+/* --- speaker -------------------------------------------------------------- */
+.t-speaker .hero {
+	display: grid;
+	grid-template-columns: 400px 1fr;
+	align-items: end;
+	gap: 56px;
+}
+.t-speaker .portrait {
+	width: 400px;
+	height: 400px;
+}
+.t-speaker .who {
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+	padding-bottom: 12px;
+}
+.t-speaker .name {
+	font-size: 92px;
+	line-height: 1.05;
+}
+.t-speaker .name-sub {
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--text-dim);
+}
+.t-speaker .role {
+	font-size: 32px;
+	font-weight: 600;
+	color: var(--text-muted);
+	line-height: 1.4;
+}
+.t-speaker .bio {
+	font-size: 31px;
+	line-height: 1.6;
+	color: var(--text-muted);
+}
+.t-speaker .talk {
+	margin-top: auto;
+	display: flex;
+	flex-direction: column;
+	gap: 22px;
+}
+.t-speaker .talk h3 {
+	font-size: 46px;
+	line-height: 1.28;
+}
+.size-square.t-speaker .hero {
+	grid-template-columns: 340px 1fr;
+	gap: 44px;
+}
+.size-square.t-speaker .portrait {
+	width: 320px;
+	height: 320px;
+}
+.size-square.t-speaker .name {
+	font-size: 76px;
+}
+.size-square.t-speaker .bio {
+	display: none;
+}
+.size-story.t-speaker .hero {
+	grid-template-columns: 1fr;
+	justify-items: start;
+	gap: 40px;
+}
+.size-story.t-speaker .portrait {
+	width: 380px;
+	height: 380px;
+}
+
+/* --- session -------------------------------------------------------------- */
+.t-session .session-title {
+	font-size: 70px;
+	line-height: 1.2;
+}
+.t-session .session-title.is-long {
+	font-size: 56px;
+}
+.t-session .summary {
+	font-size: 33px;
+	line-height: 1.6;
+	color: var(--text-muted);
+}
+.t-session .by {
+	margin-top: auto;
+	display: flex;
+	align-items: center;
+	gap: 32px;
+	padding-top: 36px;
+	border-top: 1.5px solid var(--border);
+}
+.t-session .by .name {
+	font-size: 40px;
+	font-weight: 800;
+	letter-spacing: -0.02em;
+}
+.t-session .by .role {
+	font-size: 27px;
+	color: var(--text-muted);
+	margin-top: 6px;
+}
+
+/* --- timetable ------------------------------------------------------------ */
+.t-timetable .rows {
+	display: flex;
+	flex-direction: column;
+	border-top: 2px solid var(--ink);
+}
+.t-timetable .row {
+	display: grid;
+	grid-template-columns: 170px 1fr;
+	gap: 28px;
+	align-items: baseline;
+	padding: 30px 20px;
+	border-bottom: 1.5px solid var(--border);
+}
+.t-timetable .row.is-highlight {
+	background: var(--paper);
+}
+.t-timetable .time {
+	font-family: var(--font-mono);
+	font-size: 29px;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+	color: var(--accent);
+}
+.t-timetable .what {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+.t-timetable .what .t {
+	font-size: 34px;
+	font-weight: 700;
+	line-height: 1.35;
+	letter-spacing: -0.01em;
+}
+.t-timetable .what .s {
+	font-size: 27px;
+	color: var(--text-muted);
+}
+.t-timetable .what .chip {
+	align-self: flex-start;
+	font-size: 24px;
+	padding: 6px 16px;
+	margin-top: 4px;
+}
+.t-timetable.is-dense .row {
+	padding: 18px 20px;
+}
+.t-timetable.is-dense .what .t {
+	font-size: 30px;
+}
+.t-timetable.is-dense .what .s {
+	font-size: 24px;
+}
+.t-timetable.is-dense .time {
+	font-size: 26px;
+}
+
+/* --- sponsor -------------------------------------------------------------- */
+.t-sponsor .tier + .tier {
+	margin-top: 8px;
+}
+.t-sponsor .tier .label {
+	margin-bottom: 18px;
+	display: block;
+}
+.t-sponsor .logos {
+	display: grid;
+	grid-template-columns: repeat(var(--cols, 2), 1fr);
+	gap: 20px;
+}
+.t-sponsor .logo {
+	aspect-ratio: 16 / 9;
+	border-radius: var(--r-md);
+}
+.t-sponsor .logo-name {
+	margin-top: 12px;
+	text-align: center;
+	font-size: 24px;
+	font-weight: 700;
+	color: var(--text-muted);
+}
+.t-sponsor .spotlight {
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+.t-sponsor .spotlight .logo {
+	aspect-ratio: 2 / 1;
+	--inset: 14%;
+}
+.t-sponsor .spotlight .name {
+	font-size: 52px;
+}
+.t-sponsor .spotlight .desc {
+	font-size: 32px;
+	line-height: 1.55;
+	color: var(--text-muted);
+	margin-top: 12px;
+}
+
+/* --- goods ---------------------------------------------------------------- */
+.t-goods .gallery {
+	flex: 1;
+	min-height: 0;
+	display: grid;
+	gap: 24px;
+}
+.t-goods .gallery.n-1 {
+	grid-template-columns: 1fr;
+}
+.t-goods .gallery.n-2 {
+	grid-template-columns: 1fr 1fr;
+}
+.t-goods .gallery.n-3 {
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 1fr;
+}
+.t-goods .gallery.n-3 .item:first-child {
+	grid-row: span 2;
+}
+.t-goods .gallery.n-4 {
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 1fr;
+}
+.t-goods .item {
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+.t-goods .item .frame {
+	flex: 1;
+	min-height: 0;
+	border-radius: var(--r-lg);
+}
+.t-goods .item .cap {
+	flex: none;
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: 16px;
+}
+.t-goods .item .cap .n {
+	font-size: 30px;
+	font-weight: 800;
+	letter-spacing: -0.02em;
+}
+.t-goods .item .cap .p {
+	font-size: 25px;
+	font-weight: 700;
+	color: var(--accent);
+	white-space: nowrap;
+}
+.t-goods .item .cap .d {
+	font-size: 25px;
+	color: var(--text-muted);
+}
+
+/* --- cta (flat solid brand surface) -------------------------------------- */
+.t-cta.tone-brand {
+	background: var(--blue-900);
+	color: var(--white);
+}
+.t-cta.tone-brand .brand,
+.t-cta.tone-brand h2 {
+	color: var(--white);
+}
+.t-cta.tone-brand .kicker {
+	color: var(--sky);
+}
+.t-cta.tone-brand em.hl {
+	color: var(--sky);
+}
+.t-cta.tone-brand .lead {
+	color: rgba(255, 255, 255, 0.82);
+}
+.t-cta.tone-brand .card-foot {
+	border-color: rgba(255, 255, 255, 0.2);
+	color: rgba(255, 255, 255, 0.7);
+}
+.t-cta.tone-brand .card-foot .page {
+	color: var(--sky);
+}
+.t-cta .card-body {
+	justify-content: center;
+}
+.t-cta .info {
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+	border-top: 1.5px solid var(--border);
+}
+.t-cta.tone-brand .info {
+	border-color: rgba(255, 255, 255, 0.22);
+}
+.t-cta .info > div {
+	display: grid;
+	grid-template-columns: 180px 1fr;
+	align-items: baseline;
+	gap: 24px;
+	padding: 26px 0;
+	border-bottom: 1.5px solid var(--border);
+	font-size: 30px;
+	font-weight: 700;
+}
+.t-cta.tone-brand .info > div {
+	border-color: rgba(255, 255, 255, 0.22);
+}
+.t-cta.tone-brand .info .label {
+	color: rgba(255, 255, 255, 0.6);
+}
+.t-cta .button {
+	align-self: flex-start;
+	display: inline-flex;
+	align-items: center;
+	gap: 14px;
+	padding: 26px 44px;
+	border-radius: var(--r-full);
+	background: var(--blue-700);
+	color: var(--white);
+	font-size: 34px;
+	font-weight: 800;
+}
+.t-cta.tone-brand .button {
+	background: var(--white);
+	color: var(--blue-700);
+}
+.t-cta .button .icon-arrow {
+	width: 34px;
+	height: 34px;
+}
+.t-cta .url {
+	font-family: var(--font-mono);
+	font-size: 27px;
+	color: var(--text-dim);
+	word-break: break-all;
+}
+.t-cta.tone-brand .url {
+	color: rgba(255, 255, 255, 0.7);
+}
+
+/* ==========================================================================
+   Structure (wireframe) review mode — `html.wire`
+   Outlines every data slot with its name so a human can verify the card's
+   information structure before anything is rendered to an image.
+   ========================================================================== */
+html.wire [data-slot] {
+	outline: 2px dashed rgba(124, 77, 255, 0.85);
+	outline-offset: 2px;
+	position: relative;
+}
+html.wire [data-slot]::after {
+	content: attr(data-slot);
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 20;
+	transform: translateY(-100%);
+	padding: 3px 10px;
+	background: #7c4dff;
+	color: #fff;
+	font: 700 16px/1.3 var(--font-mono);
+	letter-spacing: 0.04em;
+	border-radius: 6px 6px 6px 0;
+	white-space: nowrap;
+	pointer-events: none;
+}
+html.wire .portrait {
+	filter: none;
+}
+html.wire [data-overflow] {
+	outline: 4px solid #e5484d;
+}

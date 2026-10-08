@@ -1,0 +1,136 @@
+/* ==========================================================================
+   rail — navy side rail for logistics, wide white field for the person
+   ========================================================================== */
+.card.style-rail {
+	flex-direction: row;
+	padding: 0;
+	gap: 0;
+}
+.style-rail .rl-rail {
+	flex: none;
+	width: 310px;
+	background: var(--blue-900);
+	color: var(--white);
+	padding: 64px 40px 56px;
+	display: flex;
+	flex-direction: column;
+	gap: 44px;
+}
+.style-rail .rl-rail .fs-mark {
+	align-self: flex-start;
+}
+.style-rail .rl-date span {
+	display: block;
+	font-size: 74px;
+	font-weight: 900;
+	line-height: 0.95;
+	letter-spacing: -0.05em;
+	font-variant-numeric: tabular-nums;
+}
+.style-rail .rl-date small,
+.style-rail .rl-item small {
+	display: block;
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	color: var(--sky);
+	margin-top: 10px;
+}
+.style-rail .rl-item {
+	padding-top: 26px;
+	border-top: 1.5px solid rgba(255, 255, 255, 0.22);
+}
+.style-rail .rl-item small {
+	margin: 0 0 6px;
+}
+.style-rail .rl-item span {
+	display: block; /* a block box lets check measure long values like 300/301/400호 */
+	overflow-wrap: anywhere;
+	line-height: 1.1;
+	font-size: 48px;
+	font-weight: 800;
+	letter-spacing: -0.03em;
+	font-variant-numeric: tabular-nums;
+}
+.style-rail .rl-main {
+	flex: 1;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	padding: 64px 64px 56px 56px;
+	gap: 36px;
+}
+.style-rail .rl-top {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.style-rail .rl-brand {
+	font-size: 30px;
+	font-weight: 800;
+	letter-spacing: -0.02em;
+}
+.style-rail .rl-kind {
+	font-family: var(--font-mono);
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+.style-rail .rl-body {
+	gap: 18px;
+}
+/* The portrait absorbs the free height, so the name block and the talk rule
+   stay a steady distance apart whatever the title length. Flat circle: a
+   drop-shadow here got clipped square by the body's overflow edge. */
+.style-rail .rl-photo {
+	flex: 1 1 0;
+	min-height: 320px;
+	max-height: 540px;
+	margin-bottom: 18px;
+}
+.style-rail .rl-photo .frame {
+	height: 100%;
+	width: auto;
+	aspect-ratio: 1;
+}
+.style-rail .rl-name {
+	font-size: 112px;
+	line-height: 1;
+	letter-spacing: -0.04em;
+	text-wrap: balance;
+}
+.style-rail .rl-role {
+	font-size: 34px;
+	font-weight: 700;
+	color: var(--text-muted);
+}
+.style-rail .rl-title {
+	margin-top: auto;
+	padding-top: 30px;
+	border-top: 3px solid var(--ink);
+	font-size: 50px;
+	line-height: 1.26;
+}
+/* Keep a floor of air above the talk rule when the portrait is at its minimum. */
+.style-rail .rl-body > :has(+ .rl-title) {
+	margin-bottom: 30px;
+}
+.style-rail .rl-title .line {
+	display: block;
+	text-wrap: balance;
+}
+.style-rail .rl-foot {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	gap: 20px;
+	font-size: 25px;
+	color: var(--text-muted);
+}
+.style-rail .rl-foot > span:last-child {
+	font-family: var(--font-mono);
+	font-size: 26px;
+}
