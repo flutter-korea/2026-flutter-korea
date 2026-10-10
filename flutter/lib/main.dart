@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import 'i18n/i18n.dart';
 import 'pages/home_page.dart';
+import 'pages/timetable_page.dart';
 import 'theme/tokens.dart';
 import 'theme/typography.dart';
 
@@ -17,6 +18,11 @@ void main() {
 final _router = GoRouter(
   routes: [
     GoRoute(path: '/', builder: (context, state) => const HomePage()),
+    // Flutter's hash URL strategy resolves `/#timetable` as `/timetable`.
+    GoRoute(
+      path: '/timetable',
+      builder: (context, state) => const TimetablePage(),
+    ),
   ],
 );
 
