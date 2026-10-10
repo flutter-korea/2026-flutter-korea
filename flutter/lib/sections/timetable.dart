@@ -26,24 +26,7 @@ class TimetableSection extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Top gradient band mirroring .timeline-band in Timetable.svelte
-            Container(
-              height: (constraints.maxWidth * 0.04).clamp(32.0, 56.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(FKRadii.sm),
-                gradient: const LinearGradient(
-                  begin: Alignment(-1.0, -0.17),
-                  end: Alignment(1.0, 0.17),
-                  colors: [
-                    Color(0xFF1955C5),
-                    Color(0xFF087DF0),
-                    Color(0xFF1660CE),
-                  ],
-                  stops: [0.0, 0.55, 1.0],
-                ),
-              ),
-            ),
-            SizedBox(height: (vw * 0.04).clamp(28.0, 48.0)),
+            SizedBox(height: (vw * 0.015).clamp(12.0, 24.0)),
             Reveal(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,6 +61,15 @@ class TimetableSection extends StatelessWidget {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 8),
+                  Text(
+                    data['dateLine'] as String? ?? '2026.11.07 · AWS Korea',
+                    style: sans(
+                      size: 11,
+                      weight: 600,
+                      color: const Color(0xFF2878D4),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -89,9 +81,9 @@ class TimetableSection extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 12),
                   child: Row(
                     children: [
-                      Expanded(child: _TrackHeader(trackAi)),
-                      const SizedBox(width: 48),
                       Expanded(child: _TrackHeader(trackFlutter)),
+                      const SizedBox(width: 48),
+                      Expanded(child: _TrackHeader(trackAi)),
                     ],
                   ),
                 ),
@@ -173,36 +165,41 @@ class _ScheduleRow extends StatelessWidget {
           const SizedBox(width: 16),
           Text(
             row['label'] as String,
-            style: sans(
-              size: 13.5,
-              weight: 700,
-              color: FKColors.textDim,
-            ),
+            style: sans(size: 13.5, weight: 700, color: FKColors.textDim),
           ),
         ],
       );
     } else if (row['shared'] != null) {
-      body = _Session(
-        time: time,
-        session: {
-          'title': row['shared'],
-          'speaker': row['speaker'],
-        },
-        shared: true,
-      );
+      final title = row['shared'] as String;
+      final isLunch =
+          title.toLowerCase().contains('lunch') || title.contains('런치');
+      final isPhoto =
+          title.toLowerCase().contains('photo') || title.contains('사진');
+      body = isLunch || isPhoto
+          ? _SharedEventRow(time: time, title: title, isLunch: isLunch)
+          : _Session(
+              time: time,
+              session: {
+                'title': title,
+                'speaker': row['speaker'],
+                'org': row['org'],
+                'image': row['image'],
+              },
+              shared: true,
+            );
     } else {
       final aiSession = row['ai'] as Map<String, dynamic>?;
       final flutterSession = row['flutter'] as Map<String, dynamic>?;
 
-      final cardAi = _Session(
-        time: time,
-        session: aiSession ?? const {},
-        trackLabel: wide ? null : trackAi,
-      );
       final cardFlutter = _Session(
         time: time,
         session: flutterSession ?? const {},
         trackLabel: wide ? null : trackFlutter,
+      );
+      final cardAi = _Session(
+        time: time,
+        session: aiSession ?? const {},
+        trackLabel: wide ? null : trackAi,
       );
 
       body = wide
@@ -259,21 +256,98 @@ class _TimeChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 5),
-        decoration: BoxDecoration(
-          color: FKColors.white,
-          border: Border.all(color: FKColors.border),
-          borderRadius: BorderRadius.circular(FKRadii.full),
+    padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 5),
+    decoration: BoxDecoration(
+      color: FKColors.white,
+      border: Border.all(color: FKColors.border),
+      borderRadius: BorderRadius.circular(FKRadii.full),
+    ),
+    child: Text(
+      time,
+      style: mono(size: 11.5, weight: 700, color: const Color(0xFF3A3F48)),
+    ),
+  );
+}
+
+class _SharedEventRow extends StatelessWidget {
+  final String time;
+  final String title;
+  final bool isLunch;
+
+  const _SharedEventRow({
+    required this.time,
+    required this.title,
+    required this.isLunch,
+  });
+
+  @override
+  Widget build(BuildContext context) => Row(
+    children: [
+      _TimeChip(time),
+      const SizedBox(width: 16),
+      Expanded(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (isLunch) ...[
+              Image.asset(
+                'assets/images/crycheese-burger-logo.png',
+                width: 112,
+                fit: BoxFit.contain,
+              ),
+              const SizedBox(width: 12),
+            ],
+            Flexible(
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
+                style: heading(size: 16.5, weight: 750, color: FKColors.ink),
+              ),
+            ),
+          ],
         ),
-        child: Text(
-          time,
-          style: mono(
-            size: 11.5,
-            weight: 700,
-            color: const Color(0xFF3A3F48),
-          ),
-        ),
-      );
+      ),
+    ],
+  );
+}
+
+class _GooglePortraitStack extends StatelessWidget {
+  final bool includeMariam;
+
+  const _GooglePortraitStack({required this.includeMariam});
+
+  @override
+  Widget build(BuildContext context) {
+    final people = [
+      'assets/images/speaker/craig-labenz.jpg',
+      'assets/images/speaker/khanh-nguyen.jpg',
+      if (includeMariam) 'assets/images/speaker/mariam-hasnany.jpg',
+    ];
+    const diameter = 52.0;
+    const overlap = 25.0;
+    return SizedBox(
+      width: diameter + (people.length - 1) * overlap,
+      height: diameter,
+      child: Stack(
+        children: [
+          for (var i = 0; i < people.length; i++)
+            Positioned(
+              left: i * overlap,
+              child: Container(
+                width: diameter,
+                height: diameter,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: FKColors.white, width: 2),
+                ),
+                clipBehavior: Clip.antiAlias,
+                child: Image.asset(people[i], fit: BoxFit.cover),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
 }
 
 class _Session extends StatelessWidget {
@@ -297,20 +371,12 @@ class _Session extends StatelessWidget {
       return const SizedBox(height: 40);
     }
     final speaker = (session['speaker'] as String?) ?? '';
-    final room = session['room'] as String?;
-    final isGoogle = speaker.contains('Google');
+    final org = (session['org'] as String?) ?? '';
+    final isGooglePanel = shared && speaker.contains('Craig Labenz');
     final image = session['image'] as String?;
 
     Widget avatar;
-    if (isGoogle) {
-      avatar = Padding(
-        padding: const EdgeInsets.all(7),
-        child: SvgPicture.asset(
-          'assets/images/google-g.svg',
-          fit: BoxFit.contain,
-        ),
-      );
-    } else if (shared) {
+    if (shared && (title == 'Opening' || title == '오프닝')) {
       avatar = Padding(
         padding: const EdgeInsets.all(7),
         child: SvgPicture.asset(
@@ -342,20 +408,24 @@ class _Session extends StatelessWidget {
       );
     }
 
+    final avatarWidget = isGooglePanel
+        ? _GooglePortraitStack(includeMariam: speaker.contains('Mariam'))
+        : Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: FKColors.white,
+              border: Border.all(color: FKColors.border),
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: avatar,
+          );
+
     final content = Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: 56,
-          height: 56,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: FKColors.white,
-            border: Border.all(color: FKColors.border),
-          ),
-          clipBehavior: Clip.antiAlias,
-          child: avatar,
-        ),
+        avatarWidget,
         const SizedBox(width: 16),
         Expanded(
           child: Column(
@@ -365,7 +435,10 @@ class _Session extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 4),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 2,
+                    ),
                     decoration: BoxDecoration(
                       color: FKColors.paperStrong,
                       borderRadius: BorderRadius.circular(4),
@@ -395,12 +468,12 @@ class _Session extends StatelessWidget {
                       height: 1.35,
                     ),
                   ),
-                  if (room != null && room.isNotEmpty)
+                  if (org.isNotEmpty)
                     Text(
-                      '• $room',
+                      org,
                       style: sans(
                         color: FKColors.textDim,
-                        size: 13,
+                        size: 10,
                         weight: 500,
                       ),
                     ),
@@ -427,11 +500,7 @@ class _Session extends StatelessWidget {
         if (constraints.maxWidth < 420) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _TimeChip(time),
-              const SizedBox(height: 14),
-              content,
-            ],
+            children: [_TimeChip(time), const SizedBox(height: 14), content],
           );
         }
         return Row(
