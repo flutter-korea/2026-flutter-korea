@@ -206,7 +206,7 @@ class _ScheduleRow extends StatelessWidget {
           ? Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(child: cardAi),
+                Expanded(child: cardFlutter),
                 const SizedBox(width: 48),
                 Expanded(
                   child: Container(
@@ -214,7 +214,7 @@ class _ScheduleRow extends StatelessWidget {
                     decoration: const BoxDecoration(
                       border: Border(left: BorderSide(color: FKColors.border)),
                     ),
-                    child: cardFlutter,
+                    child: cardAi,
                   ),
                 ),
               ],

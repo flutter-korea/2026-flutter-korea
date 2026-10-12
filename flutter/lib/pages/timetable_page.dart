@@ -27,11 +27,7 @@ class _TimetablePageState extends State<TimetablePage> {
   Widget build(BuildContext context) => SiteScaffold(
     hub: _hub,
     children: [
-      FkSection(
-        key: _hub.keyFor('timetable'),
-        maxWidth: double.infinity,
-        child: const TimetableSection(),
-      ),
+      FkSection(key: _hub.keyFor('timetable'), child: const TimetableSection()),
       SiteFooter(hub: _hub),
     ],
   );
