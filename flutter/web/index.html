@@ -50,6 +50,14 @@
   <link rel="manifest" href="manifest.json">
 
   <script>
+    // Keep public section links such as `/#timetable` compatible with
+    // Flutter's hash router, which expects `/#/timetable`.
+    if (window.location.hash === '#timetable') {
+      window.location.replace(
+        `${window.location.pathname}${window.location.search}#/timetable`,
+      );
+    }
+
     // Framework switch (counterpart of the script in the SvelteKit app.html):
     // this Flutter build is deployed under <base>/flutter/ next to the
     // SvelteKit site, which is the default. `?mode=svelte` / `?mode=sveltekit`

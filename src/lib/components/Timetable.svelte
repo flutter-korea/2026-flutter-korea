@@ -45,8 +45,8 @@
 		</header>
 
 		<div class="timeline-grid reveal" use:reveal={{ delay: 100 }}>
-			<div class="track-label">{$t.timetable.tracks.ai}</div>
 			<div class="track-label">{$t.timetable.tracks.flutter}</div>
+			<div class="track-label">{$t.timetable.tracks.ai}</div>
 			{#each $t.timetable.tracks.rows as row}
 				{#if !row.empty && isWithinProgram(row)}
 					<div class="timeline-row">
@@ -71,7 +71,7 @@
 								<span>{row.label}</span>
 							</div>
 						{:else}
-							{#each [row.ai, row.flutter] as session}
+							{#each [row.flutter, row.ai] as session}
 								{#if isEmptySession(session)}
 									<div class="event-spacer" aria-hidden="true"></div>
 								{:else}
@@ -123,7 +123,6 @@
 	}
 	.timeline-container {
 		position: relative;
-		max-width: none;
 	}
 	.timeline-header {
 		max-width: 54rem;

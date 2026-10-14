@@ -50,7 +50,6 @@ class _HomePageState extends State<HomePage> {
         FkSection(key: _hub.keyFor('about'), child: const AboutSection()),
         FkSection(
           key: _hub.keyFor('timetable'),
-          maxWidth: double.infinity,
           child: const TimetableSection(),
         ),
         FkSection(key: _hub.keyFor('tickets'), child: const TicketsSection()),

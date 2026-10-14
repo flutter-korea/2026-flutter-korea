@@ -25,6 +25,7 @@ flutter:
 
   assets:
     - assets/images/google-g.svg
+    - assets/images/crycheese-burger-logo.png
     - assets/images/speaker/
     - assets/images/flutter_seoul/
     - assets/images/sponsors/

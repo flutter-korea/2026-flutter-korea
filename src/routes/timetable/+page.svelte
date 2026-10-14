@@ -131,7 +131,7 @@
 		background: var(--white);
 	}
 	.timetable-page :global(.container) {
-		max-width: none;
+		max-width: var(--container);
 		padding-inline: clamp(0.75rem, 1.35vw, 1.5rem);
 	}
 	.page-head {
@@ -336,6 +336,8 @@
 		justify-content: space-between;
 		gap: 1rem;
 		padding: 0.65rem clamp(0.75rem, 1.35vw, 1.5rem);
+		max-width: var(--container);
+		margin-inline: auto;
 		color: #71829a;
 		font-size: 0.65rem;
 	}
