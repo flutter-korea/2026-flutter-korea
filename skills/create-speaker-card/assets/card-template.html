@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1024, initial-scale=1">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:1024px;height:1372px;overflow:hidden;background:#fff}
+.card{position:relative;width:1024px;height:1372px;overflow:hidden;background:#fff;color:#102f70;font-family:Arial,sans-serif}
+.frame{position:absolute;inset:0;width:1024px;height:1372px}
+.cover{position:absolute;background:#fff}
+.track-cover{left:72px;top:186px;height:66px;border-radius:33px}.track-cover.flutter{width:251px}.track-cover.ai{width:202px}
+.track-crop{position:absolute;left:51px;top:165px;height:108px;overflow:hidden}
+.track-crop.flutter{width:272px}.track-crop.ai{left:72px;width:202px}
+.track-crop img{position:absolute;top:0;width:574px;height:108px;max-width:none}.track-crop.ai img{left:-292px}
+.title-cover{left:54px;top:284px;width:796px;height:472px;clip-path:polygon(0 0,630px 0,630px 49px,796px 49px,796px 472px,0 472px)}
+.title{position:absolute;left:68px;top:292px;width:770px;display:flex;flex-direction:column;font-size:58px;line-height:74px;font-weight:800;letter-spacing:-1.1px;color:#102f70}
+.title-line{white-space:nowrap}
+.speaker-cover{left:54px;top:923px;width:550px;height:78px}
+.speaker{position:absolute;left:68px;top:923px;font-size:47px;line-height:58px;font-weight:800;color:#102f70;white-space:nowrap}
+.time-cover{left:154px;top:1020px;width:310px;height:102px;background:#eff6ff;border-radius:0 51px 51px 0}
+.time{position:absolute;left:164px;top:1020px;width:285px;height:102px;display:flex;align-items:center;font-size:32px;line-height:40px;font-weight:800;color:#102f70;white-space:nowrap}
+.room-cover{position:absolute;left:612px;top:1199px;width:350px;height:55px;background:#fff}
+.room{position:absolute;left:624px;top:1208px;font-size:32px;line-height:40px;font-weight:800;color:#102f70;white-space:nowrap}
+.portrait{position:absolute;left:648px;top:878px;width:292px;height:292px;border-radius:50%;object-fit:cover}
+</style>
+</head>
+<body>
+<div class="card">
+  <img class="frame" src="{{FRAME_IMAGE}}" alt="">
+  <div class="cover track-cover {{TRACK_CLASS}}"></div><div class="track-crop {{TRACK_CLASS}}"><img src="{{CHIP_IMAGE}}" alt=""></div>
+  <div class="cover title-cover"></div><div class="title">{{TITLE_LINES}}</div>
+  <div class="cover speaker-cover"></div><div class="speaker" style="font-size:{{SPEAKER_FONT_SIZE}}px">{{SPEAKER_NAME}}</div>
+  <div class="cover time-cover"></div><div class="time">{{TIME}}</div>
+  <div class="room-cover"></div><div class="room">{{ROOM}}</div>
+  {{PORTRAIT_CONTENT}}
+</div>
+</body>
+</html>
