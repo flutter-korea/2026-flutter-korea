@@ -64,10 +64,12 @@
 								</div>
 							{:else}
 								<div class="shared-content">
-					<div class="portrait-stack" aria-hidden="true">
-						{#if row.shared.toLowerCase().includes('opening') || row.shared.includes('오프닝')}
-							<img class="flutter-logo" src={`${base}${row.image ?? '/assets/flutter-seoul/flutter-seoul-logo-exact-size.svg'}`} alt="" />
-										{:else}
+								<div class="portrait-stack" aria-hidden="true">
+									{#if row.shared.toLowerCase().includes('opening') || row.shared.includes('오프닝')}
+										<img class="flutter-logo" src={`${base}${row.image ?? '/assets/flutter-seoul/flutter-seoul-logo-exact-size.svg'}`} alt="" />
+									{:else if row.shared.toLowerCase().includes('aws')}
+										<img class="aws-logo" src={`${base}/assets/aws-logo.svg`} alt="AWS" />
+									{:else}
 											{#each portraitsFor(row) as portrait (portrait)}
 												<img src={portrait} alt="" />
 											{/each}
@@ -324,6 +326,10 @@
 	}
 	.portrait-stack .flutter-logo {
 		padding: 0.45rem;
+		border: 1px solid var(--border);
+	}
+	.portrait-stack .aws-logo {
+		padding: 0.55rem;
 		border: 1px solid var(--border);
 	}
 	.lunch-logo {

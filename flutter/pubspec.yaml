@@ -24,6 +24,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/images/aws-logo.svg
     - assets/images/google-g.svg
     - assets/images/crycheese-burger-logo.png
     - assets/images/speaker/

@@ -373,6 +373,7 @@ class _Session extends StatelessWidget {
     final speaker = (session['speaker'] as String?) ?? '';
     final org = (session['org'] as String?) ?? '';
     final isGooglePanel = shared && speaker.contains('Craig Labenz');
+    final isAwsKeynote = shared && title.toLowerCase().contains('aws');
     final image = session['image'] as String?;
 
     Widget avatar;
@@ -381,6 +382,14 @@ class _Session extends StatelessWidget {
         padding: const EdgeInsets.all(7),
         child: SvgPicture.asset(
           'assets/images/flutter_seoul/flutter_seoul_logo_exact_size.svg',
+          fit: BoxFit.contain,
+        ),
+      );
+    } else if (isAwsKeynote) {
+      avatar = Padding(
+        padding: const EdgeInsets.all(7),
+        child: SvgPicture.asset(
+          'assets/images/aws-logo.svg',
           fit: BoxFit.contain,
         ),
       );

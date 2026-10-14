@@ -53,7 +53,9 @@
 						{#if row.shared}
 							<div class="shared-event">
 								<span class="time-pill">{row.start} – {row.end}</span>
-								{#if isGoogleSpeaker(row.speaker)}
+								{#if row.shared.toLowerCase().includes('aws')}
+									<img class="profile-slot aws-profile" src={base + "/assets/aws-logo.svg"} alt="AWS" />
+								{:else if isGoogleSpeaker(row.speaker)}
 									<img class="profile-slot google-profile" src={base + "/assets/google-g.svg"} alt="Google" />
 								{:else}
 									<img class="profile-slot seoul-profile" src={`${base}/assets/flutter-seoul/flutter-seoul-logo-exact-size.svg`} alt="Flutter Seoul" />
@@ -206,6 +208,10 @@
 	}
 	.google-profile {
 		padding: 5px;
+	}
+	.aws-profile {
+		padding: 7px;
+		object-fit: contain;
 	}
 	.seoul-profile {
 		padding: 5px;
