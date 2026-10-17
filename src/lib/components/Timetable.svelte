@@ -1,8 +1,18 @@
 <script>
-	import { t } from '$lib/i18n.js';
+	import { t, lang } from '$lib/i18n.js';
 	import { reveal } from '$lib/actions.js';
 	import { base } from '$app/paths';
+	import SessionDialog from './SessionDialog.svelte';
 
+	/** @type {{ title: string; speaker?: string; org?: string; description?: string; time: string; track?: string } | null} */
+	let details = $state(null);
+	/** @param {{ title?: string; speaker?: string; org?: string; description?: string } | undefined} session
+	 *  @param {{ start: string; end: string }} row
+	 *  @param {string} [track] */
+	function openSession(session, row, track) {
+		if (!session?.description?.trim()) return;
+		details = { title: session.title ?? '', speaker: session.speaker, org: session.org, description: session.description, time: `${row.start} – ${row.end}`, track };
+	}
 	/** @param {{ room?: string; title?: string; speaker?: string }} session */
 	function speakerMeta(session) {
 		if (!session?.speaker) return '';
@@ -52,6 +62,7 @@
 					<div class="timeline-row">
 						{#if row.shared}
 							<div class="shared-event">
+								{#if 'description' in row && typeof row.description === 'string' && row.description.trim()}<button type="button" class="card-hit" aria-label={`${row.shared} · ${$lang === 'ko' ? '세션 설명 보기' : 'View session details'}`} onclick={() => openSession({ title: row.shared, speaker: row.speaker, org: 'org' in row && typeof row.org === 'string' ? row.org : undefined, description: row.description }, row)}></button>{/if}
 								<span class="time-pill">{row.start} – {row.end}</span>
 								{#if row.shared.toLowerCase().includes('aws')}
 									<img class="profile-slot aws-profile" src={base + "/assets/aws-logo.svg"} alt="AWS" />
@@ -78,6 +89,7 @@
 									<div class="event-spacer" aria-hidden="true"></div>
 								{:else}
 									<article class="event-card">
+										{#if session?.description?.trim()}<button type="button" class="card-hit" aria-label={`${session?.title ?? ''} · ${$lang === 'ko' ? '세션 설명 보기' : 'View session details'}`} onclick={() => openSession(session, row, session === row.flutter ? $t.timetable.tracks.flutter : $t.timetable.tracks.ai)}></button>{/if}
 										<div class="event-layout">
 											<span class="time-pill">{row.start} – {row.end}</span>
 											{#if isGoogleSpeaker(session?.speaker)}
@@ -106,6 +118,7 @@
 		</div>
 	</div>
 </section>
+<SessionDialog {details} lang={$lang} onClose={() => details = null} />
 
 <style>
 	.timeline-section {
@@ -265,6 +278,9 @@
 		line-height: 1.35;
 		word-break: keep-all;
 	}
+	.card-hit { position: absolute; inset: 0; z-index: 1; width: 100%; border: 0; background: transparent; cursor: pointer; }
+	.card-hit:hover ~ .event-layout .event-title, .card-hit:hover ~ .event-copy .event-title { color: var(--accent); }
+	.card-hit:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 0.25rem; }
 	.shared-event,
 	.break-event {
 		grid-column: 1 / -1;
@@ -273,6 +289,7 @@
 		gap: 1.25rem;
 		padding-left: 0;
 	}
+	.shared-event { position: relative; }
 	.shared-event {
 		display: flex;
 		align-items: flex-start;
