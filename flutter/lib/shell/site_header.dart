@@ -75,7 +75,12 @@ class SiteHeader extends StatelessWidget {
     );
   }
 
-  Widget _navRow(BuildContext context, Content t, String activeId, ScrollHub? hub) {
+  Widget _navRow(
+    BuildContext context,
+    Content t,
+    String activeId,
+    ScrollHub? hub,
+  ) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -83,7 +88,7 @@ class SiteHeader extends StatelessWidget {
           _NavLink(
             label: link.label,
             active: hub != null && activeId == link.id,
-            onTap: () => goHomeAnchor(context, link.id, hub: hub),
+            onTap: () => goNavLink(context, link, hub: hub),
           ),
           if (link != t.nav.links.last) const SizedBox(width: 32),
         ],
@@ -114,7 +119,11 @@ class _Brand extends StatelessWidget {
                 borderRadius: BorderRadius.circular(9),
               ),
               alignment: Alignment.center,
-              child: StrokeIcon(FkIcons.flutterMark, size: 20, color: FKColors.white),
+              child: StrokeIcon(
+                FkIcons.flutterMark,
+                size: 20,
+                color: FKColors.white,
+              ),
             ),
             const SizedBox(width: 9.6),
             Text(
@@ -140,7 +149,11 @@ class _NavLink extends StatelessWidget {
   final bool active;
   final VoidCallback onTap;
 
-  const _NavLink({required this.label, required this.active, required this.onTap});
+  const _NavLink({
+    required this.label,
+    required this.active,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -164,8 +177,8 @@ class _NavLink extends StatelessWidget {
                   color: active
                       ? FKColors.accent
                       : hovered
-                          ? FKColors.ink
-                          : FKColors.textMuted,
+                      ? FKColors.ink
+                      : FKColors.textMuted,
                 ),
                 child: Text(label),
               ),
@@ -213,7 +226,8 @@ class LangButton extends StatelessWidget {
             decoration: BoxDecoration(
               color: hovered ? FKColors.paper : FKColors.white,
               border: Border.all(
-                  color: hovered ? FKColors.borderStrong : FKColors.border),
+                color: hovered ? FKColors.borderStrong : FKColors.border,
+              ),
               borderRadius: BorderRadius.circular(FKRadii.full),
             ),
             child: Row(

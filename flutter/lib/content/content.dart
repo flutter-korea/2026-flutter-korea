@@ -17,6 +17,8 @@ abstract final class Links {
   static const kakaoTalk = 'https://open.kakao.com/o/gdL2Gj1e';
   static const discord = 'https://flutter-seoul.com';
   static const email = 'mailto:flutter-seoul@googlegroups.com';
+  static const previousEvents =
+      'https://flutter-korea.github.io/2026-flutter-korea/previous-events/';
 }
 
 class MetaStrings {
@@ -441,6 +443,7 @@ const koContent = Content(
       NavLink(id: 'timetable', label: '타임테이블'),
       NavLink(id: 'tickets', label: '티켓'),
       NavLink(id: 'sponsors', label: '후원사'),
+      NavLink(id: 'previous-events', label: '이전 행사 보기'),
     ],
     cta: '연사 지원',
     menu: '메뉴',
@@ -469,13 +472,29 @@ const koContent = Content(
     lead: 'Flutter Korea 2026은 실전 기술 토크와 깊이 있는 교류가 결합된, 밀도 높은 하루입니다.',
     stats: [
       OverviewStat(
-          label: 'Date', value: '11.07', unit: 'SAT · 2026', note: '2026년 11월 7일 토요일'),
+        label: 'Date',
+        value: '11.07',
+        unit: 'SAT · 2026',
+        note: '2026년 11월 7일 토요일',
+      ),
       OverviewStat(
-          label: 'Time', value: '11:00', unit: '– 18:00', note: '접수 10:30 시작'),
+        label: 'Time',
+        value: '11:00',
+        unit: '– 18:00',
+        note: '접수 10:30 시작',
+      ),
       OverviewStat(
-          label: 'Attendees', value: '100+', unit: '오프라인', note: '오프라인 100–150명 내외'),
+        label: 'Attendees',
+        value: '100+',
+        unit: '오프라인',
+        note: '오프라인 100–150명 내외',
+      ),
       OverviewStat(
-          label: 'Host', value: 'Flutter', unit: 'Seoul', note: '주최 · 주관 Flutter Seoul'),
+        label: 'Host',
+        value: 'Flutter',
+        unit: 'Seoul',
+        note: '주최 · 주관 Flutter Seoul',
+      ),
     ],
   ),
   about: AboutStrings(
@@ -553,8 +572,7 @@ const koContent = Content(
   tickets: TicketsStrings(
     kicker: 'Tickets',
     title: '티켓',
-    lead:
-        'Flutter Korea 2026 티켓 예매가 오픈되었습니다. 티켓타코(Ticketaco)에서 지금 바로 예매하세요.',
+    lead: 'Flutter Korea 2026 티켓 예매가 오픈되었습니다. 티켓타코(Ticketaco)에서 지금 바로 예매하세요.',
     statusBadge: '예매 오픈',
     cta: '티켓 예매하기',
     ctaTbd: '오픈 예정',
@@ -586,7 +604,8 @@ const koContent = Content(
     ],
     platformNote: '예매 플랫폼 · 티켓타코(Ticketaco) 공식 이벤트 페이지',
     speakerNote: '연사자는 티켓 구매가 필요하지 않습니다.',
-    venueNote: '행사 장소 · AWS 코리아 (서울 강남구 테헤란로 231 센터필드 EAST 12층 / 주차 지원 불가, 대중교통 이용 권장)',
+    venueNote:
+        '행사 장소 · AWS 코리아 (서울 강남구 테헤란로 231 센터필드 EAST 12층 / 주차 지원 불가, 대중교통 이용 권장)',
     venueMapLinkText: '지도 보기',
     platformLinkText: '예매 바로가기',
   ),
@@ -617,11 +636,18 @@ const koContent = Content(
     date: '2026년 11월 7일 (토)',
     levelsTitle: '난이도 · Target Audience Level',
     levels: [
-      SpeakerLevel(name: 'Beginner', desc: '입문 · 기초 (Introduction / Fundamentals)'),
       SpeakerLevel(
-          name: 'Intermediate', desc: '응용 · 일반 패턴 (Applied skills / Common patterns)'),
+        name: 'Beginner',
+        desc: '입문 · 기초 (Introduction / Fundamentals)',
+      ),
       SpeakerLevel(
-          name: 'Advanced', desc: '아키텍처 · 심화 · 내부 구조 (Architecture / Deep Dive / Internals)'),
+        name: 'Intermediate',
+        desc: '응용 · 일반 패턴 (Applied skills / Common patterns)',
+      ),
+      SpeakerLevel(
+        name: 'Advanced',
+        desc: '아키텍처 · 심화 · 내부 구조 (Architecture / Deep Dive / Internals)',
+      ),
     ],
     categoriesTitle: '지원 가능 분야 · Session Category',
     categories: [
@@ -663,7 +689,8 @@ const koContent = Content(
     connect: '연락처',
     speakers: '연사 모집',
     rights: '© 2026 Flutter Seoul · Flutter Korea 2026',
-    trademark: 'Flutter와 Flutter 로고는 Google LLC의 상표입니다. 본 행사는 커뮤니티가 운영하는 비영리 행사입니다.',
+    trademark:
+        'Flutter와 Flutter 로고는 Google LLC의 상표입니다. 본 행사는 커뮤니티가 운영하는 비영리 행사입니다.',
     backToTop: '맨 위로',
   ),
 );
@@ -678,7 +705,12 @@ const enContent = Content(
     label: 'Until the event',
     live: 'Happening right now',
     done: 'Thanks for being part of it',
-    units: CountdownUnits(days: 'Days', hours: 'Hours', minutes: 'Min', seconds: 'Sec'),
+    units: CountdownUnits(
+      days: 'Days',
+      hours: 'Hours',
+      minutes: 'Min',
+      seconds: 'Sec',
+    ),
   ),
   nav: NavStrings(
     brand: 'Flutter Korea 2026',
@@ -687,6 +719,7 @@ const enContent = Content(
       NavLink(id: 'timetable', label: 'Timetable'),
       NavLink(id: 'tickets', label: 'Tickets'),
       NavLink(id: 'sponsors', label: 'Sponsors'),
+      NavLink(id: 'previous-events', label: 'Previous Events'),
     ],
     cta: 'Apply to Speak',
     menu: 'Menu',
@@ -696,7 +729,8 @@ const enContent = Content(
     badge: 'NOV 7, 2026 SAT · Seoul',
     sloganTop: 'Back to Basics,',
     sloganBottom: 'Move Forward',
-    subtitle: 'Return to the essence of technology, and fearlessly define the future.',
+    subtitle:
+        'Return to the essence of technology, and fearlessly define the future.',
     description:
         'In an era where change is the default, we spend a day defining the future with AI, armed with unshakable fundamentals. Join Flutter and AI sessions and conversations.',
     ctaPrimary: 'Apply to Speak',
@@ -716,19 +750,29 @@ const enContent = Content(
         'Flutter Korea 2026 packs real-world tech talks and meaningful exchange into one dense, focused day.',
     stats: [
       OverviewStat(
-          label: 'Date',
-          value: '11.07',
-          unit: 'SAT · 2026',
-          note: 'Saturday, November 7, 2026'),
+        label: 'Date',
+        value: '11.07',
+        unit: 'SAT · 2026',
+        note: 'Saturday, November 7, 2026',
+      ),
       OverviewStat(
-          label: 'Time', value: '11:00', unit: '– 18:00', note: 'Registration opens 10:30'),
+        label: 'Time',
+        value: '11:00',
+        unit: '– 18:00',
+        note: 'Registration opens 10:30',
+      ),
       OverviewStat(
-          label: 'Attendees', value: '100+', unit: 'in person', note: 'Around 100–150 on-site'),
+        label: 'Attendees',
+        value: '100+',
+        unit: 'in person',
+        note: 'Around 100–150 on-site',
+      ),
       OverviewStat(
-          label: 'Host',
-          value: 'Flutter',
-          unit: 'Seoul',
-          note: 'Hosted & organized by Flutter Seoul'),
+        label: 'Host',
+        value: 'Flutter',
+        unit: 'Seoul',
+        note: 'Hosted & organized by Flutter Seoul',
+      ),
     ],
   ),
   about: AboutStrings(
@@ -801,7 +845,11 @@ const enContent = Content(
     title: 'Call for Speakers is Closed',
     body:
         'The Call for Speakers for Flutter Korea 2026 is now closed. Thank you to everyone who submitted proposals. Please check out the confirmed schedule in the timetable.',
-    perks: ['Speakers attend free', 'Official slide template provided', 'Propose your own topic'],
+    perks: [
+      'Speakers attend free',
+      'Official slide template provided',
+      'Propose your own topic',
+    ],
     cta: 'Closed',
     ctaNote: 'Speaker applications are closed',
     deadlineLabel: 'Status',
@@ -825,26 +873,39 @@ const enContent = Content(
         badge: 'Sold Out',
         featured: false,
         soldOut: true,
-        features: ['Early bird special', 'Limited to the first 30', 'All sessions + fireside chat'],
+        features: [
+          'Early bird special',
+          'Limited to the first 30',
+          'All sessions + fireside chat',
+        ],
       ),
       TicketTier(
         name: 'Standard',
         price: '20,000',
         badge: 'Final price',
         featured: true,
-        features: ['All sessions + fireside chat', 'Networking', 'Sponsor booth access'],
+        features: [
+          'All sessions + fireside chat',
+          'Networking',
+          'Sponsor booth access',
+        ],
       ),
       TicketTier(
         name: 'Flutter Lover',
         price: '80,000',
         badge: 'Personal Supporter',
         support: true,
-        features: ['All sessions + fireside chat', 'Listed as a personal supporter'],
+        features: [
+          'All sessions + fireside chat',
+          'Listed as a personal supporter',
+        ],
       ),
     ],
-    platformNote: 'Ticketing platform · Available on Ticketaco official event page.',
+    platformNote:
+        'Ticketing platform · Available on Ticketaco official event page.',
     speakerNote: 'Speakers do not need to purchase a ticket.',
-    venueNote: 'Venue · AWS Korea (Centerfield East 12F, 231 Teheran-ro, Gangnam-gu, Seoul / Public transit recommended)',
+    venueNote:
+        'Venue · AWS Korea (Centerfield East 12F, 231 Teheran-ro, Gangnam-gu, Seoul / Public transit recommended)',
     venueMapLinkText: 'View Map',
     platformLinkText: 'Go to Ticketaco',
   ),
@@ -877,8 +938,14 @@ const enContent = Content(
     levelsTitle: 'Target Audience Level',
     levels: [
       SpeakerLevel(name: 'Beginner', desc: 'Introduction / Fundamentals'),
-      SpeakerLevel(name: 'Intermediate', desc: 'Applied skills / Common patterns'),
-      SpeakerLevel(name: 'Advanced', desc: 'Architecture / Deep Dive / Internals'),
+      SpeakerLevel(
+        name: 'Intermediate',
+        desc: 'Applied skills / Common patterns',
+      ),
+      SpeakerLevel(
+        name: 'Advanced',
+        desc: 'Architecture / Deep Dive / Internals',
+      ),
     ],
     categoriesTitle: 'Session Category',
     categories: [
@@ -906,14 +973,19 @@ const enContent = Content(
       'Social · GitHub (optional)',
     ],
     perksTitle: 'Speaker perks',
-    perks: ['Free speaker ticket', 'Official slide template provided', 'Propose any topic'],
+    perks: [
+      'Free speaker ticket',
+      'Official slide template provided',
+      'Propose any topic',
+    ],
     applyCta: 'Applications Closed',
     applyNote: 'Speaker applications are now closed',
     back: 'Back to home',
     closed: true,
   ),
   footer: FooterStrings(
-    tagline: 'Return to the essence of technology, and fearlessly define the future.',
+    tagline:
+        'Return to the essence of technology, and fearlessly define the future.',
     madeBy: 'Organized by',
     org: 'Flutter Seoul',
     nav: 'Navigate',

@@ -76,12 +76,14 @@ class _SiteScaffoldState extends State<SiteScaffold> {
                 child: IgnorePointer(
                   ignoring: menuOpen,
                   child: ScrollConfiguration(
-                    behavior: ScrollConfiguration.of(context)
-                        .copyWith(scrollbars: true),
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: true),
                     child: SingleChildScrollView(
                       controller: widget.hub.controller,
                       padding: const EdgeInsets.only(
-                          top: FKLayout.announceH + FKLayout.headerH),
+                        top: FKLayout.announceH + FKLayout.headerH,
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: widget.children,
@@ -161,7 +163,11 @@ class _MobilePanel extends StatelessWidget {
         ],
       ),
       padding: const EdgeInsets.fromLTRB(
-          24, FKLayout.announceH + FKLayout.headerH + 24, 24, 32),
+        24,
+        FKLayout.announceH + FKLayout.headerH + 24,
+        24,
+        32,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -171,11 +177,14 @@ class _MobilePanel extends StatelessWidget {
               builder: (context, hovered) => GestureDetector(
                 onTap: () {
                   onClose();
-                  goHomeAnchor(context, link.id, hub: hub);
+                  goNavLink(context, link, hub: hub);
                 },
                 behavior: HitTestBehavior.opaque,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 4),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 16,
+                    horizontal: 4,
+                  ),
                   decoration: const BoxDecoration(
                     border: Border(bottom: BorderSide(color: FKColors.border)),
                   ),
@@ -184,7 +193,11 @@ class _MobilePanel extends StatelessWidget {
                     children: [
                       Text(
                         link.label,
-                        style: sans(size: 18.4, weight: 600, color: FKColors.ink),
+                        style: sans(
+                          size: 18.4,
+                          weight: 600,
+                          color: FKColors.ink,
+                        ),
                       ),
                       StrokeIcon(
                         FkIcons.chevronRight,
