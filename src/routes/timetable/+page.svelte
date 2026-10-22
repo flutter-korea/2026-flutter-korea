@@ -2,7 +2,16 @@
 	import { t, lang } from '$lib/i18n.js';
 	import { base } from '$app/paths';
 	import { reveal } from '$lib/actions.js';
-
+	import SessionDialog from '$lib/components/SessionDialog.svelte';
+	/** @type {{ title: string; speaker?: string; org?: string; description?: string; time: string; track?: string } | null} */
+	let details = $state(null);
+	/** @param {{ title?: string; speaker?: string; org?: string; description?: string } | undefined} session
+	 *  @param {{ start: string; end: string }} row
+	 *  @param {string} [track] */
+	function openSession(session, row, track) {
+		if (!session?.description?.trim()) return;
+		details = { title: session.title ?? '', speaker: session.speaker, org: session.org, description: session.description, time: `${row.start} – ${row.end}`, track };
+	}
 	const googlePortraits = [
 		`${base}/assets/flutter-seoul/speaker/craig-labenz.jpg`,
 		`${base}/assets/flutter-seoul/speaker/khanh-nguyen.jpg`,
@@ -64,10 +73,13 @@
 								</div>
 							{:else}
 								<div class="shared-content">
-					<div class="portrait-stack" aria-hidden="true">
-						{#if row.shared.toLowerCase().includes('opening') || row.shared.includes('오프닝')}
-							<img class="flutter-logo" src={`${base}${row.image ?? '/assets/flutter-seoul/flutter-seoul-logo-exact-size.svg'}`} alt="" />
-										{:else}
+									{#if 'description' in row && typeof row.description === 'string' && row.description.trim()}<button type="button" class="card-hit" aria-label={`${row.shared} · ${$lang === 'ko' ? '세션 설명 보기' : 'View session details'}`} onclick={() => openSession({ title: row.shared, speaker: row.speaker, org: 'org' in row && typeof row.org === 'string' ? row.org : undefined, description: row.description }, row)}></button>{/if}
+								<div class="portrait-stack" aria-hidden="true">
+									{#if row.shared.toLowerCase().includes('opening') || row.shared.includes('오프닝')}
+										<img class="flutter-logo" src={`${base}${row.image ?? '/assets/flutter-seoul/flutter-seoul-logo-exact-size.svg'}`} alt="" />
+									{:else if row.shared.toLowerCase().includes('aws')}
+										<img class="aws-logo" src={`${base}/assets/aws-logo.svg`} alt="AWS" />
+									{:else}
 											{#each portraitsFor(row) as portrait (portrait)}
 												<img src={portrait} alt="" />
 											{/each}
@@ -86,6 +98,7 @@
 						<article class="schedule-row session-row">
 							{#each [row.flutter, row.ai] as session, i (`${row.start}-${i}`)}
 								<div class="session">
+									{#if session?.description?.trim()}<button type="button" class="card-hit" aria-label={`${session?.title ?? ''} · ${$lang === 'ko' ? '세션 설명 보기' : 'View session details'}`} onclick={() => openSession(session, row, i === 0 ? $t.timetable.tracks.flutter : $t.timetable.tracks.ai)}></button>{/if}
 									<span class="time-pill">{row.start} – {row.end}</span>
 									{#if session?.image}
 										<img class="portrait" src={`${base}${session.image.normalize('NFD')}`} alt="{session.speaker} 프로필" />
@@ -112,6 +125,7 @@
 		</div>
 	</div>
 </article>
+<SessionDialog {details} lang={$lang} onClose={() => details = null} />
 
 <footer class="page-footer">
 	<span>Flutter Korea 2026 · Organized by Flutter Seoul</span>
@@ -196,6 +210,7 @@
 		padding: 1.25rem 0;
 	}
 	.session {
+		position: relative;
 		display: grid;
 		grid-template-columns: auto 3.25rem minmax(0, 1fr);
 		align-items: start;
@@ -271,6 +286,10 @@
 		line-height: 1.3;
 		letter-spacing: -0.025em;
 	}
+	.shared-content { position: relative; }
+	.card-hit { position: absolute; inset: 0; z-index: 1; width: 100%; border: 0; background: transparent; cursor: pointer; }
+	.card-hit:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 0.25rem; }
+	.session:hover h2, .shared-content:hover h2 { color: var(--accent); }
 	.break-row,
 	.shared-row {
 		display: flex;
@@ -324,6 +343,10 @@
 	}
 	.portrait-stack .flutter-logo {
 		padding: 0.45rem;
+		border: 1px solid var(--border);
+	}
+	.portrait-stack .aws-logo {
+		padding: 0.55rem;
 		border: 1px solid var(--border);
 	}
 	.lunch-logo {

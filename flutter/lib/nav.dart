@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart' as launcher;
 
+import 'content/content.dart';
 import 'shell/scroll_hub.dart';
 
 /// Navigate to a home-page section (`${base}/#id` in the original). When
@@ -18,6 +19,14 @@ void goHomeAnchor(BuildContext context, String id, {ScrollHub? hub}) {
 }
 
 void goSpeakers(BuildContext context) => context.go('/speakers');
+
+void goNavLink(BuildContext context, NavLink link, {ScrollHub? hub}) {
+  if (link.id == 'previous-events') {
+    openExternal(Links.previousEvents);
+  } else {
+    goHomeAnchor(context, link.id, hub: hub);
+  }
+}
 
 /// External links open in a new tab (web) / default handler elsewhere.
 Future<void> openExternal(String url) async {

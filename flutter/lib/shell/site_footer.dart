@@ -24,14 +24,16 @@ class SiteFooter extends StatelessWidget {
     final vw = MediaQuery.sizeOf(context).width;
     final padTop = (vw * 0.07).clamp(48.0, 80.0);
 
-    final brandCol = Reveal(child: _BrandCol(t: t, hub: hub));
+    final brandCol = Reveal(
+      child: _BrandCol(t: t, hub: hub),
+    );
     final navCol = Reveal(
       delayMs: 80,
       child: _LinkCol(
         title: t.footer.nav,
         links: [
           for (final link in t.nav.links)
-            _FooterLink(link.label, () => goHomeAnchor(context, link.id, hub: hub)),
+            _FooterLink(link.label, () => goNavLink(context, link, hub: hub)),
         ],
       ),
     );
@@ -40,9 +42,20 @@ class SiteFooter extends StatelessWidget {
       child: _LinkCol(
         title: t.footer.connect,
         links: [
-          _FooterLink(t.tickets.title, () => goHomeAnchor(context, 'tickets', hub: hub)),
-          _FooterLink('Meetup', () => openExternal(Links.meetup), external: true),
-          _FooterLink('Discord', () => openExternal(Links.discord), external: true),
+          _FooterLink(
+            t.tickets.title,
+            () => goHomeAnchor(context, 'tickets', hub: hub),
+          ),
+          _FooterLink(
+            'Meetup',
+            () => openExternal(Links.meetup),
+            external: true,
+          ),
+          _FooterLink(
+            'Discord',
+            () => openExternal(Links.discord),
+            external: true,
+          ),
           _FooterLink('Contact', () => openExternal(Links.email)),
         ],
       ),
@@ -61,7 +74,10 @@ class SiteFooter extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(flex: vw >= Bp.footerWide ? 20 : 14, child: brandCol),
+                  Expanded(
+                    flex: vw >= Bp.footerWide ? 20 : 14,
+                    child: brandCol,
+                  ),
                   const SizedBox(width: 32),
                   Expanded(flex: 10, child: navCol),
                   const SizedBox(width: 32),
@@ -80,7 +96,10 @@ class SiteFooter extends StatelessWidget {
                 ],
               ),
             SizedBox(height: FKLayout.panelPadY(vw)),
-            Reveal(delayMs: 240, child: _Bottom(t: t, hub: hub)),
+            Reveal(
+              delayMs: 240,
+              child: _Bottom(t: t, hub: hub),
+            ),
           ],
         ),
       ),
@@ -126,8 +145,11 @@ class _BrandCol extends StatelessWidget {
                       ],
                     ),
                     alignment: Alignment.center,
-                    child: StrokeIcon(FkIcons.flutterMark,
-                        size: 22, color: FKColors.white),
+                    child: StrokeIcon(
+                      FkIcons.flutterMark,
+                      size: 22,
+                      color: FKColors.white,
+                    ),
                   ),
                   const SizedBox(width: 11.2),
                   Column(
@@ -261,7 +283,10 @@ class _Bottom extends StatelessWidget {
               Text(
                 t.footer.rights,
                 style: mono(
-                    size: 12.5, color: FKColors.textMuted, letterSpacing: 0.5),
+                  size: 12.5,
+                  color: FKColors.textMuted,
+                  letterSpacing: 0.5,
+                ),
               ),
               _BackToTop(label: t.footer.backToTop, hub: hub),
             ],
@@ -298,7 +323,8 @@ class _BackToTop extends StatelessWidget {
           decoration: BoxDecoration(
             color: hovered ? FKColors.paperStrong : FKColors.paper,
             border: Border.all(
-                color: hovered ? FKColors.borderStrong : FKColors.border),
+              color: hovered ? FKColors.borderStrong : FKColors.border,
+            ),
             borderRadius: BorderRadius.circular(FKRadii.full),
           ),
           child: Row(
@@ -316,8 +342,7 @@ class _BackToTop extends StatelessWidget {
               AnimatedContainer(
                 duration: FKMotion.quick,
                 curve: FKMotion.ease,
-                transform:
-                    Matrix4.translationValues(0, hovered ? -2 : 0, 0),
+                transform: Matrix4.translationValues(0, hovered ? -2 : 0, 0),
                 child: StrokeIcon(
                   FkIcons.arrowUp,
                   size: 13.5,

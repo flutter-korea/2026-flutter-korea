@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../content/schedule.dart';
@@ -183,6 +183,7 @@ class _ScheduleRow extends StatelessWidget {
                 'title': title,
                 'speaker': row['speaker'],
                 'org': row['org'],
+                'description': row['description'],
                 'image': row['image'],
               },
               shared: true,
@@ -367,12 +368,14 @@ class _Session extends StatelessWidget {
   Widget build(BuildContext context) {
     final vw = MediaQuery.sizeOf(context).width;
     final title = (session['title'] as String?) ?? '';
+    final description = (session['description'] as String?) ?? '';
     if (title.isEmpty || title == 'X') {
       return const SizedBox(height: 40);
     }
     final speaker = (session['speaker'] as String?) ?? '';
     final org = (session['org'] as String?) ?? '';
     final isGooglePanel = shared && speaker.contains('Craig Labenz');
+    final isAwsKeynote = shared && title.toLowerCase().contains('aws');
     final image = session['image'] as String?;
 
     Widget avatar;
@@ -381,6 +384,14 @@ class _Session extends StatelessWidget {
         padding: const EdgeInsets.all(7),
         child: SvgPicture.asset(
           'assets/images/flutter_seoul/flutter_seoul_logo_exact_size.svg',
+          fit: BoxFit.contain,
+        ),
+      );
+    } else if (isAwsKeynote) {
+      avatar = Padding(
+        padding: const EdgeInsets.all(7),
+        child: SvgPicture.asset(
+          'assets/images/aws-logo.svg',
           fit: BoxFit.contain,
         ),
       );
@@ -495,23 +506,89 @@ class _Session extends StatelessWidget {
       ],
     );
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        if (constraints.maxWidth < 420) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [_TimeChip(time), const SizedBox(height: 14), content],
-          );
-        }
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _TimeChip(time),
-            const SizedBox(width: 16),
-            Expanded(child: content),
-          ],
-        );
-      },
+    final isKo = I18nScope.of(context).lang.name == 'ko';
+    final hasDescription = description.trim().isNotEmpty;
+    return Semantics(
+      button: hasDescription,
+      label: hasDescription
+          ? '$title · ${isKo ? '세션 설명 보기' : 'View session details'}'
+          : title,
+      child: InkWell(
+        onTap: !hasDescription
+            ? null
+            : () => showDialog<void>(
+                context: context,
+                builder: (dialogContext) => AlertDialog(
+                  title: Text(title),
+                  scrollable: true,
+                  content: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 560),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          time,
+                          style: sans(size: 12, color: FKColors.textDim),
+                        ),
+                        if (speaker.isNotEmpty) ...[
+                          const SizedBox(height: 8),
+                          Text(
+                            '$speaker${org.isEmpty ? '' : ' / $org'}',
+                            style: sans(
+                              size: 14,
+                              weight: 700,
+                              color: FKColors.accent,
+                            ),
+                          ),
+                        ],
+                        const SizedBox(height: 16),
+                        Text(
+                          description.isNotEmpty
+                              ? description
+                              : (isKo
+                                    ? '세션 설명을 준비 중입니다.'
+                                    : 'Session description coming soon.'),
+                          style: sans(
+                            size: 14,
+                            color: FKColors.ink,
+                            height: 1.6,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(dialogContext).pop(),
+                      child: Text(isKo ? '닫기' : 'Close'),
+                    ),
+                  ],
+                ),
+              ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            if (constraints.maxWidth < 420) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _TimeChip(time),
+                  const SizedBox(height: 14),
+                  content,
+                ],
+              );
+            }
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _TimeChip(time),
+                const SizedBox(width: 16),
+                Expanded(child: content),
+              ],
+            );
+          },
+        ),
+      ),
     );
   }
 }
