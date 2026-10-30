@@ -15,7 +15,10 @@
 	{#if details}
 		<div class="dialog-head">
 			<p class="time">{details.time}{details.track ? ` · ${details.track}` : ''}</p>
-			<button type="button" class="close" onclick={() => dialog?.close()} aria-label={lang === 'ko' ? '닫기' : 'Close'}>×</button>
+			<button type="button" class="close" onclick={() => dialog?.close()}>
+				<span aria-hidden="true">×</span>
+				{lang === 'ko' ? '닫기' : 'Close'}
+			</button>
 		</div>
 		{#if details.speaker}<p class="speaker">{details.speaker}{details.org ? ` / ${details.org}` : ''}</p>{/if}
 		<h2>{details.title}</h2>
@@ -25,6 +28,9 @@
 
 <style>
 	dialog {
+		position: fixed;
+		inset: 0;
+		margin: auto;
 		width: min(40rem, calc(100vw - 2rem));
 		max-height: min(80vh, 50rem);
 		padding: clamp(1.3rem, 4vw, 2rem);
@@ -38,7 +44,9 @@
 	dialog::backdrop { background: rgb(15 30 55 / 56%); }
 	.dialog-head { display: flex; align-items: start; justify-content: space-between; gap: 1rem; }
 	.time { color: var(--text-muted); font-size: 0.8rem; font-weight: 700; }
-	.close { border: 0; background: transparent; color: var(--ink); font: inherit; font-size: 1.8rem; line-height: 1; cursor: pointer; }
+	.close { display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; flex-shrink: 0; min-height: 44px; padding: 0.4rem 0.75rem; border: 1px solid var(--border); border-radius: 0.5rem; background: var(--white); color: var(--ink); font: inherit; font-size: 0.9rem; line-height: 1; cursor: pointer; }
+	.close span { font-size: 1.5rem; }
+	.close:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 	.speaker { margin-top: 1rem; color: var(--accent); font-weight: 700; }
 	h2 { margin-top: 0.5rem; font-size: clamp(1.3rem, 4vw, 1.85rem); line-height: 1.35; word-break: keep-all; }
 	.description { margin-top: 1.3rem; color: var(--text-muted); line-height: 1.7; white-space: pre-line; overflow-wrap: anywhere; }
