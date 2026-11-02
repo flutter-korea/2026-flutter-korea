@@ -313,15 +313,19 @@ class _SharedEventRow extends StatelessWidget {
 }
 
 class _GooglePortraitStack extends StatelessWidget {
+  final bool includeKhanh;
   final bool includeMariam;
 
-  const _GooglePortraitStack({required this.includeMariam});
+  const _GooglePortraitStack({
+    required this.includeKhanh,
+    required this.includeMariam,
+  });
 
   @override
   Widget build(BuildContext context) {
     final people = [
       'assets/images/speaker/craig-labenz.jpg',
-      'assets/images/speaker/khanh-nguyen.jpg',
+      if (includeKhanh) 'assets/images/speaker/khanh-nguyen.jpg',
       if (includeMariam) 'assets/images/speaker/mariam-hasnany.jpg',
     ];
     const diameter = 52.0;
@@ -420,7 +424,10 @@ class _Session extends StatelessWidget {
     }
 
     final avatarWidget = isGooglePanel
-        ? _GooglePortraitStack(includeMariam: speaker.contains('Mariam'))
+        ? _GooglePortraitStack(
+            includeKhanh: speaker.contains('Khanh'),
+            includeMariam: speaker.contains('Mariam'),
+          )
         : Container(
             width: 56,
             height: 56,

@@ -21,7 +21,9 @@
 	/** @param {{ speaker?: string }} session */
 	function portraitsFor(session) {
 		if (session?.speaker?.includes('Craig Labenz')) {
-			return session.speaker.includes('Mariam') ? googlePortraits : googlePortraits.slice(0, 2);
+			if (session.speaker.includes('Mariam')) return googlePortraits;
+			if (session.speaker.includes('Khanh')) return googlePortraits.slice(0, 2);
+			return googlePortraits.slice(0, 1);
 		}
 		return [];
 	}
