@@ -461,7 +461,7 @@ const koContent = Content(
     facts: [
       LabelValue(label: '일시', value: '2026.11.07 (토)'),
       LabelValue(label: '시간', value: '11:00 – 18:00'),
-      LabelValue(label: '장소', value: '18층 AWS 코리아', href: Links.venueMap),
+      LabelValue(label: '장소', value: 'AWS 코리아', href: Links.venueMap),
       LabelValue(label: '주최', value: 'Flutter Seoul'),
     ],
     scroll: 'Scroll',
@@ -549,7 +549,7 @@ const koContent = Content(
       LabelValue(label: 'DATE', value: '2026.11.07 (토)'),
       LabelValue(label: 'DOORS', value: '10:30 접수'),
       LabelValue(label: 'PROGRAM', value: '11:00 – 18:00'),
-      LabelValue(label: 'VENUE', value: 'AWS 코리아 (센터필드 EAST 18층)'),
+      LabelValue(label: 'VENUE', value: 'AWS 코리아 (센터필드 EAST 12층)'),
     ],
     comingSoon: ComingSoonStrings(
       badge: '향후 공개 예정',
@@ -605,7 +605,7 @@ const koContent = Content(
     platformNote: '예매 플랫폼 · 티켓타코(Ticketaco) 공식 이벤트 페이지',
     speakerNote: '연사자는 티켓 구매가 필요하지 않습니다.',
     venueNote:
-        '행사 장소 · AWS 코리아 (서울 강남구 테헤란로 231 센터필드 EAST 18층 / 주차 지원 불가, 대중교통 이용 권장)',
+        '행사 장소 · AWS 코리아 (서울 강남구 테헤란로 231 센터필드 EAST 12층 / 주차 지원 불가, 대중교통 이용 권장)',
     venueMapLinkText: '지도 보기',
     platformLinkText: '예매 바로가기',
   ),
@@ -738,7 +738,7 @@ const enContent = Content(
     facts: [
       LabelValue(label: 'Date', value: 'Sat, Nov 7, 2026'),
       LabelValue(label: 'Time', value: '11:00 – 18:00'),
-      LabelValue(label: 'Venue', value: 'AWS Korea, 18F', href: Links.venueMap),
+      LabelValue(label: 'Venue', value: 'AWS Korea', href: Links.venueMap),
       LabelValue(label: 'Host', value: 'Flutter Seoul'),
     ],
     scroll: 'Scroll',
@@ -831,7 +831,7 @@ const enContent = Content(
       LabelValue(label: 'DATE', value: 'Sat, Nov 7, 2026'),
       LabelValue(label: 'DOORS', value: '10:30 check-in'),
       LabelValue(label: 'PROGRAM', value: '11:00 – 18:00'),
-      LabelValue(label: 'VENUE', value: 'AWS Korea (Centerfield East 18F)'),
+      LabelValue(label: 'VENUE', value: 'AWS Korea (Centerfield East 12F)'),
     ],
     comingSoon: ComingSoonStrings(
       badge: 'To be announced',
@@ -905,7 +905,7 @@ const enContent = Content(
         'Ticketing platform · Available on Ticketaco official event page.',
     speakerNote: 'Speakers do not need to purchase a ticket.',
     venueNote:
-        'Venue · AWS Korea (Centerfield East 18F, 231 Teheran-ro, Gangnam-gu, Seoul / Public transit recommended)',
+        'Venue · AWS Korea (Centerfield East 12F, 231 Teheran-ro, Gangnam-gu, Seoul / Public transit recommended)',
     venueMapLinkText: 'View Map',
     platformLinkText: 'Go to Ticketaco',
   ),
