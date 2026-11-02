@@ -63,7 +63,7 @@ export const dict = {
 			facts: [
 				{ label: '일시', value: '2026.11.07 (토)' },
 				{ label: '시간', value: '11:00 – 18:00' },
-				{ label: '장소', value: '12층 AWS 코리아', href: links.venueMap },
+				{ label: '장소', value: '18층 AWS 코리아', href: links.venueMap },
 				{ label: '주최', value: 'Flutter Seoul' }
 			],
 			scroll: 'Scroll'
@@ -128,7 +128,7 @@ export const dict = {
 				{ label: 'DATE', value: '2026.11.07 (토)' },
 				{ label: 'DOORS', value: '10:30 접수' },
 				{ label: 'PROGRAM', value: '11:00 – 18:00' },
-				{ label: 'VENUE', value: 'AWS 코리아 (센터필드 EAST 12층)' }
+				{ label: 'VENUE', value: 'AWS 코리아 (센터필드 EAST 18층)' }
 			],
 			tracks: {
 				ai: 'AI Track',
@@ -138,7 +138,7 @@ export const dict = {
 					{ start: '10:00', end: '11:00', ai: { room: '401호', title: '장비 체크', speaker: '오거나이저 1' }, flutter: { room: '300/301/400호', title: '장비 체크', speaker: '오거나이저 1' } },
 					{ start: '11:00', end: '11:05', shared: '오프닝', speaker: '송승현', image: '/assets/flutter-seoul/flutter-seoul-logo-large.svg' },
 					{ start: '11:05', end: '11:20', shared: 'AWS 키노트', speaker: '윤석찬' },
-					{ start: '11:20', end: '11:50', shared: '키노트: 어디서나 만나는 Flutter (ENG)', description: 'Flutter의 목표는 언제나 “디바이스가 픽셀을 그리는 곳이라면 어디에서든” Flutter 앱이 실행되도록 하는 것이었습니다. 이번 키노트에서는 이 야심 찬 목표를 실현하기 위한 Flutter의 계획을 보여주는 세 가지 발표를 소개합니다.', speaker: 'Craig Labenz & Khanh Nguyen', org: 'Google' },
+					{ start: '11:20', end: '11:50', shared: '키노트: 어디서나 만나는 Flutter (ENG)', description: 'Flutter의 목표는 언제나 “디바이스가 픽셀을 그리는 곳이라면 어디에서든” Flutter 앱이 실행되도록 하는 것이었습니다. 이번 키노트에서는 이 야심 찬 목표를 실현하기 위한 Flutter의 계획을 보여주는 세 가지 발표를 소개합니다.', speaker: 'Craig Labenz', org: 'Google' },
 					{ start: '11:50', end: '12:20', ai: { room: '401호', title: '천재 개발자와 그 이후', description: "- 천재 개발자 되는법에서 소개했던 인공지능과 에이전트에 대한 간단한 이야기\n- AI를 에이전트로 다루는 방법\n- 프롬포트, 컨텍스트, 하네스, 루프, 그래프 엔지니어링이 말하고자하는 것\n- 개발자의 미래는 정말로 암울한가? (개인적인 생각)\n- 피지컬 AI, VLM 그리고 소셜 월드모델에서 보여지는 미래에 대한 이야기", speaker: '박성수', org: 'COSMAX', image: '/assets/flutter-seoul/speaker/sungsoo-park.jpg' }, flutter: { room: '300/301/400호', title: '첫 프로젝트가 글로벌 앱 런칭이라구요?', description: "신입 개발자가 처음으로 맡게 된 프로젝트가 글로벌 앱 런칭 건 이었던 실 사례 케이스를 공유합니다.\n\n실제 개발에 투입된 타임라인에 따라 내용이 전개됩니다.\n각 상황에서 마주한 문제들을 어떻게 접근했는지에 대한 경험과, 기술적으로 어떻게 해결했는지에 대한 내용으로 챕터별 옴니버스 형식으로 진행됩니다.\n\n1. 프로젝트가 연기된 사이 연구한 아키텍처와 패키지\n입사 후 몇개월동안 사이드 프로젝트 및 유지보수 업무에 투입되는 동안 언젠가 진행할 메인 프로젝트를 미리 준비했습니다.\n플러터 아키텍처를 설계하고, 이걸 쉽게 메인 프로젝트에 적용하기 위한 라이브러리도 만들어 배포했습니다.\n(실제로는 제 설계를 외부 패키지에 두고, 메인 프로젝트에 의존성을 갖게 하는건 장기적으로 위험하다 판단해, 동일한 코드를 프로젝트의 패키지 모듈로 분리했지만요)\n+ 개발하면서 느꼈던 bloc의 단점을 보완하는 기능들이 담긴 패키지 (스트림 기반 비즈니스 레이어 상태 동기화, 1회성 UI 이벤트 방출 방법)\n+ 앱에 화려한 애니메이션을 위한 패키지 (toss의 탭 전환 애니메이션을 구현해보자)\n패키지 개발과정과 구현 의도를 예시 코드와 함께 설명할 예정입니다. (13분)\n\n2. Restful 대신, 아직 메이저하지 않은 스택인 GraphQL을 선택한 이유\n이제 메인 프로젝트가 개시되었고, 요구사항이 어느정도 구체화 되었으니, 기술 스택을 정하는 회의가 진행되었습니다. 오늘의 주제는 Restful vs. GraphQL 이었습니다.\n+ 같은 내용이지만, 레이아웃이나 노출되는 정보가 다른 여러 위젯을 그리기 위해 각각 API를 작성하는 것이 비효율적이라고 판단했습니다.\n+ 일반적인 API 호출과 소켓 스펙을 하나의 클라이언트로 처리하고 싶었습니다. 하나의 앱에서 여러개의 서버를 동적으로 연결해야 했기에 클라이언트의 수를 줄이는게 중요했습니다.\n+ Restful 패키지들과 마찬가지로 코드젠을 지원했습니다. 개발 난이도의 차이가 크게 없다는 것 또한 중요했습니다.\n물론 장점만 있지는 않았습니다.\n- 보일러 플레이트 코드가 너무 많이 생성된다.\n- 요청할 graphql 스펙의 문서를 하나하나 작성해야 한다.\n- 패키지 지원이 열악해서 API 엔드포인트 생성용, GraphQL 모델 생성용 코드와, 생성 결과물의 클래스 시그니처가 달라 치환 과정이 필요했다.\nGraphQL 적용 이유와 장단점을 예시 코드와 함께 설명할 예정입니다. (7분)\n\n3. 앱 코드에 하드코딩된 문자열이 없다, i18n 적용과 확장을 AI로 관리한 방법\n개발 중반, 처음에는 한글로 하드코딩하며 개발하다가, 드디어 용어 번역서가 도착하여 i18n을 적용해야 할 시기가 왔습니다. 하지만, 이미 페이지는 50개를 넘어가고 있었고, 번역 키의 유지보수성과 확장성을 고려해야 했는데...\n+ 확장 가능한 key 설계 방법론 (1:1 매핑 방법)\n+ 일관된 코드 품질을 유지하는 AI 하네스 구성\n개발과정에서 i18n 적용에 AI를 도입한 케이스에 대해 설명할 예정입니다. (5분)\n\n4. 빌드 환경 분리, k~ 네이밍된 플래그의 존재 이유\n개발 막바지, 앱의 보안 검사가 진행되었습니다. 하지만, 디버그 빌드에만 넣어뒀던 실험적 기능이 보안 문제로 거론되게 되는데.. 분명 flavor에 따라 다르게 DI 되도록 구현되었는데 어떻게 된 일일까요?\n+ Flavor.name 을 분기문으로 쓸 경우에 발생하는 문제\n+ k~ 네이밍된 유래와 플래그의 존재 이유 (트리셰이킹)\n우연히 알게된 k 플래그를 사용해야 하는 케이스에 대해 공유할 예정입니다. (5분)", speaker: '이웅재', org: 'KM Park', image: '/assets/flutter-seoul/speaker/woongjae-lee.jpg' } },
 					{ start: '12:20', end: '13:00', shared: '네트워킹 런치', speaker: '' },
 					{ start: '13:00', end: '13:30', ai: { room: '401호', title: 'llamadart로 시작하는 플러터 온디바이스 에이전트(feat: tool call parser)', description: "Flutter/Dart에서 동작하는 LLM 추론 엔진 \"llamadart\"를 소개하고, 에이전틱 AI의 핵심 기반 기술인 Tool Call을 설명하며, 관련 기여 경험과 온디바이스 에이전틱 AI 구현을 사례로 보여주는 발표입니다.\n\nFlutter GDE 리핵님이 메인테이너로 활동 중이신 llamadart라는 프로젝트가 있습니다. 이는 LLM 추론 엔진 llama.cpp를 Dart로 포팅한 프로젝트입니다. 올해 해당 프로젝트에 Tool Call Parser와 Tool Execution Loop 관련 기여한 경험(https://github.com/leehack/llamadart/pull/43)이 있습니다. 온디바이스에서 Tool Call 파싱을 직접 제어하기 위한 기여 과정에서 에이전틱 AI에서 가장 중요한 Tool Call의 개념, 왜 많은 Parser들을 지원해야 하는지, Tool Execution Loop은 어떻게 구현하는지에 대해 깊게 알게 되었습니다. 이러한 경험과 지식을 공유하기 위한 발표입니다.\n\n대략적인 발표 흐름은 다음과 같습니다.\n\n1. 에이전틱 AI의 기반, Structured output과 Tool call\n2. Tool call의 동작 원리와 Tool execution loop\n3. 온디바이스 에이전트 개발(Tool call 파싱을 앱에서 직접 제어)\n4. llamadart의 Tool calling 구현 구조 (handler, chat template, grammar)\n5. 모델별로 Tool call이 실패하던 케이스 분석과 기여 사례\n6. Tool execution loop 구현 기여\n7. 실기기 데모 : llamadart로 구현한 온디바이스 에이전트 기능과 벤치마크", speaker: '권태형', org: '고려대학교', image: '/assets/flutter-seoul/speaker/taehyung-kwon.jpg' }, flutter: { room: '300/301/400호', title: "안 되는 건 안 된다'고 말하는 플러그인: 알람 플러그인으로 본 capability-first federated plugin 설계", description: "알람 앱을 만들면서 pub.dev의 알람 패키지를 썼습니다. Android에서는 잘 울렸고, iOS에서는 아무 오류 없이 조용히 울리지 않았습니다. 문제는 iOS의 제약이 아니라, 그 제약을 플러그인이 숨기고 있었다는 점이었습니다.\n\n그래서 각 플랫폼이 \"할 수 있는 것\"을 먼저 보고하는 플러그인을 직접 만들었습니다. warm_alarm은 스케줄을 잡기 전에 getCapabilities, getPermissionState, getReadiness 세 단계로 시스템 상태를 진단하고, 부족한 이유를 코드로 돌려줍니다. 정확한 알람 권한이 없거나 배터리 최적화가 실행을 지연시킬 수 있다면 사용자에게 설정 화면으로 가는 길까지 안내합니다. silent no-op 대신 \"limited\"와 \"blocked\"를 명시하는 것이 이 플러그인의 첫 번째 설계 원칙입니다.\n\n두 번째는 federated plugin 안에서의 경계입니다. Android와 Apple 플랫폼이 서로 다른 길로 발전할 수 있도록 Pigeon 스키마를 플랫폼별로 분리했고, Pigeon이 생성한 DTO가 public API로 새어 나가지 않도록 공개 모델은 platform_interface에 손으로 작성했습니다. 이 경계가 왜 필요한지, 지키지 않으면 어떤 호환성 비용이 생기는지를 실제 diff로 보여드립니다.\n\n세 번째는 Flutter 엔진이 죽어도 살아남아야 하는 알람의 특성입니다. 스케줄 저장소를 Dart가 아닌 네이티브 쪽에 두어 엔진 재시작을 견디게 했고, Android에서는 AlarmManager, ForegroundService, full-screen intent, 그리고 사용자가 실제로 깨어났는지 확인하고 다시 울리는 wake-check 흐름을 구현했습니다. 이 과정에서 만난 OS 버전별 제약과 권한 정책을 정리해 공유합니다.\n\n이 세션은 알람 플러그인 홍보가 아닙니다. 플랫폼마다 되는 것이 다른 기능을 하나의 Dart API로 감쌀 때, 그 차이를 어떻게 정직하게 드러내고 유지보수 가능한 경계를 어디에 둘지에 대한 이야기입니다. 알람이 아니어도 네이티브 기능을 플러그인으로 감싸 본 분이라면 같은 문제를 겪으셨을 겁니다.", speaker: '유동민', image: '/assets/flutter-seoul/speaker/dongmin-yu.png' } },
@@ -195,7 +195,7 @@ export const dict = {
 				}
 			],
 			platformNote: '예매 플랫폼 · 티켓타코(Ticketaco) 공식 이벤트 페이지',
-			venueNote: '행사 장소 · AWS 코리아 (서울 강남구 테헤란로 231 센터필드 EAST 12층 / 주차 지원 불가, 대중교통 이용 권장)',
+			venueNote: '행사 장소 · AWS 코리아 (서울 강남구 테헤란로 231 센터필드 EAST 18층 / 주차 지원 불가, 대중교통 이용 권장)',
 			venueMapLinkText: '지도 보기',
 			platformLinkText: '예매 바로가기'
 		},
@@ -615,7 +615,7 @@ export const dict = {
 			facts: [
 				{ label: 'Date', value: 'Sat, Nov 7, 2026' },
 				{ label: 'Time', value: '11:00 – 18:00' },
-				{ label: 'Venue', value: 'AWS Korea, 12F', href: links.venueMap },
+				{ label: 'Venue', value: 'AWS Korea, 18F', href: links.venueMap },
 				{ label: 'Host', value: 'Flutter Seoul' }
 			],
 			scroll: 'Scroll'
@@ -680,7 +680,7 @@ export const dict = {
 				{ label: 'DATE', value: 'Sat, Nov 7, 2026' },
 				{ label: 'DOORS', value: '10:30 check-in' },
 				{ label: 'PROGRAM', value: '11:00 – 18:00' },
-				{ label: 'VENUE', value: 'AWS Korea (Centerfield East 12F)' }
+				{ label: 'VENUE', value: 'AWS Korea (Centerfield East 18F)' }
 			],
 			tracks: {
 				ai: 'AI Track',
@@ -690,7 +690,7 @@ export const dict = {
 					{ start: '10:00', end: '11:00', ai: { room: 'Room 401', title: 'Equipment check', speaker: 'Organizer 1' }, flutter: { room: 'Rooms 300/301/400', title: 'Equipment check', speaker: 'Organizer 1' } },
 					{ start: '11:00', end: '11:05', shared: 'Opening', speaker: 'Song SeungHyeon', image: '/assets/flutter-seoul/flutter-seoul-logo-large.svg' },
 					{ start: '11:05', end: '11:20', shared: 'AWS Keynote', speaker: 'Channy Yun' },
-					{ start: '11:20', end: '11:50', shared: 'Keynote: Flutter is Everywhere (ENG)', description: 'Flutter\'s goal has always been to run your Flutter apps "anywhere a device paints pixels". Join us for 3 announcements that will outline our plan to make sure Flutter delivers on that ambitious goal.', speaker: 'Craig Labenz & Khanh Nguyen', org: 'Google' },
+					{ start: '11:20', end: '11:50', shared: 'Keynote: Flutter is Everywhere (ENG)', description: 'Flutter\'s goal has always been to run your Flutter apps "anywhere a device paints pixels". Join us for 3 announcements that will outline our plan to make sure Flutter delivers on that ambitious goal.', speaker: 'Craig Labenz', org: 'Google' },
 					{ start: '11:50', end: '12:20', ai: { room: 'Room 401', title: 'After becoming a genius developer', description: "A follow-up to “How to Become a Genius Developer”: AI and agents, how to work with AI as an agent, prompt/context/harness/loop/graph engineering, the future of developers, and emerging possibilities in physical AI, VLMs, and social world models.", speaker: 'Sungsoo Park', org: 'COSMAX', image: '/assets/flutter-seoul/speaker/sungsoo-park.jpg' }, flutter: { room: 'Rooms 300/301/400', title: 'Your first project is a global app launch?', description: "A new developer shares the experience of launching a global app as a first major project. Following the project timeline, the talk covers architecture and package preparation, the trade-offs of choosing GraphQL over REST, using AI to roll out and maintain i18n across a large app, and separating build environments safely.", speaker: 'Woongjae Lee', org: 'KM Park', image: '/assets/flutter-seoul/speaker/woongjae-lee.jpg' } },
 					{ start: '12:20', end: '13:00', shared: 'Networking lunch', speaker: '' },
 					{ start: '13:00', end: '13:30', ai: { room: 'Room 401', title: 'Starting with llamadart: a Flutter on-device agent (feat. tool call parser)', description: "An introduction to llamadart, a Dart port of the llama.cpp inference engine, and to tool calling as a foundation for on-device agents. Drawing on contributions to its Tool Call Parser and Tool Execution Loop, the talk explains structured output, parsing across models, execution loops, implementation architecture, failure cases, and an on-device demo with benchmarks.", speaker: 'Taehyung Kwon', org: 'Korea Univ.', image: '/assets/flutter-seoul/speaker/taehyung-kwon.jpg' }, flutter: { room: 'Rooms 300/301/400', title: 'A capability-first federated plugin design through an alarm plugin', description: "An alarm package worked on Android but silently failed on iOS, hiding the platform’s limitations. This talk explains how warm_alarm reports capabilities, permissions, and readiness instead of silently doing nothing; how to design maintainable boundaries in a federated plugin; and how native scheduling survives Flutter Engine restarts while navigating OS-level alarm policies.", speaker: 'Dongmin Yu', image: '/assets/flutter-seoul/speaker/dongmin-yu.png' } },
@@ -747,7 +747,7 @@ export const dict = {
 				}
 			],
 			platformNote: 'Ticketing platform · Available on Ticketaco official event page.',
-			venueNote: 'Venue · AWS Korea (Centerfield East 12F, 231 Teheran-ro, Gangnam-gu, Seoul / Public transit recommended)',
+			venueNote: 'Venue · AWS Korea (Centerfield East 18F, 231 Teheran-ro, Gangnam-gu, Seoul / Public transit recommended)',
 			venueMapLinkText: 'View Map',
 			platformLinkText: 'Go to Ticketaco'
 		},

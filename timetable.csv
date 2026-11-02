@@ -1,6 +1,6 @@
-﻿"시작 시간","종료 시간","트랙","발표자","세션 제목","세션 설명"
+"시작 시간","종료 시간","트랙","발표자","세션 제목","세션 설명"
 "11:00","11:10","공통","Flutter Seoul","오프닝",""
-"11:10","11:40","공통","Google / Craig Labenz & Khanh Nguyen","Keynote: Flutter is Everywhere (ENG)","Flutter's goal has always been to run your Flutter apps ""anywhere a device paints pixels"". Join us for 3 announcements that will outline our plan to make sure Flutter delivers on that ambitious goal."
+"11:10","11:40","공통","Google / Craig Labenz","Keynote: Flutter is Everywhere (ENG)","Flutter's goal has always been to run your Flutter apps ""anywhere a device paints pixels"". Join us for 3 announcements that will outline our plan to make sure Flutter delivers on that ambitious goal."
 "11:40","11:50","공통","","휴식",""
 "11:50","12:20","AI Track","박성수","천재 개발자와 그 이후","- 천재 개발자 되는법에서 소개했던 인공지능과 에이전트에 대한 간단한 이야기
 - AI를 에이전트로 다루는 방법
