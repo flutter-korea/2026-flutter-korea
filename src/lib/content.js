@@ -63,7 +63,7 @@ export const dict = {
 			facts: [
 				{ label: '일시', value: '2026.11.07 (토)' },
 				{ label: '시간', value: '11:00 – 18:00' },
-				{ label: '장소', value: '12층 AWS 코리아', href: links.venueMap },
+				{ label: '장소', value: '18층 AWS 코리아', href: links.venueMap },
 				{ label: '주최', value: 'Flutter Seoul' }
 			],
 			scroll: 'Scroll'
@@ -128,7 +128,7 @@ export const dict = {
 				{ label: 'DATE', value: '2026.11.07 (토)' },
 				{ label: 'DOORS', value: '10:30 접수' },
 				{ label: 'PROGRAM', value: '11:00 – 18:00' },
-				{ label: 'VENUE', value: 'AWS 코리아 (센터필드 EAST 12층)' }
+				{ label: 'VENUE', value: 'AWS 코리아 (센터필드 EAST 18층)' }
 			],
 			tracks: {
 				ai: 'AI Track',
@@ -145,9 +145,9 @@ export const dict = {
 					{ start: '13:30', end: '13:40', kind: 'break', label: '휴식' },
 					{ start: '13:40', end: '14:10', ai: { room: '401호', title: 'AI와 함께 스타트업에서 생존하기', description: "스타트업에서 개발·리뷰·QA 리소스를 AI와 자동화로 채워나는법", speaker: '한상욱', org: '넛지헬스케어(주)', image: '/assets/flutter-seoul/speaker/sangwook-han.jpeg' }, flutter: { room: '300/301/400호', title: '기술 세션: A2UI로 생성형 UI 기반의 동적인 Flutter 앱 만들기 (ENG)', description: 'Flutter의 GenUI SDK를 사용해 경험을 이끄는 에이전트만큼 역동적이고 표현력이 풍부하며 개인화된 UI를 만드는 방법을 알아봅니다.', speaker: 'Khanh Nguyen', org: 'Google', image: '/assets/flutter-seoul/speaker/khanh-nguyen.jpg' } },
 					{ start: '14:10', end: '14:20', kind: 'break', label: '휴식' },
-					{ start: '14:20', end: '14:50', ai: { room: '401호', title: 'AI가 개발자를 대체할까 걱정했는데, 1년 동안 같이 일해보니 일단 재밌습니다', description: "지난 1년간 Claude와 Codex를 개발 업무 전반에 도입하며, 제가 일하는 방식도 크게 달라졌습니다. 처음에는 AI가 빠르게 발전할수록 개발자의 역할이 줄어드는 것은 아닐까 걱정했지만, 실제로 AI와 함께 여러 프로젝트를 진행하고 게임까지 만들어보면서 어느 순간 생각이 조금 단순해졌습니다. “그래도 만드는 게 재밌으면 된 거 아닌가?” 하고요.\n\n이번 세션에서는 제가 지난 1년 동안 AI를 개발 업무에 거의 100% 도입하면서 겪었던 경험들을 솔직하게 공유해보려 합니다. 실제 업무 방식이 어떻게 달라졌는지, 어떤 시행착오가 있었는지, AI로 어떤 결과물까지 만들어봤는지, 그리고 그 과정에서 제가 실제로 느꼈던 생각들을 가볍고 솔직하게 이야기해보려 합니다.", speaker: '김준호', image: '/assets/flutter-seoul/speaker/junho-kim.jpeg' }, flutter: { room: '300/301/400호', title: 'Dart와 Flutter의 AI 평가 프레임워크를 내 프로젝트에 활용하는 법 (ENG)', description: 'Dart와 Flutter 팀이 AI 모델과 개발 도구를 평가하는 방법을 알아보고, 동일한 과정을 자신의 Flutter 프로젝트에 적용하는 방법을 배웁니다.', speaker: 'Mariam Hasnany', org: 'Google', image: '/assets/flutter-seoul/speaker/mariam-hasnany.jpg' } },
+					{ start: '14:20', end: '14:50', ai: { room: '401호', title: 'AI가 개발자를 대체할까 걱정했는데, 1년 동안 같이 일해보니 일단 재밌습니다', description: "지난 1년간 Claude와 Codex를 개발 업무 전반에 도입하며, 제가 일하는 방식도 크게 달라졌습니다. 처음에는 AI가 빠르게 발전할수록 개발자의 역할이 줄어드는 것은 아닐까 걱정했지만, 실제로 AI와 함께 여러 프로젝트를 진행하고 게임까지 만들어보면서 어느 순간 생각이 조금 단순해졌습니다. “그래도 만드는 게 재밌으면 된 거 아닌가?” 하고요.\n\n이번 세션에서는 제가 지난 1년 동안 AI를 개발 업무에 거의 100% 도입하면서 겪었던 경험들을 솔직하게 공유해보려 합니다. 실제 업무 방식이 어떻게 달라졌는지, 어떤 시행착오가 있었는지, AI로 어떤 결과물까지 만들어봤는지, 그리고 그 과정에서 제가 실제로 느꼈던 생각들을 가볍고 솔직하게 이야기해보려 합니다.", speaker: '김준호', image: '/assets/flutter-seoul/speaker/junho-kim.jpeg' }, flutter: { room: '300/301/400호', title: 'Why you should steal Dart & Flutter’s AI evaluation framework (ENG)', description: 'Dart와 Flutter 팀이 AI 모델과 개발 도구를 평가하는 방법을 알아보고, 동일한 과정을 자신의 Flutter 프로젝트에 적용하는 방법을 배웁니다.', speaker: 'Mariam Hasnany', org: 'Google', image: '/assets/flutter-seoul/speaker/mariam-hasnany.jpg' } },
 					{ start: '14:50', end: '15:00', kind: 'break', label: '휴식' },
-					{ start: '15:00', end: '15:30', highlight: true, ai: { room: '401호', title: 'Agent와 함께 Flutter 운영 프로젝트 일대기', description: "Agent를 활용해 새로운 회사 프로젝트를 만들면서 느끼 내용을 공유합니다", speaker: '박준우', org: '벳칭', image: '/assets/flutter-seoul/speaker/junewoo-park.jpg' }, flutter: { room: '300/301/400호', title: 'Flutter Desktop 멀티윈도우 개발기', description: "Flutter Desktop 환경에서 멀티윈도우 기능을 개발하면서 겪었던 경험기 및 노하우 공유", speaker: '추세일', org: 'SK Telecom', image: '/assets/flutter-seoul/speaker/chu-seil.png' } },
+					{ start: '15:00', end: '15:30', highlight: true, ai: { room: '401호', title: 'Agent와 함께 Flutter 운영 프로젝트 일대기', description: "Agent를 활용해 새로운 회사 프로젝트를 만들면서 느끼 내용을 공유합니다", speaker: '박준우', org: '벳칭', image: '/assets/flutter-seoul/speaker/junewoo-park.jpg' }, flutter: { room: '300/301/400호', title: 'Flutter Desktop 멀티윈도우 개발기', description: "Flutter Desktop 환경에서 멀티윈도우 기능을 개발하면서 겪었던 경험기 및 노하우 공유", speaker: '추세일', org: '', image: '/assets/flutter-seoul/speaker/chu-seil.png' } },
 					{ start: '15:30', end: '15:40', kind: 'break', label: '휴식' },
 					{ start: '15:40', end: '16:10', highlight: true, ai: { room: '401호', title: '비전공 기계설계자가 AI를 활용해 SW를 개발해 온 과정과 경험', description: "기계공학 전공자이자 오랜 시간 하드웨어 및 기구 설계를 담당해 온 엔지니어가 GenAI 시대를 맞아 Flutter 및 소프트웨어 개발을 접근하며 겪은 구체적인 여정과 인사이트를 공유합니다.\n\n엔지니어링 사고방식의 확장: 공차, 구속 조건, 시스템 조립 관점에서 바라보는 하드웨어적 사고가 소프트웨어 아키텍처 및 상태 관리를 이해하는 데 어떤 차별화된 시각을 제공하는지 다룹니다.\n\nAI 도구 활용의 실질적 본질: AI 코딩은 단순히 코드를 생성하는 것이 아니라, 현업의 도메인 지식과 논리적 문제 분해 능력이 뒷받침될 때 비로소 강력한 문제 해결 도구가 됨을 실제 프로젝트 구현 경험을 통해 증명합니다.\n\n관점의 전환과 지식 공유: 비전공자라는 한계를 넘어, 문제를 물리적 관점과 시스템적 시각으로 재해석할 때 얻을 수 있는 새로운 개발적 접근법을 전달합니다.\n\n비전공자에게는 AI를 활용한 과감한 개발 도전의 가능성을, 소프트웨어 개발자에게는 하드웨어 엔지니어의 색다른 시각과 문제 해결 방식을 엿볼 수 있는 실질적인 경험 공유 세션이 될 것입니다.", speaker: '유진식', image: '/assets/flutter-seoul/speaker/jinshik-yu.jpg' }, flutter: { room: '300/301/400호', title: 'Flutter 탐구: AI 시대, 왜 엔진을 이해해야 하는가', description: "Flutter Engine의 내부 구조와 설계 배경을 소스 코드와 함께 살펴보며, Framework/Runtime/Engine/Platform의 경계를 이해해 실제 성능 문제와 Native 연동 등의 원인을 판단하고 AI에게 올바른 개발 방향을 제시하는 방법을 다룰 예정입니다.", speaker: '박예승', image: '/assets/flutter-seoul/speaker/yeseung-park.jpg' } },
 					{ start: '16:10', end: '16:20', kind: 'break', label: '휴식' },
@@ -195,7 +195,7 @@ export const dict = {
 				}
 			],
 			platformNote: '예매 플랫폼 · 티켓타코(Ticketaco) 공식 이벤트 페이지',
-			venueNote: '행사 장소 · AWS 코리아 (서울 강남구 테헤란로 231 센터필드 EAST 12층 / 주차 지원 불가, 대중교통 이용 권장)',
+			venueNote: '행사 장소 · AWS 코리아 (서울 강남구 테헤란로 231 센터필드 EAST 18층 / 주차 지원 불가, 대중교통 이용 권장)',
 			venueMapLinkText: '지도 보기',
 			platformLinkText: '예매 바로가기'
 		},
@@ -615,7 +615,7 @@ export const dict = {
 			facts: [
 				{ label: 'Date', value: 'Sat, Nov 7, 2026' },
 				{ label: 'Time', value: '11:00 – 18:00' },
-				{ label: 'Venue', value: 'AWS Korea, 12F', href: links.venueMap },
+				{ label: 'Venue', value: 'AWS Korea, 18F', href: links.venueMap },
 				{ label: 'Host', value: 'Flutter Seoul' }
 			],
 			scroll: 'Scroll'
@@ -680,7 +680,7 @@ export const dict = {
 				{ label: 'DATE', value: 'Sat, Nov 7, 2026' },
 				{ label: 'DOORS', value: '10:30 check-in' },
 				{ label: 'PROGRAM', value: '11:00 – 18:00' },
-				{ label: 'VENUE', value: 'AWS Korea (Centerfield East 12F)' }
+				{ label: 'VENUE', value: 'AWS Korea (Centerfield East 18F)' }
 			],
 			tracks: {
 				ai: 'AI Track',
@@ -697,9 +697,9 @@ export const dict = {
 					{ start: '13:30', end: '13:40', kind: 'break', label: 'Break' },
 					{ start: '13:40', end: '14:10', ai: { room: 'Room 401', title: 'Surviving at a startup with AI', description: "How to fill development, code-review, and QA resource gaps at a startup with AI and automation.", speaker: 'Sangwook Han', org: 'Nudge Healthcare, Inc.', image: '/assets/flutter-seoul/speaker/sangwook-han.jpeg' }, flutter: { room: 'Rooms 300/301/400', title: 'Technical Session: A2UI: Build dynamic Flutter apps with Generative UI (ENG)', description: 'Build a UI that\'s as dynamic, expressive, and personal as the agents that power your experiences using Flutter’s GenUI SDK.', speaker: 'Khanh Nguyen', org: 'Google', image: '/assets/flutter-seoul/speaker/khanh-nguyen.jpg' } },
 					{ start: '14:10', end: '14:20', kind: 'break', label: 'Break' },
-					{ start: '14:20', end: '14:50', ai: { room: 'Room 401', title: 'I worried AI would replace developers, but working together for a year was fun', description: "After using Claude and Codex throughout development for a year, I’ll share how my workflow changed, what failed, and what I built—including a game. I initially worried that AI might replace developers, but working with it reminded me how much I enjoy making things.", speaker: 'Kim Junho', image: '/assets/flutter-seoul/speaker/junho-kim.jpeg' }, flutter: { room: 'Rooms 300/301/400', title: 'Why you should steal Dart & Flutter’s AI evaluation framework', description: 'Learn how the Dart and Flutter team evaluates AI models and developer tools and how to apply that exact same process to evaluate AI in your own Flutter projects.', speaker: 'Mariam Hasnany', org: 'Google', image: '/assets/flutter-seoul/speaker/mariam-hasnany.jpg' } },
+					{ start: '14:20', end: '14:50', ai: { room: 'Room 401', title: 'I worried AI would replace developers, but working together for a year was fun', description: "After using Claude and Codex throughout development for a year, I’ll share how my workflow changed, what failed, and what I built—including a game. I initially worried that AI might replace developers, but working with it reminded me how much I enjoy making things.", speaker: 'Junho Kim', image: '/assets/flutter-seoul/speaker/junho-kim.jpeg' }, flutter: { room: 'Rooms 300/301/400', title: 'Why you should steal Dart & Flutter’s AI evaluation framework (ENG)', description: 'Learn how the Dart and Flutter team evaluates AI models and developer tools and how to apply that exact same process to evaluate AI in your own Flutter projects.', speaker: 'Mariam Hasnany', org: 'Google', image: '/assets/flutter-seoul/speaker/mariam-hasnany.jpg' } },
 					{ start: '14:50', end: '15:00', kind: 'break', label: 'Break' },
-					{ start: '15:00', end: '15:30', highlight: true, ai: { room: 'Room 401', title: 'A Flutter operations project with an Agent', description: "I’ll share what I learned while using an AI agent to build a new project at my company.", speaker: 'Junewoo Park', org: 'Vetching', image: '/assets/flutter-seoul/speaker/junewoo-park.jpg' }, flutter: { room: 'Rooms 300/301/400', title: 'Flutter Desktop multi-window development', description: "Lessons and practical know-how from building multi-window functionality for Flutter Desktop.", speaker: 'Seil Chu', org: 'SK Telecom', image: '/assets/flutter-seoul/speaker/chu-seil.png' } },
+					{ start: '15:00', end: '15:30', highlight: true, ai: { room: 'Room 401', title: 'A Flutter operations project with an Agent', description: "I’ll share what I learned while using an AI agent to build a new project at my company.", speaker: 'Junewoo Park', org: 'Vetching', image: '/assets/flutter-seoul/speaker/junewoo-park.jpg' }, flutter: { room: 'Rooms 300/301/400', title: 'Flutter Desktop multi-window development', description: "Lessons and practical know-how from building multi-window functionality for Flutter Desktop.", speaker: 'Seil Chu', org: '', image: '/assets/flutter-seoul/speaker/chu-seil.png' } },
 					{ start: '15:30', end: '15:40', kind: 'break', label: 'Break' },
 					{ start: '15:40', end: '16:10', highlight: true, ai: { room: 'Room 401', title: 'The Process and Experience of a Non-Major Mechanical Designer Developing Software Using AI', description: "A mechanical engineer with years of hardware and product-design experience shares his journey into Flutter and software development in the GenAI era. The talk explores how engineering concepts such as tolerances, constraints, and system assembly inform software architecture and state management; why domain knowledge and problem decomposition matter more than code generation alone; and what developers can learn from a hardware engineer’s perspective.", speaker: 'Jinshik Yu', image: '/assets/flutter-seoul/speaker/jinshik-yu.jpg' }, flutter: { room: 'Rooms 300/301/400', title: 'Navigating Flutter: Why understand the Engine in the AI era', description: "We’ll explore the Flutter Engine’s internals and design decisions through source code. Understanding the boundaries between the Framework, Runtime, Engine, and Platform helps us diagnose performance and native-integration issues and give AI tools better direction.", speaker: 'Yeseung Park', image: '/assets/flutter-seoul/speaker/yeseung-park.jpg' } },
 					{ start: '16:10', end: '16:20', kind: 'break', label: 'Break' },
@@ -747,7 +747,7 @@ export const dict = {
 				}
 			],
 			platformNote: 'Ticketing platform · Available on Ticketaco official event page.',
-			venueNote: 'Venue · AWS Korea (Centerfield East 12F, 231 Teheran-ro, Gangnam-gu, Seoul / Public transit recommended)',
+			venueNote: 'Venue · AWS Korea (Centerfield East 18F, 231 Teheran-ro, Gangnam-gu, Seoul / Public transit recommended)',
 			venueMapLinkText: 'View Map',
 			platformLinkText: 'Go to Ticketaco'
 		},
