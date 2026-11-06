@@ -1,3 +1,4 @@
+import '../venue_visibility.dart';
 import 'package:flutter/widgets.dart';
 
 import '../content/content.dart';
@@ -32,7 +33,9 @@ class SiteFooter extends StatelessWidget {
       child: _LinkCol(
         title: t.footer.nav,
         links: [
-          for (final link in t.nav.links)
+          for (final link in t.nav.links.where(
+            (link) => link.id != 'venue-map' || venueVisible.value,
+          ))
             _FooterLink(link.label, () => goNavLink(context, link, hub: hub)),
         ],
       ),

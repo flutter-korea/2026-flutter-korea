@@ -1,8 +1,9 @@
 <script>
+	import { venueVisible } from '$lib/venue-visibility.js';
 	import { t, lang, toggleLang } from '$lib/i18n.js';
 	import { base } from '$app/paths';
 	import { page } from '$app/state';
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 
 	let { collapsed = false } = $props();
 
@@ -19,7 +20,10 @@
 
 	/** @param {{ id: string; href: string }} link */
 	function isActive(link) {
-		if (link.href.startsWith('#')) return onHome && activeId === link.id;
+		if (link.href.startsWith('#')) {
+			if (link.id === 'timetable' && (page.url.pathname === `${base}/timetable` || page.url.pathname === `${base}/timetable/`)) return true;
+			return onHome && activeId === link.id;
+		}
 		const path = `${base}${link.href}`;
 		return page.url.pathname === path || page.url.pathname === `${path}/`;
 	}
@@ -51,32 +55,33 @@
 	onMount(() => {
 		window.addEventListener('keydown', onKeydown);
 
-		// Scroll-spy: highlight the nav link for the section currently in view.
-		const ids = $t.nav.links
-			.filter((link) => link.href.startsWith('#'))
-			.map((link) => link.href.slice(1));
-		const sections = ids
-			.map((id) => document.getElementById(id))
-			.filter((el) => el !== null);
+		return () => window.removeEventListener('keydown', onKeydown);
+	});
+
+	// The header persists across routes, so attach observers again when the
+	// home page is mounted after navigating from another page.
+	$effect(() => {
+		const isHome = onHome;
 		/** @type {IntersectionObserver | undefined} */
 		let observer;
-		if (sections.length) {
-			observer = new IntersectionObserver(
-				(entries) => {
-					for (const entry of entries) {
-						if (entry.isIntersecting) activeId = entry.target.id;
-					}
-				},
-				{ rootMargin: '-40% 0px -50% 0px', threshold: 0 }
-			);
-			for (const s of sections) observer.observe(s);
-		}
-
-		return () => {
-			window.removeEventListener('keydown', onKeydown);
-			observer?.disconnect();
-		};
+		let cancelled = false;
+		activeId = '';
+		if (isHome) tick().then(() => {
+			if (cancelled) return;
+			const sections = $t.nav.links
+				.filter((link) => link.href.startsWith('#'))
+				.map((link) => document.getElementById(link.href.slice(1)))
+				.filter((el) => el !== null);
+			observer = new IntersectionObserver((entries) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) activeId = entry.target.id;
+				}
+			}, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+			for (const section of sections) observer.observe(section);
+		});
+		return () => { cancelled = true; observer?.disconnect(); };
 	});
+
 </script>
 
 <header class="site-header" class:collapsed data-open={open}>
@@ -94,10 +99,11 @@
 
 		<!-- Desktop nav -->
 		<nav class="desktop-nav" aria-label={$t.nav.brand}>
-			{#each $t.nav.links as link (link.id)}
+			{#each $t.nav.links.filter((link) => link.id !== 'venue-map' || $venueVisible) as link (link.id)}
 				<a
 					class="nav-link"
 					class:active={isActive(link)}
+					aria-current={isActive(link) ? 'location' : undefined}
 					href={navHref(link)}
 				>
 					{link.label}
@@ -150,8 +156,8 @@
 
 <div id={panelId} class="mobile-panel" class:open aria-hidden={!open}>
 	<nav class="mobile-nav" aria-label={$t.nav.menu}>
-		{#each $t.nav.links as link (link.id)}
-			<a class="mobile-link" href={navHref(link)} onclick={closeMenu} tabindex={open ? 0 : -1}>
+		{#each $t.nav.links.filter((link) => link.id !== 'venue-map' || $venueVisible) as link (link.id)}
+			<a class="mobile-link" class:active={isActive(link)} aria-current={isActive(link) ? 'location' : undefined} href={navHref(link)} onclick={closeMenu} tabindex={open ? 0 : -1}>
 				<span>{link.label}</span>
 				<svg viewBox="0 0 24 24" width="0.9em" height="0.9em" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 					<path d="m9 5 7 7-7 7" />
@@ -396,6 +402,7 @@
 		color: var(--ink);
 		border-bottom: 1px solid var(--border);
 	}
+	.mobile-link.active { color: var(--accent); }
 	.mobile-link svg {
 		color: var(--text-dim);
 	}

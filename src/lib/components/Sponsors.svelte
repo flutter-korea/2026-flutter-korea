@@ -20,7 +20,7 @@
 					href={sponsor.url}
 					target="_blank"
 					rel="noopener noreferrer"
-					aria-label={`${sponsor.name} (${sponsor.description})`}
+					aria-label={sponsor.description ? `${sponsor.name} (${sponsor.description})` : sponsor.name}
 				>
 					<div class="logo-wrap">
 						<img
@@ -40,7 +40,7 @@
 								</svg>
 							</span>
 						</div>
-						<p class="sponsor-desc">{sponsor.description}</p>
+						{#if sponsor.description}<p class="sponsor-desc">{sponsor.description}</p>{/if}
 					</div>
 				</a>
 			{/each}

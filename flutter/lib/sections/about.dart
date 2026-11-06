@@ -30,15 +30,16 @@ class AboutSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Reveal(child: SectionHeader(kicker: t.kicker, title: t.title)),
+        Reveal(
+          child: SectionHeader(kicker: t.kicker, title: t.title),
+        ),
         const SizedBox(height: 44),
 
         // Narrative column: 3 paragraphs, first slightly lead-like.
         Reveal(
           delayMs: 80,
           child: ConstrainedBox(
-            constraints:
-                BoxConstraints(maxWidth: chWidth(FKType.body(vw), 64)),
+            constraints: BoxConstraints(maxWidth: chWidth(FKType.body(vw), 64)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -90,8 +91,7 @@ class AboutSection extends StatelessWidget {
           child: Center(
             child: ConstrainedBox(
               // border-box: the CSS max-width includes the left padding.
-              constraints:
-                  BoxConstraints(maxWidth: chWidth(FKType.body(vw), 52)),
+              constraints: const BoxConstraints(minWidth: double.infinity),
               child: Padding(
                 padding: EdgeInsets.only(
                   left: (vw * 0.03).clamp(20.0, 32.0) + 3,
@@ -125,8 +125,11 @@ class _CompassCard extends StatelessWidget {
   final bool forward;
   final double vw;
 
-  const _CompassCard(
-      {required this.compass, required this.forward, required this.vw});
+  const _CompassCard({
+    required this.compass,
+    required this.forward,
+    required this.vw,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -157,8 +160,7 @@ class _CompassCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: forward ? FKColors.paperStrong : FKColors.paper,
                   border: Border.all(
-                    color:
-                        hovered ? FKColors.borderStrong : FKColors.border,
+                    color: hovered ? FKColors.borderStrong : FKColors.border,
                   ),
                   borderRadius: BorderRadius.circular(FKRadii.md),
                 ),
@@ -187,7 +189,10 @@ class _CompassCard extends StatelessWidget {
           Text(
             compass.body,
             style: sans(
-                size: FKType.body(vw), color: FKColors.textMuted, height: 1.7),
+              size: FKType.body(vw),
+              color: FKColors.textMuted,
+              height: 1.7,
+            ),
           ),
         ],
       ),

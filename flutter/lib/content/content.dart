@@ -440,6 +440,7 @@ const koContent = Content(
     brand: 'Flutter Korea 2026',
     links: [
       NavLink(id: 'about', label: '소개'),
+      NavLink(id: 'venue-map', label: '행사장 안내도'),
       NavLink(id: 'timetable', label: '타임테이블'),
       NavLink(id: 'tickets', label: '티켓'),
       NavLink(id: 'sponsors', label: '후원사'),
@@ -621,6 +622,12 @@ const koContent = Content(
         url: 'https://flutter.dev',
         description: 'Build apps for any screen',
       ),
+      SponsorItem(
+        name: '튜링의 사과',
+        logo: 'assets/images/sponsors/turing-apple.png',
+        url: 'https://turingapple.com/',
+        description: '',
+      ),
     ],
     ctaTitle: '후원사로 함께하시겠어요?',
     ctaBody: '국내 최대 규모의 Flutter 커뮤니티와 만나고, 브랜드를 개발자에게 각인시킬 기회입니다.',
@@ -716,6 +723,7 @@ const enContent = Content(
     brand: 'Flutter Korea 2026',
     links: [
       NavLink(id: 'about', label: 'About'),
+      NavLink(id: 'venue-map', label: 'Venue map'),
       NavLink(id: 'timetable', label: 'Timetable'),
       NavLink(id: 'tickets', label: 'Tickets'),
       NavLink(id: 'sponsors', label: 'Sponsors'),
@@ -920,6 +928,12 @@ const enContent = Content(
         logo: 'assets/images/sponsors/flutter.png',
         url: 'https://flutter.dev',
         description: 'Build apps for any screen',
+      ),
+      SponsorItem(
+        name: '튜링의 사과',
+        logo: 'assets/images/sponsors/turing-apple.png',
+        url: 'https://turingapple.com/',
+        description: '',
       ),
     ],
     ctaTitle: 'Become a sponsor',

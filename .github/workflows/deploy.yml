@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   # Allow manual runs from the Actions tab
+  schedule:
+    - cron: '17 * * * *'
   workflow_dispatch:
 
 # Permissions required for GitHub Pages deployment

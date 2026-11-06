@@ -43,6 +43,7 @@ export const dict = {
 			brand: 'Flutter Korea 2026',
 			links: [
 				{ id: 'about', label: '소개', href: '#about' },
+				{ id: 'venue-map', label: '행사장 안내도', href: '#venue-map' },
 				{ id: 'timetable', label: '타임테이블', href: '#timetable' },
 				{ id: 'tickets', label: '티켓', href: '#tickets' },
 				{ id: 'sponsors', label: '후원사', href: '#sponsors' },
@@ -210,6 +211,12 @@ export const dict = {
 					logo: '/assets/sponsors/flutter.png',
 					url: 'https://flutter.dev',
 					description: 'Build apps for any screen'
+				},
+				{
+					name: '튜링의 사과',
+					logo: '/assets/sponsors/turing-apple.png',
+					url: 'https://turingapple.com/',
+					description: ''
 				}
 			],
 			ctaTitle: '후원사로 함께하시겠어요?',
@@ -595,6 +602,7 @@ export const dict = {
 			brand: 'Flutter Korea 2026',
 			links: [
 				{ id: 'about', label: 'About', href: '#about' },
+				{ id: 'venue-map', label: 'Venue map', href: '#venue-map' },
 				{ id: 'timetable', label: 'Timetable', href: '#timetable' },
 				{ id: 'tickets', label: 'Tickets', href: '#tickets' },
 				{ id: 'sponsors', label: 'Sponsors', href: '#sponsors' },
@@ -762,6 +770,12 @@ export const dict = {
 					logo: '/assets/sponsors/flutter.png',
 					url: 'https://flutter.dev',
 					description: 'Build apps for any screen'
+				},
+				{
+					name: '튜링의 사과',
+					logo: '/assets/sponsors/turing-apple.png',
+					url: 'https://turingapple.com/',
+					description: ''
 				}
 			],
 			ctaTitle: 'Become a sponsor',

@@ -19,8 +19,12 @@ class ScrollHub {
 
   /// Sections the header nav tracks — single-sourced from the nav links in
   /// content.dart (ids are language-independent; the test asserts ko == en).
-  static final spyIds =
-      List<String>.unmodifiable(koContent.nav.links.map((l) => l.id));
+  static final spyIds = List<String>.unmodifiable([
+    for (final link in koContent.nav.links) ...[
+      if (link.id == 'timetable') 'venue-map',
+      if (link.id != 'venue-map') link.id,
+    ],
+  ]);
 
   ScrollHub() {
     controller.addListener(_onScroll);
@@ -41,8 +45,9 @@ class ScrollHub {
   }
 
   void _updateSpy() {
-    final viewportH =
-        controller.hasClients ? controller.position.viewportDimension : 0.0;
+    final viewportH = controller.hasClients
+        ? controller.position.viewportDimension
+        : 0.0;
     if (viewportH == 0) return;
     for (final id in spyIds) {
       final box = _boxFor(id);
@@ -74,7 +79,8 @@ class ScrollHub {
     }
     final box = _boxFor(id);
     if (box == null) return;
-    final target = controller.offset +
+    final target =
+        controller.offset +
         box.localToGlobal(Offset.zero).dy -
         (FKLayout.headerH + 16);
     _animate(target.clamp(0.0, controller.position.maxScrollExtent));
