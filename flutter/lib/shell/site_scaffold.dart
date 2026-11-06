@@ -1,3 +1,4 @@
+import '../venue_visibility.dart';
 import 'package:flutter/material.dart' show Material, SelectionArea;
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -171,7 +172,9 @@ class _MobilePanel extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          for (final link in t.nav.links)
+          for (final link in t.nav.links.where(
+            (link) => link.id != 'venue-map' || venueVisible.value,
+          ))
             HoverBuilder(
               cursor: SystemMouseCursors.click,
               builder: (context, hovered) => GestureDetector(

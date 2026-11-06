@@ -1,4 +1,5 @@
 <script>
+	import { venueVisible } from '$lib/venue-visibility.js';
 	import { lang, t } from '$lib/i18n.js';
 	import { base } from '$app/paths';
 	import { reveal } from '$lib/actions.js';
@@ -42,7 +43,7 @@
 			<nav class="link-col reveal" use:reveal={{ delay: 80 }} aria-label={$t.footer.nav}>
 				<h2 class="col-title">{$t.footer.nav}</h2>
 				<ul class="link-list">
-					{#each $t.nav.links as link (link.id)}
+					{#each $t.nav.links.filter((link) => link.id !== 'venue-map' || $venueVisible) as link (link.id)}
 						<li><a href={navHref(link)}>{link.label}</a></li>
 					{/each}
 				</ul>

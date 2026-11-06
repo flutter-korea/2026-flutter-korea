@@ -215,8 +215,7 @@
 	/* --- Closing pull-quote ----------------------------------------------- */
 	.closing {
 		margin-top: clamp(3.25rem, 7vw, 5rem);
-		max-width: 52ch;
-		margin-inline: auto;
+		width: 100%;
 		padding: 0.5rem 0 0.5rem clamp(1.25rem, 3vw, 2rem);
 		border-left: 3px solid transparent;
 		border-image: var(--gradient-brand) 1;

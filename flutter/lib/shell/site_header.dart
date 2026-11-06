@@ -1,4 +1,6 @@
+import '../venue_visibility.dart';
 import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 
 import '../content/content.dart';
 import '../i18n/i18n.dart';
@@ -84,10 +86,17 @@ class SiteHeader extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        for (final link in t.nav.links) ...[
+        for (final link in t.nav.links.where(
+          (link) => link.id != 'venue-map' || venueVisible.value,
+        )) ...[
           _NavLink(
             label: link.label,
-            active: hub != null && activeId == link.id,
+            active:
+                (hub != null && activeId == link.id) ||
+                (link.id == 'timetable' &&
+                    GoRouterState.of(context).uri.path == '/timetable') ||
+                (link.id == 'venue-map' &&
+                    GoRouterState.of(context).uri.path == '/venue-map'),
             onTap: () => goNavLink(context, link, hub: hub),
           ),
           if (link != t.nav.links.last) const SizedBox(width: 32),

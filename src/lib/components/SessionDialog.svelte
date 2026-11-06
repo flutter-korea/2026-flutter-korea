@@ -25,6 +25,9 @@
 
 <style>
 	dialog {
+		position: fixed;
+		inset: 0;
+		margin: auto;
 		width: min(40rem, calc(100vw - 2rem));
 		max-height: min(80vh, 50rem);
 		padding: clamp(1.3rem, 4vw, 2rem);

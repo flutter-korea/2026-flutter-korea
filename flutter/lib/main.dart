@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'i18n/i18n.dart';
+import 'venue_visibility.dart';
 import 'pages/home_page.dart';
 import 'pages/timetable_page.dart';
+import 'pages/venue_map_page.dart';
 import 'theme/tokens.dart';
 import 'theme/typography.dart';
 
@@ -18,6 +20,10 @@ void main() {
 final _router = GoRouter(
   routes: [
     GoRoute(path: '/', builder: (context, state) => const HomePage()),
+    GoRoute(
+      path: '/venue-map',
+      builder: (context, state) => const VenueMapPage(),
+    ),
     // Flutter's hash URL strategy resolves `/#timetable` as `/timetable`.
     GoRoute(
       path: '/timetable',
@@ -32,14 +38,17 @@ class FkApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
-      listenable: I18n.instance,
+      listenable: Listenable.merge([I18n.instance, venueVisible]),
       builder: (context, _) => MaterialApp.router(
         title: 'Flutter Korea 2026: Back to Basics, Move Forward',
         debugShowCheckedModeBanner: false,
         routerConfig: _router,
         builder: (context, child) => I18nScope(
           notifier: I18n.instance,
-          child: child ?? const SizedBox.shrink(),
+          child: KeyedSubtree(
+            key: ValueKey(venueVisible.value),
+            child: child ?? const SizedBox.shrink(),
+          ),
         ),
         theme: ThemeData(
           useMaterial3: true,

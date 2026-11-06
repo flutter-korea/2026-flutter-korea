@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
 
 import '../sections/timetable.dart';
+import '../sections/venue_map.dart';
+import '../venue_visibility.dart';
 import '../shell/scroll_hub.dart';
 import '../shell/site_footer.dart';
 import '../shell/site_scaffold.dart';
@@ -27,6 +29,7 @@ class _TimetablePageState extends State<TimetablePage> {
   Widget build(BuildContext context) => SiteScaffold(
     hub: _hub,
     children: [
+      if (venueVisible.value) const FkSection(child: VenueMapSection()),
       FkSection(key: _hub.keyFor('timetable'), child: const TimetableSection()),
       SiteFooter(hub: _hub),
     ],

@@ -6,6 +6,8 @@ import '../sections/overview.dart';
 import '../sections/sponsors.dart';
 import '../sections/tickets.dart';
 import '../sections/timetable.dart';
+import '../sections/venue_map.dart';
+import '../venue_visibility.dart';
 import '../shell/scroll_hub.dart';
 import '../shell/site_footer.dart';
 import '../shell/site_scaffold.dart';
@@ -48,6 +50,11 @@ class _HomePageState extends State<HomePage> {
         HeroSection(hub: _hub),
         FkSection(key: _hub.keyFor('overview'), child: const OverviewSection()),
         FkSection(key: _hub.keyFor('about'), child: const AboutSection()),
+        if (venueVisible.value)
+          FkSection(
+            key: _hub.keyFor('venue-map'),
+            child: const VenueMapSection(),
+          ),
         FkSection(
           key: _hub.keyFor('timetable'),
           child: const TimetableSection(),

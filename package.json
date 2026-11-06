@@ -4,9 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "sync:slides": "node scripts/sync-session-slides.mjs",
     "sync:flutter": "node scripts/sync-flutter-schedule.mjs",
     "dev": "vite dev",
-    "build": "vite build",
+    "build": "npm run sync:slides && vite build",
     "preview": "vite preview",
     "prepare": "svelte-kit sync || echo ''",
     "check": "svelte-check --tsconfig ./jsconfig.json"
